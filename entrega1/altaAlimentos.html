@@ -5,24 +5,6 @@
     <title>Alta</title>
     <link rel="stylesheet" media="screen" href="./estilos/form.css" >
 	
-<!-- Scripts para mostrar la fecha-->
-<link rel="stylesheet" href="./estilos/fecha.css" />
-<script src="./js/jquery-1.9.1.js"></script>
-<script src="./js/jquery-ui.js"></script>
-<script src="./js/fecha.js"></script>
-
-<script>
-$(function () {
-$.datepicker.setDefaults($.datepicker.regional["es"]);
-$("#datepicker").datepicker({
-firstDay: 1
-});
-});
-</script>
-<!-- Fin de scripts y estilos de la fecha -->
-
-
-
 
 </head>
 <body>
@@ -31,35 +13,20 @@ firstDay: 1
 
 <ul>
     <li>
-         <h2>Alta de Alimentos</h2>
-         <span class="required_notification">Fecha de vencimiento:<input type="text" id="datepicker" /></span>
+         <h2>Alta de Donantes</h2>
+         <span class="required_notification">Fecha de alta:<input type="date" name="fecha"></span>
          
     </li>
-    
     <li>
-		
-        <label for="nombre">*Descripción:</label>
+        <label for="nombre">*Nombre:</label>
+        <input type="text" name="nombre" required/>
+    </li>
+    <li>
+        <label for="nombre">*Apellido:</label>
         <input type="text" name="nombre" required/>
     </li>
     
-    	 <li>
-    <label for="message">Contenido:</label>
-    <textarea name="message" cols="40" rows="6" > </textarea>
-	</li>
-    
-    
-    
-    <li>
-        <label for="nombre">*Peso:</label>
-        <input type="number" name="peso" required/>
-    </li>
-    
-    <li>
-        <label for="nombre">*Stock:</label>
-        <input type="number" name="peso" required/>
-    </li>
-    
-<<!--	<li>
+	<li>
         <label for="dni">*DNI</label>
         <input type="text" name="dni" placeholder="Introduzca número de DNI sin puntos" required="required" maxlength="8" pattern="{8,}" required/> 
         <span class="form_hint">Ejemplo: "12345678"</span>
@@ -81,8 +48,11 @@ firstDay: 1
     <input type="url" name="website" />
     <span class="form_hint">Ejemplo: "http://pagina.com"</span>
 	</li>
--->
 	
+	<li>
+    <label for="message">Comentarios:</label>
+    <textarea name="message" cols="40" rows="6" > </textarea>
+	</li>
 * Campos obligatorios
 <li>
     <button type="submit" name= "boton">Generar Alta</button>
