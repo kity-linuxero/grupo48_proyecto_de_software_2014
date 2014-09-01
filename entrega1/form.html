@@ -13,30 +13,49 @@
 
 <ul>
     <li>
-         <h2>Contact Us</h2>
-         <span class="required_notification">* Denotes Required Field</span>
+         <h2>Alta de Donantes</h2>
+         <span class="required_notification">Fecha de alta:<input type="date" name="fecha"></span>
+         
     </li>
     <li>
-        <label for="name">Name:</label>
-        <input type="text" name="name" />
+        <label for="nombre">*Nombre:</label>
+        <input type="text" name="nombre" required/>
     </li>
+    <li>
+        <label for="nombre">*Apellido:</label>
+        <input type="text" name="nombre" required/>
+    </li>
+    
+	<li>
+        <label for="dni">*DNI</label>
+        <input type="text" name="dni" placeholder="Introduzca número de DNI sin puntos" required="required" maxlength="8" pattern="{8,}" required/> 
+        <span class="form_hint">Ejemplo: "12345678"</span>
+        
+        
+
+    </li>
+	
+	
+	
+	
 	<li>
 		<label for="email">Email:</label>
-		<input type="text" name="email" />
-		<span class="form_hint">Proper format "name@something.com"</span>
+		<input type="email" name="email" />
+		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
 	</li>
 	<li>
     <label for="website">Website:</label>
-    <input type="text" name="website" />
-    <span class="form_hint">Proper format "http://someaddress.com"</span>
+    <input type="url" name="website" />
+    <span class="form_hint">Ejemplo: "http://pagina.com"</span>
 	</li>
+	
 	<li>
-    <label for="message"> Message: </label>
-    <textarea name="message" cols="40" rows="6" >
+    <label for="message">Comentarios:</label>
+    <textarea name="message" cols="40" rows="6" > </textarea>
 	</li>
-
+* Campos obligatorios
 <li>
-    <button class="submit" type="submit">Submit Form</button>
+    <button class="submit" type="submit">Generar Alta</button>
 </li>
 
 </ul>
