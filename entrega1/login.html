@@ -1,36 +1,33 @@
 <!DOCTYPE html>
-
+<html>
 <head>
-
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Iniciar sesión</title>
-<!-- <link rel="stylesheet" type="text/css" href="./estilos/login.css" /> -->
-
-<link rel="stylesheet" type="text/css" href="./estilos/form.css" />
-
+    <meta charset="utf-8">
+    <title>IdentifÃ­quese</title>
+    <link rel="stylesheet" media="screen" href="./estilos/form.css" >
+	<script type="text/javascript" src="./js/login.js"></script>
 </head>
+
 <body>
-<div class="container">
-	<section id="content">
-		<form class="formulario" action="">
-			<h2>Identifíquese</h2>
-			
-			<div>
-				<input type="text" placeholder="Usuario" required="" id="username" />
-			</div>
-			
-			<div>
-				<input type="password" placeholder="Contraseña" required="" id="password" />
-			</div>
-			
-		</form>
-		<div>
-				<input class="button" type="submit" value="Iniciar sesión" />
-				
-			</div>
-			<div><a href="#">¿Olvidó su contraseña?</a>
-				<a href="#">Registrarse</a></div>
-	</section>
+
+<form class="log"  method="post" name="formulario"  onSubmit=userPass();>
+
+         <h3>IdentifÃ­quese</h3>
+    <div>
+        <input type="text" name="nombre" placeholder="Usuario" required/>
+    </div>
+     <div>
+        <input type="password" name="pass" placeholder="ContraseÃ±a" required/>
+    </div>
+    
+<div>
+    <button type="submit" name= "boton" class="button">Iniciar sesiÃ³n</button>
+    
+    
 </div>
+
+
+</form>
+
+
 </body>
 </html>

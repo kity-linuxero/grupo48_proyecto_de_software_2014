@@ -58,8 +58,12 @@ body {font: 14px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", san
     float:right;
     font-size: 12px;
     color: red;
-    
+   
 
+}
+
+.button{
+	margin: 5px 0 0 0;
 }
 
 
