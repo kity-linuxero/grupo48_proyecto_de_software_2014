@@ -1,11 +1,12 @@
     function userPass() {
         var un = formulario.nombre.value;
         var pw = formulario.pass.value;
-        var username = "username"; 
-        var password = "password";
+        var username = "admin"; 
+        var password = "admin";
         if ((un == username) && (pw == password)) {
-            /* window.location = "main.html";*/
-            alert ("Usuario y contraseña correctas.");
+            /* window.location = "backend.html"*/
+            /* alert ("Usuario y contraseña correctas.");*/
+            window.open("backend.html");
             return false;
         }
         else {
