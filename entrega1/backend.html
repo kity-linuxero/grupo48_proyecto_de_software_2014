@@ -4,16 +4,29 @@
 <link rel="stylesheet" type="text/css" href="./estilos/encabezado.css" />
 <meta charset="utf-8"> 
 
+
+<link rel="stylesheet" media="(max-width: 800px)" href="./estilos/backendMobile.css" />
+<link rel="stylesheet" media="(min-width: 801px)" href="./estilos/backend.css" />
+
+
+
 <title>Banco alimentario La Plata - Backend</title>
 </head>
 
 <body>
 
-<img src="./img/logo.png" class="logo"/>
+<!-- <img src="./img/logo.png" class="logo"/> -->
 <h1>Banco alimentario La Plata</h1>
+<div><a href="./index.html" name=logout>Logout</a></div>
 
+<div>
+	<h4>Backend</h4>
 
+	<script type="text/javascript">
+	document.write(window.opener.userPass.username());
+	</script>
 
+</div>
 
 
 </body>

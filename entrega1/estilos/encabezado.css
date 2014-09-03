@@ -1,6 +1,14 @@
 /* Título de encabezado */
 h1 {
-
-
+	
+	text-align: center; 
+	float: center;
+	margin: 20px
 }
+
+logo {
+	float: none;
+}
+
+
 

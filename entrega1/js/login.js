@@ -4,9 +4,9 @@
         var username = "admin"; 
         var password = "admin";
         if ((un == username) && (pw == password)) {
-            /* window.location = "backend.html"*/
-            /* alert ("Usuario y contraseña correctas.");*/
+          /*  window.close();*/
             window.open("backend.html");
+            
             return false;
         }
         else {

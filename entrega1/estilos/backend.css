@@ -1,9 +1,22 @@
 /* Título de encabezado */
+
+body {
+    background-image: url('../img/logo.png');
+  
+    background-repeat: no-repeat;
+} 
+
 h1 {
-	
+	font-size: 120%;
 	text-align: center; 
 	float: center;
-	margin: 20px
+	/*margin: 20px*/
+}
+
+h4 {
+	margin-top: 40px;
+	margin-left: 10px;
+
 }
 
 logo {
