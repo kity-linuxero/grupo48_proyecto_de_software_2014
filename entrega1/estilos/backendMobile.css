@@ -8,9 +8,10 @@ h1 {
     font-size: 90%;
 }
 
-logout{
-	position: relative;
+a{
+	position: absolute;
     right;
+	/*text-align:center;*/
 
 }
 
