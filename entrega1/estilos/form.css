@@ -1,4 +1,5 @@
-body {font: 14px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;}
+body {font: 14px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+	  background-color: #DDDDDD}
 
 
 .formulario h1, .formulario label {font-family: Verdana,Arial,Sans; font-size: 13px }
@@ -16,10 +17,7 @@ body {font: 14px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", san
     border-bottom:1px solid #eee;
     position:relative;
 }
-/* Línea de separación */
-.formulario li:first-child, .formulario:last-child {
-    border-bottom:1px solid #777;
-}
+
 
 .formulario h2 {
     margin:0;

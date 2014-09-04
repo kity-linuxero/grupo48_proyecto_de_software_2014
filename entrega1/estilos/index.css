@@ -1,8 +1,9 @@
+body {font: 14px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+	  background-color:#DDDDDD}
+
+
 h1{
 	text-align: center;
-}
-
-body{ background-color:#DDDDDD
 }
 
 #contenedor{  
@@ -10,8 +11,8 @@ body{ background-color:#DDDDDD
         border:1px solid #FF0000;  
 }  
 #cabecera{  
-        background-color:#FFDD00;  
-        height:20%;  
+        background-color:#FFFFFF;  
+        height:100px;  
 }  
 #menu{  
         height:80%;  
@@ -31,6 +32,7 @@ body{ background-color:#DDDDDD
 }  
 #pie{  
         height:20%;  
-        background-color:#D3D1C1;  
+        background-color:#D3FFC1;  
         clear:both;  
+		text-align: center;
 }  
