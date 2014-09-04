@@ -1,35 +1,42 @@
-﻿<!DOCTYPE html>
-<html lang="es">
-<head>
+<!DOCTYPE html>
+<html lang="es">  
+    <head>  
+	<meta charset="utf-8"> 
+        <title>Banco de alimentos La Plata - Backend</title>  
+        <link rel="stylesheet" href="./estilos/maqueta.css" type="text/css"/>  
+    </head>  
+    <body>  
+        <div id ="contenedor">  <a href="./index.html">Logout</a>
+            <div id ="cabecera"><h1>Backend - Panel de control</h1></div>  
+            <div id ="menu">Bienvenido 'Usuario Registrado'</div>  
 
-<meta charset="utf-8"> 
+            <div id ="izquierda">
+				<div><a href="">ABM de Donantes</a></div>
+				<div><a href="">ABM de Entidades receptoras</a></div>
+				<div><a href="">ABM de alimentos</a></div>
+				<div><a href="">ABM de turnos de entrega</a></div>
+				<div><a href="">ABM de Servicios prestados</a></div>
+				<div><a href="">Confección y entrega de pedidos</a></div>
+				<div><a href="">Consulta de stock de alimentos</a></div>
+				<div><a href="">Listado de alimentos</a></div>
 
+            </div>  
+            <!-- <div id ="derecha">Panel Derecho</div>  -->
+            <div id ="pie"></div>  
+        </div>  
+        
+        
+        <!-- Pie de página -->
+        <footer>Banco de Alimentos La Plata -
+        
+        <!-- Script para mostrar la fecha -->
+			<script type="text/javascript">
+				var d = new Date();
+				document.write(d.getDate()+'/');document.write(d.getMonth()+'/')/document.write(d.getFullYear());
+			</script> 
+         </footer>
+        
+        
+    </body>  
+</html>  
 
-<link rel="stylesheet" media="(max-width: 800px)" href="./estilos/backendMobile.css" />
-<link rel="stylesheet" media="(min-width: 801px)" href="./estilos/backend.css" />
-
-
-
-<title>Banco alimentario La Plata - Backend</title>
-</head>
-
-<body>
-
-<!-- <img src="./img/logo.png" class="logo"/> -->
-<h1>Banco alimentario La Plata</h1>
-
-<div><a href="./index.html" class=logout>Logout</a></div>
-
-<div>
-	<h4>Backend</h4>
-
-	<script type="text/javascript">
-	document.write(window.opener.userPass.username());
-	</script>
-
-</div>
-
-
-</body>
-
-</html>
