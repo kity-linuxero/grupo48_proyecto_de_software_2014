@@ -15,28 +15,26 @@ footer{
 }
 
 #contenedor{  
-      /*  background-color:#F4ABF2;  */
-        border:1px solid #FF0000;  
+    
 }  
 #cabecera{  
-        background-color:#E5BC7A;  
-        height:20%;  
+		height:20%;  
 }  
 #menu{  
         height:10%;  
         background-color:#C8CACC;  
 }  
 #izquierda{  
-        height:50%;  
+        height:90%;  
         background-color:#BDD2EF;  
         float:left;  
-        width:50%;  
+        width:20%;  
 }  
 #derecha{  
-        height:50%;  
+        height:90%;  
         background-color:#DAF7E2;  
         float:right;  
-        width:50%;  
+        width:80%;  
 }  
 #pie{  
         height:20%;  

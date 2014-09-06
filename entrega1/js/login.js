@@ -10,7 +10,7 @@
             return false;
         }
         else {
-            alert ("Usuario o contraseña incorrectas.");
+            alert ("Usuario o contraseña incorrectas.\nUse: admin/admin");
         }
  }
 
