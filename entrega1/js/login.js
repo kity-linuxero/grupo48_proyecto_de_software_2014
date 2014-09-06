@@ -7,7 +7,7 @@
           /*  window.close();*/
             window.open("backend.html");
             
-            return false;
+          /* return false;*/
         }
         else {
             alert ("Usuario o contraseña incorrectas.\nUse: admin/admin");
