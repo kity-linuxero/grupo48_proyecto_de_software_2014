@@ -7,47 +7,48 @@
 </head>
 <body>
 
-<form class="formulario" action="" method="post" name="formulario" onSubmit="index.html">
+<form class="formulario" method="post" name="formulario" >
 
 <ul>
     <li>
          <h2>Alta de Alimentos</h2>
     </li>
     <li>
-        <label for="nombre">*Descripción:</label>
-        <input type="text" name="nombre" required/>
+       
+        <input type="text" id="nombre" required/>
+         <label for="nombre">*Descripción:</label>
     </li>
     
     <li>
     <!-- Fecha -->
+         
+         <input type="text" id="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" required/>
          <label for="fecha">*Fecha de vencimiento</label>
-         <input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" required/>
     
     </li>
     <li>
+        <input type="number" min="0" id="peso">
         <label for="peso">Peso:</label>
-        <input type="number" min="0" name="peso">
     </li>
     
 	<li>
-        <label for="stock">*Stock</label>
-        <input type="number" min="0" name="stock" equired/> 
-       
+        <input type="number" min="0" id="stock" placeholder="0"> 
+		<label for="stock">*Stock</label>
     </li>
 		
 	<li>
-    <label for="contenido">Contenido:</label>
-    <textarea name="contenido" cols="40" rows="6" > </textarea>
+		<textarea id="contenido" cols="40" rows="6" > </textarea>
+		<label for="contenido">Contenido:</label>
 	</li>
 	
-	<span class="obligatorios">*Campos obligatorios</span>
 
-<li>
-    <button type="submit" name= "boton">Generar Alta</button>
-</li>
+
+	<li>
+		<button type="submit" name= "boton">Generar Alta</button>
+	</li>
 
 </ul>
-
+<div class="obligatorios">*Campos obligatorios</div>
 
 
 </form>

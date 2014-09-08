@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form class="formulario" action="" method="post" name="formulario">
+<form class="formulario" method="post" name="formulario">
 
 <ul>
     <li>
@@ -20,39 +20,38 @@
     </li>
     <li>
         <label for="nombre">*Nombre:</label>
-        <input type="text" name="nombre" required/>
+        <input type="text" id="nombre" required/>
     </li>
     <li>
-        <label for="nombre">*Apellido:</label>
-        <input type="text" name="nombre" required/>
+        <label for="apellido">*Apellido:</label>
+        <input type="text" id="apellido" required/>
     </li>
     
 	<li>
         <label for="nombre">*DNI</label>
-        <input type="text" name="dni" placeholder="Introduzca número de DNI sin puntos" maxlength="8" pattern="[0-9]{8}" title="Ingrese un número de DNI válido" required/> 
+        <input type="text" id="dni" placeholder="Introduzca número de DNI sin puntos" maxlength="8" pattern="[0-9]{8}" title="Ingrese un número de DNI válido" required/> 
         
         <span class="form_hint">Ejemplo: "12345678"</span>
     </li>
 		
 	<li>
 		<label for="email">Email:</label>
-		<input type="email" name="email" />
+		<input type="email" id="email" />
 		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
 	</li>
 
 	<li>
     <label for="comentarios">Comentarios:</label>
-    <textarea name="comentarios" cols="40" rows="6" > </textarea>
+    <textarea id="comentarios" cols="40" rows="6" > </textarea>
 	</li>
 	
-	<span class="obligatorios">*Campos obligatorios</span>
 
 <li>
     <button type="submit" name= "boton">Generar Alta</button>
 </li>
 
 </ul>
-
+<div class="obligatorios">*Campos obligatorios</div>
 
 
 </form>
