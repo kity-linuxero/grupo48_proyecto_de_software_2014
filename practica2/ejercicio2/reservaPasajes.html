@@ -1,0 +1,45 @@
+<!DOCTYPE html >
+<html>
+
+<head>
+	<title>Reserva de pasajes</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+
+<body>
+	
+<h1>Reserva de pasajes</h1>
+          
+<form method="post" action="reservaPasaje.php">
+	<label for="nombre">Nombre</label>
+		<input type="text" name="nombre" /required></br>
+	<label for="apellido">Apellido</label>
+		<input type="text" name="apellido" /required></br>
+		
+	<label for="mail">e-mail</label>
+		<input type="email" name="mail"></br>
+		
+	<label for="tel">Teléfono</label>
+		<input type="text" name="tel"></br>
+		
+		
+	<label for="tipo">Nº Documento</label>
+		<select name="dni">
+		<option>DNI</option>
+		<option>Pasaporte</option>
+		</select>
+		
+		
+		<input type="text" name="dni" placeholder="Ingrese su DNI" /required> </br>
+	
+	<p>-- Datos de reserva --</p>
+	<label for="fecha">Fecha Reserva</label>
+		<input type="date" name="fecha"></br>
+	<label for="cantidad">Cantidad</label>
+		<input type="number" name="cantidad" min=0></br>
+		
+    <input type="submit" value="Enviar"> <input type="reset" value="Restablecer">
+</form>  
+</body>
+
+</html>
