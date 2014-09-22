@@ -3,7 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>Alta de </title>
+
     <link rel="stylesheet" media="screen" href="./estilos/form.css" >
+    <link rel="stylesheet" media="(max-width: 320px)" href="./estilos/formMobile.css" />
+    
+    
 </head>
 <body>
 
@@ -15,8 +19,6 @@
 
 		<!-- Fecha -->
          <span class="textoChico">Fecha de alta<input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" ></span>      
-         
-         
     </li>
     <li>
         <label for="nombre">*Nombre:</label>
@@ -42,7 +44,7 @@
 
 	<li>
     <label for="comentarios">Comentarios:</label>
-    <textarea id="comentarios" cols="40" rows="6" > </textarea>
+    <textarea id="comentarios" cols="30" rows="6" > </textarea>
 	</li>
 	
 

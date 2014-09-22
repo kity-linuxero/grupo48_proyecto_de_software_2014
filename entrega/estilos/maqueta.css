@@ -1,0 +1,34 @@
+body {
+ background-color: #EBEBEB;
+
+}
+#global {
+ width:700px; height:800px;
+ margin: 0 auto 0 auto;
+ background-color: #FFFFFF;
+}
+#cabecera {
+ width:700px;
+ margin: 0 auto 0 auto;
+ 
+}
+
+#navegacion {
+ width:780px;
+ margin: 0 auto 0 auto;
+ background-color: #E2F47C;
+}
+#principal {
+font: 13px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;`
+ width:600px;
+ margin: 0 auto 0 auto;
+ float: left;
+}
+
+#pie {
+ width:700px;
+ margin: 0 auto 0 auto;
+ background-color: #FFFFFF;
+ 
+ float: none;
+}

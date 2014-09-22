@@ -3,38 +3,57 @@
     <head>  
 	<meta charset="utf-8"> 
         <title>Banco de alimentos La Plata - Backend</title>  
-        <link rel="stylesheet" href="./estilos/backend.css" type="text/css"/>  
+        <link rel="stylesheet" href="./estilos/maqueta.css" type="text/css"/>
+		<link rel="stylesheet" href="./estilos/botonera.css" type="text/css"/>
+        
+        
+        
     </head>  
     <body>  
-        <div id ="contenedor">  <a href="./index.html" id=log>Logout</a>
-            <div id ="cabecera"><h1>Backend - Panel de control</h1></div>  
-            <div id ="menu">Bienvenido 'Usuario Registrado'</div>  
+        <div id ="global">  <a href="index.html" id=log class="boton">Logout</a>
+        
+            
+            <div id ="cabecera">
+		
+				<h1>Backend - Panel de control</h1></div>  
+            <!-- <div id ="menu">Bienvenido 'Usuario Registrado'</div>  -->
 
-            <div id ="izquierda">
-				<div><a href="./altaDonantes.html">ABM de Donantes</a></div>
-				<div><a href="">ABM de Entidades receptoras</a></div>
-				<div><a href="./altaAlimentos.html">ABM de alimentos</a></div>
-				<div><a href="">ABM de turnos de entrega</a></div>
-				<div><a href="">ABM de Servicios prestados</a></div>
-				<div><a href="">Confección y entrega de pedidos</a></div>
-				<div><a href="">Consulta de stock de alimentos</a></div>
-				<div><a href="./listadoDeAlimentos.html">Listado de alimentos</a></div>
+			<div id ="navegacion">
+				<ul id="boton"> 
+			
+					<li><a href="./altaDonantes.html">ABM de Donantes</a></li>
+					<li><a href="">ABM de Entidades receptoras</a></li>
+					<li><a href="./altaAlimentos.html">ABM de alimentos</a></li>
+					<li><a href="">ABM de turnos de entrega</a></li>
+					<li><a href="">ABM de Servicios prestados</a></li>
+					<li><a href="">Confección y entrega de pedidos</a></li>
+					<li><a href="">Consulta de stock de alimentos</a></li>
+					<li><a href="./listadoDeAlimentos.html">Listado de alimentos</a></li>
+			
+				</ul>
+			
+			
+			<!-- <footer>Usuario registrado</footer> -->
+			
+			</div>
 
-            </div>  
-            <!-- <div id ="derecha">Panel Derecho</div>  -->
-            <div id ="pie"></div>  
-        </div>  
-        
-        
-        <!-- Pie de página -->
-        <footer>Banco Alimentario La Plata -
-        
-        <!-- Script para mostrar la fecha -->
-			<script type="text/javascript">
+            <div id ="centro">
+				
+            </div>
+			
+            <!-- Pie de página -->
+            <div id ="pie">
+			
+			<script> type="text/javascript">
 				var d = new Date();
 				document.write(d.getDate()+'/');document.write(d.getMonth()+'/')/document.write(d.getFullYear());
 			</script> 
-         </footer>
+			</div>  
+        </div>  
+        
+        
+        
+        
         
         
     </body>  
