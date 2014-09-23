@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Alta de </title>
+
+    <link rel="stylesheet" media="screen" href="./estilos/form.css" >
+    <link rel="stylesheet" media="(max-width: 320px)" href="./estilos/formMobile.css" />
+    
+    
+</head>
+<body>
+
+<form class="formulario" method="post" name="formulario">
+
+<ul>
+    <li>
+         <h2>Alta de Entidades receptoras</h2>
+
+		<!-- Fecha -->
+         <span class="textoChico">Fecha de alta<input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" ></span>      
+    </li>
+    <li>
+        <label for="razonsocial">*Razón social:</label>
+        <input type="text" id="razonsocial" required/>
+    </li>
+    <li>
+        <label for="tel">*Teléfono:</label>
+        <input type="tel" id="tel" required/>
+    </li>
+    
+    <li>
+        <label for="domicilio">*Domicilio:</label>
+        <input type="text" id="domicilio" required/>
+    </li>
+    
+   
+    <li>
+    <label for="servicioprestado">*Servicio prestado:</label>
+    <input type="text" list="servicioprestado" … >
+		<datalist id="servicioprestado">
+			<option label="Hogar de dia" value="Hogar de dia">
+			<option label="Comedor infantil" value="Comedor infantil">
+			<option label="Hogar de adolescentes" value="Hogar de adolescentes">
+				<option label="Jardin maternal" value="Jardin maternal">    
+	</datalist>
+    
+    
+    </li>
+    
+    
+    
+    
+    <li><label for="necesidad">Necesidad</label>
+    <select name="necesidad">
+		<option>Máxima</option>
+		<option>Mediana</option>
+		<option>Mínima</option>
+	</select>
+    </li>
+    
+	<li><label for="estado">Estado</label>
+    <select name="estado">
+		<option>Alta</option>
+		<option>En trámite</option>
+		<option>Suspendida</option>
+		<option>Baja</option>
+	</select>
+    </li>
+
+	<li>
+    <label for="comentarios">Comentarios:</label>
+    <textarea id="comentarios" cols="30" rows="6" > </textarea>
+	</li>
+	
+
+<li>
+    <button type="submit" name= "boton">Generar Alta</button>
+</li>
+
+</ul>
+<div class="obligatorios">*Campos obligatorios</div>
+
+
+</form>
+
+
+
+</body>
+</html>
