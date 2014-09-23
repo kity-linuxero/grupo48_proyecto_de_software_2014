@@ -2,8 +2,13 @@
 <html lang="es">
 <head>
  <meta charset="utf-8" />
- <link rel="stylesheet" href="./estilos/maqueta.css" type="text/css" media="all">
- <link rel="stylesheet" href="./estilos/botonera.css" type="text/css"/>
+ <link rel="stylesheet" media="(min-width: 481px)" href="./estilos/maqueta.css" type="text/css">
+ <link rel="stylesheet" media="(min-width: 481px)" href="./estilos/botonera.css" type="text/css"/>
+ <link rel="stylesheet" media="(max-width: 480px)" href="./estilos/maquetaMobile.css" />
+ <link rel="stylesheet" media="(max-width: 480px)" href="./estilos/botoneraMobile.css" />
+ <link rel="stylesheet" href="./estilos/login.css" type="text/css"/>
+ 
+ 
  <title>Sistema Online del Banco Alimentario La Plata</title>
 
 </head>
@@ -24,7 +29,7 @@
 					<li><a href="#">Colaboradores</a></li>
 					<li><a href="#">Como colaborar</a></li>
 					<li><a href="#">Contacto</a></li>
-					<li><a href="./login.html">Login</a></li>
+					<li><a href="#login">Login</a></li>
 					
 			
 				</ul>
@@ -38,7 +43,7 @@
 
 </div>
 			
-			<img src="./img/imagen-banco.jpg" alt="Imagen descriptiva">
+			<img src="./img/imagen-banco.jpg" alt="Imagen descriptiva" class="imagenCuerpo">
 
  </div>
  
@@ -50,6 +55,32 @@ Seguinos en:
 
  </div>
  
- 
+ <div id="login" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<h2>Login</h2>
+		<p>Inicie sesión para continuar.</p>
+		
+		<form class="log"  method="post" name="formulario"  onSubmit=userPass();>
+		 <div>
+			<input type="text" name="usuario" placeholder="Usuario" required/>
+		</div>
+		<div>
+			<input type="password" name="pass" placeholder="Contraseña" required/>
+		</div>
+		
+		<div>
+    <button type="submit" name= "boton" class="button">Iniciar sesión</button>
+    
+    
+</div>
+		
+		</form>
+		
+		
+		
+	</div>
+</div>
+
 </body>
 </html>
