@@ -25,12 +25,21 @@ try {
 	*/
 	$rows = $result->fetch(PDO::FETCH_NUM);
 	if($rows > 0) {
-	header("location: backend.html");
+		//el login es exitoso
+		
+	session_start();
+	$_SESSION['usuario'] = $_POST["usuario"];
+	// $_SESSION['rol'] = $POST["usuario"];
+
+		
+	header("location: backend.php");
 	}
 	else{
 		$errmsg_arr[] = 'Username and Password are not found';
 		$errflag = true;
 		echo "<script type='text/javascript'> alert('Error de login'); </script>";
+		$doc =& JFactory::getDocument();
+		$doc->setMetaData('refresh', '5;url=index.php', 'true');
 	}
 	
 	/*
