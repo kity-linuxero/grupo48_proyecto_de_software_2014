@@ -1,3 +1,17 @@
+<?php
+
+require_once './php/ValidadorSesion.php';
+
+$sesion= ValidadorSesion::validar();
+
+if(!$sesion){
+	header('Location: index.html'); 
+	
+  exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
