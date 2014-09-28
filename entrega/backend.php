@@ -35,8 +35,7 @@ if(!isset($_SESSION['usuario']))
             <div id ="cabecera">
 		
 				<h3>Backend - Panel de control</h3></div>  
-            <div id ="menu"><p>Bienvenido
-						<?php echo $_SESSION['usuario'];;?> 
+            <div id ="menu"><p>Bienvenido <?php echo $_SESSION['usuario'];?> usted ha iniciado con los derechos de <?php echo $_SESSION['rol'];?>
             </p></div>
 
 			<div id ="navegacion">

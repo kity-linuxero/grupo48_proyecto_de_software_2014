@@ -15,18 +15,18 @@ try {
 	if($rows > 0) {
 		//el login es exitoso
 		
-	session_start();
-	$_SESSION['usuario'] = $_POST["usuario"];
-	// $_SESSION['rol'] = $POST["usuario"];
+		session_start();
+		$_SESSION['usuario'] = $_POST["usuario"];
+	
+		$_SESSION['rol'] = $rows[2];
 
 		
 	header("location: backend.php");
 	}
 	else{
-		$errmsg_arr[] = 'Username and Password are not found';
-		$errflag = true;
-		echo "<script type='text/javascript'> alert('Error de login'); </script>";
+		
 	
+	 header("location: index.php?mensaje=Error de inicio de sesion");
 	}
 }
 catch(PDOException $e){
