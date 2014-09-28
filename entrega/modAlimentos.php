@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Modificación de Alimento</title>
+    <title>Alta de Alimentos</title>
     <link rel="stylesheet" media="screen" href="./estilos/form.css" >
 	<link rel="stylesheet" media="(max-width: 320px)" href="./estilos/formMobile.css" />
 </head>
@@ -16,7 +16,7 @@
     </li>
     <li>
        
-        <input type="text" id="codigo" required/>
+        <input type="text" id="codigo" value=<?php echo $_GET['codigo'] ?> required/>
          <label for="codigo">Código:</label>
     </li>
     <li>
@@ -58,8 +58,7 @@
 
 
 	<li>
-		<button type="submit" name="boton">Aceptar</button>
-		<button type="button" name="cancelar"  onclick="window.location.href='./backend.php'">Cancelar</button>
+		<button type="submit" name= "boton">Generar Alta</button>
 	</li>
 
 </ul>
