@@ -1,5 +1,5 @@
 <?php
-session_destroy('usuario');
-$_SESSION = array();
-header("location:index.html");
+	session_destroy();
+	$_SESSION = array();
+	header("location:index.html");
 ?>

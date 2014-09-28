@@ -49,7 +49,7 @@ if(!isset($_SESSION['usuario']))
 					<li><a href="">ABM de Servicios prestados</a></li>
 					<li><a href="">Confección y entrega de pedidos</a></li>
 					<li><a href="">Consulta de stock de alimentos</a></li>
-					<li><a href="./listadoDeAlimentos.html">Listado de alimentos</a></li>
+					<li><a href="./controlador.php?action=listar">Listado de alimentos</a></li>
 			
 				</ul>
 			
