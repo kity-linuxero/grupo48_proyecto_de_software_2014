@@ -9,12 +9,9 @@ call_user_func($action, $parametros);
 
 function listar($parametros){
 	$miConexion = Conector::conectar();
-	$query = $miConexion->prepare('SELECT codigo,descripcion,fecha_vencimiento,contenido,peso_paquete,stock,reservado FROM alimento JOIN detalle_alimento WHERE alimento.codigo=detalle_alimento.alimento_codigo');
+	$query = $miConexion->prepare('SELECT * FROM alimento JOIN detalle_alimento WHERE alimento.codigo=detalle_alimento.alimento_codigo');
 	$query->execute();
 	$result=$query->fetchAll(PDO::FETCH_ASSOC);
-//	print_r($result);
-//	die;
-
 	echo $parametros["twig"]->render('listadoAlimentos.html', array("alimentos" => $result));
 
 }
