@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<form class="formulario" method="post" name="formulario">
+<form class="formulario" method="post" name="formulario" action="./controlador.php?action=altaEntidad">
 
 <ul>
     <li>
@@ -21,31 +21,27 @@
          <span class="textoChico">Fecha de alta<input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" ></span>      
     </li>
     <li>
-        <label for="razonsocial">*Razón social:</label>
-        <input type="text" id="razonsocial" required/>
+        <label for="razon">*Razón social:</label>
+        <input type="text" name="razon" required/>
     </li>
     <li>
         <label for="tel">*Teléfono:</label>
-        <input type="tel" id="tel" required/>
+        <input type="tel" name="tel" required/>
     </li>
     
     <li>
         <label for="domicilio">*Domicilio:</label>
-        <input type="text" id="domicilio" required/>
+        <input type="text" name="domicilio" required/>
     </li>
     
    
-    <li>
-    <label for="servicioprestado">*Servicio prestado:</label>
-    <input type="text" list="servicioprestado" … >
-		<datalist id="servicioprestado">
-			<option label="Hogar de dia" value="Hogar de dia">
-			<option label="Comedor infantil" value="Comedor infantil">
-			<option label="Hogar de adolescentes" value="Hogar de adolescentes">
-				<option label="Jardin maternal" value="Jardin maternal">    
-	</datalist>
-    
-    
+    <li><label for="servicio">Servicio prestado</label>
+    <select name="servicio">
+		<option value=1>Comedor infantil</option> 
+		<option value=2>Hogar de dia</option> 
+		<option value=3>Hogar de adolescentes</option>
+		<option value=4>Jardin maternal</option> 
+	</select>
     </li>
     
     
@@ -53,26 +49,20 @@
     
     <li><label for="necesidad">Necesidad</label>
     <select name="necesidad">
-		<option>Máxima</option>
-		<option>Mediana</option>
-		<option>Mínima</option>
+		<option value=1>Máxima</option> <!-- Maxima será el id 1-->
+		<option value=2>Mediana</option> <!-- Mediana será el id 2-->
+		<option value=3>Mínima</option> <!-- Mínima será el id 3-->
 	</select>
     </li>
     
 	<li><label for="estado">Estado</label>
     <select name="estado">
-		<option>Alta</option>
-		<option>En trámite</option>
-		<option>Suspendida</option>
-		<option>Baja</option>
+		<option value=1>Alta</option> <!-- Alta id 1-->
+		<option value=2>En trámite</option> <!-- En trámite id 2-->
+		<option value=3>Suspendida</option> <!-- Suspendida id 3-->
+		<option value=4>Baja</option> <!-- Baja id 4-->
 	</select>
     </li>
-
-	<li>
-    <label for="comentarios">Comentarios:</label>
-    <textarea id="comentarios" cols="30" rows="6" > </textarea>
-	</li>
-	
 
 <li>
     <button type="submit" name= "boton">Generar Alta</button>

@@ -9,9 +9,12 @@ call_user_func($action, $parametros);
 
 function listar($parametros){
 	$miConexion = Conector::conectar();
-	$query = $miConexion->prepare('SELECT codigo,descripcion FROM alimento');
+	$query = $miConexion->prepare('SELECT codigo,descripcion,fecha_vencimiento,contenido,peso_paquete,stock,reservado FROM alimento JOIN detalle_alimento WHERE alimento.codigo=detalle_alimento.alimento_codigo');
 	$query->execute();
 	$result=$query->fetchAll(PDO::FETCH_ASSOC);
+//	print_r($result);
+//	die;
+
 	echo $parametros["twig"]->render('listadoAlimentos.html', array("alimentos" => $result));
 
 }
@@ -30,9 +33,23 @@ function altaDonante($parametros){
 	
 	$miConexion = Conector::conectar();
 	
-	//$query = $miConexion->prepare('INSERT INTO donante (razon_social, nombre, apellido, telefono, mail) VALUES ($_POST['razon'], $_POST['nombre'],$_POST['apellido'],$_POST['tel'], $_POST['email']'););
 	$query = $miConexion->prepare("INSERT INTO donante (razon_social, nombre, apellido, telefono, mail) VALUES('$razon', '$nombre','$apellido','$tel', '$email')");	 
 	
+	var_dump($query);
+	$query->execute();
+	die;
+}
+
+function altaEntidad($parametros){
+	$razon=$_POST['razon'];
+	$domicilio=$_POST['domicilio'];
+	$servicio=$_POST['servicio'];
+	$tel=$_POST['tel'];
+	$necesidad=$_POST['necesidad'];
+	$estado=$_POST['estado'];
+	
+	$miConexion = Conector::conectar();
+	$query = $miConexion->prepare("INSERT INTO entidad_receptora(razon_social, telefono, domicilio, estado_entidad_id, necesidad_entidad_id, servicio_prestado_id) VALUES ('$razon', '$tel','$domicilio',$estado, $necesidad, $servicio)");	 
 	var_dump($query);
 	$query->execute();
 	die;

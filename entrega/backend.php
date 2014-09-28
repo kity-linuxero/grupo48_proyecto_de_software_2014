@@ -43,7 +43,7 @@ if(!isset($_SESSION['usuario']))
 				<ul id="boton"> 
 			
 					<li><a href="./altaDonantes.html">ABM de Donantes</a></li>
-					<li><a href="">ABM de Entidades receptoras</a></li>
+					<li><a href="./altaEntidadesReceptoras.html">ABM de Entidades receptoras</a></li>
 					<li><a href="./altaAlimentos.html">ABM de alimentos</a></li>
 					<li><a href="">ABM de turnos de entrega</a></li>
 					<li><a href="">ABM de Servicios prestados</a></li>
