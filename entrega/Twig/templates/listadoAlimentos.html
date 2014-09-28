@@ -27,8 +27,14 @@
 
 		{% for alimento in alimentos %}
 			<tr>
-			       	<td>{{ alimento.codigo }}</td>
-		        	<td>{{ alimento.descripcion }}</td>
+			       	<td>{{ alimento.descripcion }}</td>
+		        	<td>{{ alimento.fecha_vencimiento }}</td>
+		        	<td>{{ alimento.contenido }}</td>
+		        	<td>{{ alimento.peso_paquete }}</td>
+		        	<td>{{ alimento.stock }}</td>
+		        	<td>{{ alimento.reservado }}</td>
+		        	<td> <a href="./modAlimentos.php?codigo={{alimento.codigo}}"><img src="./img/lapiz.jpg"></a></a></td>
+		        	<td> <a href="./controlador.php?action=eliminarAlimento&codigo={{alimento.codigo}}"><img src="./img/cruz.png"></a></a></td>
 			</tr>
 			
 		{% endfor %}
