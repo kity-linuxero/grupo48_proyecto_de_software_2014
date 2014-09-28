@@ -21,6 +21,15 @@ function altaAlimento($parametros){
 	echo "altaAlimento";
 }
 
+function eliminarAlimento($parametros){
+	$miConexion = Conector::conectar();
+	$str = "DELETE FROM detalle_alimento WHERE id=".$_GET['parametro1'];
+	$query = $miConexion->prepare($str);
+	$query->execute();
+	header('Location: ./controlador.php?action=listar');
+}
+
+
 function altaDonante($parametros){
 	$razon=$_POST['razon'];
 	$nombre=$_POST['nombre'];
