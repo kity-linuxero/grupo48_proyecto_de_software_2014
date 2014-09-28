@@ -4,5 +4,5 @@
 	unset($_SESSION['usuario']);
 	unset($_SESSION['rol']); */
 	session_unset(); 
-	header("location:index.html");
+	header("location:index.php");
 ?>

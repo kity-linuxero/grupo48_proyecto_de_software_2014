@@ -41,9 +41,8 @@ function altaDonante($parametros){
 	
 	$query = $miConexion->prepare("INSERT INTO donante (razon_social, nombre, apellido, telefono, mail) VALUES('$razon', '$nombre','$apellido','$tel', '$email')");	 
 	
-	var_dump($query);
 	$query->execute();
-	die;
+	header('Location: ./backend.php');
 }
 
 function altaEntidad($parametros){
@@ -56,9 +55,9 @@ function altaEntidad($parametros){
 	
 	$miConexion = Conector::conectar();
 	$query = $miConexion->prepare("INSERT INTO entidad_receptora(razon_social, telefono, domicilio, estado_entidad_id, necesidad_entidad_id, servicio_prestado_id) VALUES ('$razon', '$tel','$domicilio',$estado, $necesidad, $servicio)");	 
-	var_dump($query);
+	
 	$query->execute();
-	die;
+	header('Location: ./backend.php');
 }
 
 ?>
