@@ -6,6 +6,7 @@ session_start();
 //validamos si se ha hecho o no el inicio de sesion correctamente
 
 //si no se ha hecho la sesion nos regresará a login.php
+
 if(!isset($_SESSION['usuario'])) 
 {
   header('Location: index.html'); 
@@ -43,7 +44,7 @@ if(!isset($_SESSION['usuario']))
 				<ul id="boton"> 
 			
 					<li><a href="./altaDonantes.html">ABM de Donantes</a></li>
-					<li><a href="">ABM de Entidades receptoras</a></li>
+					<li><a href="./altaEntidadesReceptoras.html">ABM de Entidades receptoras</a></li>
 					<li><a href="./altaAlimentos.html">ABM de alimentos</a></li>
 					<li><a href="">ABM de turnos de entrega</a></li>
 					<li><a href="">ABM de Servicios prestados</a></li>
@@ -62,7 +63,7 @@ if(!isset($_SESSION['usuario']))
 				
             </div>
 			
-            <!-- Pie de página -->
+            <!-- Pie de página con css -->
             <div id ="pie">
 			
 			<script> type="text/javascript">
