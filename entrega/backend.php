@@ -29,21 +29,20 @@ if(!isset($_SESSION['usuario']))
         
     </head>  
     <body>  
-        <div id ="global">  <a href="logout.php" id=log class="boton">Logout</a>
-        
-            
+			<div id ="global"> 
+			<img src="./img/logo.jpg" alt="logo de la fundacion" /> <br>
+				 <a href="logout.php" id=log class="boton">Logout</a>
             <div id ="cabecera">
-		
-				<h3>Backend - Panel de control</h3></div>  
+				<h3>Panel de control</h3></div>  
             <div id ="menu"><p>Bienvenido <?php echo $_SESSION['usuario'];?> usted ha iniciado con los derechos de <?php echo $_SESSION['rol'];?>
             </p></div>
 
 			<div id ="navegacion">
 				<ul id="boton"> 
 			
-					<li><a href="./altaDonantes.php">ABM de Donantes</a></li>
-					<li><a href="./altaEntidadesReceptoras.php">ABM de Entidades receptoras</a></li>
-					<li><a href="./altaAlimentos.html">ABM de alimentos</a></li>
+					<li><a href="./altaDonantes.php">Alta de Donantes</a></li>
+					<li><a href="./altaEntidadesReceptoras.php">Alta de Entidades receptoras</a></li>
+					<li><a href="./altaAlimentos.html">Alta de alimentos</a></li> <!-- No está implementado -->
 					<li><a href="">ABM de turnos de entrega</a></li>
 					<li><a href="">ABM de Servicios prestados</a></li>
 					<li><a href="">Confección y entrega de pedidos</a></li>
