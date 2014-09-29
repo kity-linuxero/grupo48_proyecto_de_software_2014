@@ -48,24 +48,20 @@
 <table class="reference" style="width:100%">
 		<tbody>
 			<tr>
-				<th>Descripción</th>
-				<th>Fec. de Venc.</th>
-				<th>Contenido</th>
-				<th>Peso</th>
-				<th>Stock</th>
-				<th>Reservado</th>
+				<th>Razón Social</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Teléfono</th>
+				<th>E-mail</th>
 			</tr>
 
-		{% for alimento in alimentos %}
+		{% for donante in listaDonantes %}
 			<tr>
-			       	<td>{{ alimento.descripcion }}</td>
-		        	<td>{{ alimento.fecha_vencimiento }}</td>
-		        	<td>{{ alimento.contenido }}</td>
-		        	<td>{{ alimento.peso_paquete }}</td>
-		        	<td>{{ alimento.stock }}</td>
-		        	<td>{{ alimento.reservado }}</td>
-		        	<td> <a href="./modAlimentos.php?codigo={{alimento.codigo}}"><img src="./img/lapiz.jpg"></a></a></td>
-		        	<td> <a href="./controlador.php?action=eliminarAlimento&parametro1={{alimento.id}}"><img src="./img/cruz.png"></a></td>
+			       	<td>{{ donante.razon_social }}</td>
+		        	<td>{{ donante.nombre }}</td>
+		        	<td>{{ donante.apellido }}</td>
+		        	<td>{{ donante.telefono }}</td>
+		        	<td>{{ donante.mail }}</td>
 			</tr>
 			
 		{% endfor %}

@@ -13,12 +13,6 @@ function listar($parametros){
 	$query->execute();
 	$result=$query->fetchAll(PDO::FETCH_ASSOC);
 	echo $parametros["twig"]->render('listadoAlimentos.html', array("alimentos" => $result));
-
-}
-
-function altaAlimento($parametros){
-	$miConexion = Conector::conectar();
-	echo "altaAlimento";
 }
 
 function eliminarAlimento($parametros){
@@ -28,7 +22,6 @@ function eliminarAlimento($parametros){
 	$query->execute();
 	header('Location: ./controlador.php?action=listar');
 }
-
 
 function altaDonante($parametros){
 	$razon=$_POST['razon'];
@@ -58,6 +51,14 @@ function altaEntidad($parametros){
 	
 	$query->execute();
 	header('Location: ./backend.php');
+}
+
+function listarDonantes($parametros){
+	$miConexion = Conector::conectar();
+	$query = $miConexion->prepare('SELECT * FROM donante');
+	$query->execute();
+	$result=$query->fetchAll(PDO::FETCH_ASSOC);
+	echo $parametros["twig"]->render('listadoDonantes.html', array("listaDonantes" => $result));
 }
 
 ?>

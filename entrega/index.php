@@ -31,7 +31,7 @@
 					<li><a href="#">Home</a></li>
 					<li><a href="#">Quienes somos</a></li>
 					<li><a href="#">A quien ayudamos</a></li>
-					<li><a href="#">Donantes</a></li>
+					<li><a href="./controlador.php?action=listarDonantes">Donantes</a></li>
 					<li><a href="#">Colaboradores</a></li>
 					<li><a href="#">Como colaborar</a></li>
 					<li><a href="#">Contacto</a></li>
