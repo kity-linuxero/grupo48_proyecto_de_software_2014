@@ -53,9 +53,7 @@
 
  </div>
  
-<footer>
-Seguinos en: <a href="https://www.facebook.com/pages/Banco-Alimentario-La-Plata/87991129502">Facebook</a> y <a href="https://twitter.com/bancoalimlp">Twitter.</a>
- </footer>
+
  
 
  </div>
@@ -86,6 +84,8 @@ Seguinos en: <a href="https://www.facebook.com/pages/Banco-Alimentario-La-Plata/
 		
 	</div>
 </div>
-
+<footer>
+Seguinos en: <a href="https://www.facebook.com/pages/Banco-Alimentario-La-Plata/87991129502">Facebook</a> y <a href="https://twitter.com/bancoalimlp">Twitter.</a>
+ </footer>
 </body>
 </html>
