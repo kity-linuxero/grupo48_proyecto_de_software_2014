@@ -28,7 +28,7 @@
 	<div id = "menu">
 				<ul id="boton"> 
 			
-					<li><a href="#">Home</a></li>
+					<li><a href="./index.php">Home</a></li>
 					<li><a href="#">Quienes somos</a></li>
 					<li><a href="#">A quien ayudamos</a></li>
 					<li><a href="./controlador.php?action=listarDonantes">Donantes</a></li>
