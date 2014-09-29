@@ -17,7 +17,7 @@ function listar($parametros){
 
 function eliminarAlimento($parametros){
 	$miConexion = Conector::conectar();
-	$str = "DELETE FROM detalle_alimento WHERE id=".$_GET['parametro1'];
+	$str = "DELETE FROM detalle_alimento WHERE id=".$_GET['p1'];
 	$query = $miConexion->prepare($str);
 	$query->execute();
 	header('Location: ./controlador.php?action=listar');
