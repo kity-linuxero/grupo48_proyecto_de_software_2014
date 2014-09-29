@@ -19,7 +19,7 @@ body {
  background-color: #E2F47C;
 }
 #principal {
-font: 13px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;`
+ font: 13px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
  width:700px;
  margin: 0 auto 0 auto;
  float: left;
@@ -31,4 +31,13 @@ font: 13px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-seri
  background-color: #FFFFFF;
  
  float: none;
+}
+
+footer{
+text-align: center;
+ font: 11px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+ width:700px;
+ margin: 0 auto 0 auto;
+ background-color: #FFFFFF;
+ 
 }

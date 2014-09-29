@@ -34,8 +34,7 @@ if(!isset($_SESSION['usuario']))
 				 <a href="logout.php" id=log class="boton">Logout</a>
             <div id ="cabecera">
 				<h3>Panel de control</h3></div>  
-            <div id ="menu"><p>Bienvenido <?php echo $_SESSION['usuario'];?> usted ha iniciado con los derechos de <?php echo $_SESSION['rol'];?>
-            </p></div>
+            <div id ="menu"></div>
 
 			<div id ="navegacion">
 				<ul id="boton"> 
@@ -63,16 +62,13 @@ if(!isset($_SESSION['usuario']))
             <!-- Pie de página -->
             <div id ="pie">
 			
-			<script> type="text/javascript">
-				var d = new Date();
-				document.write(d.getDate()+'/');document.write(d.getMonth()+'/')/document.write(d.getFullYear());
-			</script> 
+			
 			</div>  
         </div>  
         
         
         
-        
+        <footer>Bienvenido <?php echo $_SESSION['usuario'];?> usted ha iniciado con los derechos de <?php echo $_SESSION['rol'];?></footer>
         
         
     </body>  

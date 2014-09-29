@@ -53,10 +53,9 @@
 
  </div>
  
- <div id="pie">
-Seguinos en:
-				<a href="https://www.facebook.com/pages/Banco-Alimentario-La-Plata/87991129502">Facebook</a> y <a href="https://twitter.com/bancoalimlp">Twitter.</a>
- </div>
+<footer>
+Seguinos en: <a href="https://www.facebook.com/pages/Banco-Alimentario-La-Plata/87991129502">Facebook</a> y <a href="https://twitter.com/bancoalimlp">Twitter.</a>
+ </footer>
  
 
  </div>
