@@ -54,7 +54,8 @@
 
 
 	<li>
-		<button type="submit" name= "boton">Generar Alta</button>
+		<button type="submit" name= "boton">Modificar</button>
+		<button onclick="window.location.href='./backend.php'">Cancelar</button>
 	</li>
 
 </ul>

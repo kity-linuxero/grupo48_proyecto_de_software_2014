@@ -62,6 +62,8 @@ if(!$sesion){
 
 <li>
     <button type="submit" name= "boton">Generar Alta</button>
+	<button onclick="window.location.href='./backend.php'">Cancelar</button>
+
 </li>
 
 </ul>
