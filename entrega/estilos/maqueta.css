@@ -20,13 +20,13 @@ body {
 }
 #principal {
 font: 13px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;`
- width:780px;
+ width:700px;
  margin: 0 auto 0 auto;
- /*float: left;*/
+ float: left;
 }
 
 #pie {
- width:780px;
+ width:700px;
  margin: 0 auto 0 auto;
  background-color: #FFFFFF;
  
