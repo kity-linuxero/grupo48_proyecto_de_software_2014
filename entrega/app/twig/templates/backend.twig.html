@@ -1,0 +1,25 @@
+{% extends "layoutBack.twig.html" %}
+
+{% block title %}
+	Banco de Alimentos - La Plata
+{% endblock %}
+
+{% block botonera %}
+
+							<li><a href="./backend.php">Home</a></li>
+							<li><a href="./backend.php?accion=listarDonantes">Donantes</a></li>
+							<li><a href="./backend.php?accion=listarEntidades">Entidades Receptoras</a></li>
+							<li><a href="./backend.php?accion=listarAlimentos">Listar Alimentos</a></li>
+							<li><a href="../app/logout.php">Logout</a></li>
+
+{% endblock %}
+
+
+{% block contenido %}
+
+	<p>Bienvenido <?php echo $_SESSION['usuario']?>. Aquí se presentan las funciones disponibles para usted.</p>
+	<hr>
+	
+	
+	
+{% endblock %}

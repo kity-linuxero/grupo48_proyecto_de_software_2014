@@ -1,0 +1,41 @@
+{% extends "backend.twig.html" %}
+
+{% block contenido %}
+
+<table class="reference" style="width:100%">
+		<tbody>
+			</br>
+			<tr>
+				<th>Descripción</th>
+				<th>Fec. de Venc.</th>
+				<th>Contenido</th>
+				<th>Peso</th>
+				<th>Stock</th>
+				<th>Reservado</th>
+			</tr>
+
+		{% for alimento in alimentos %}
+			<tr>
+			       	<td>{{ alimento.descripcion }}</td>
+		        	<td>{{ alimento.fecha_vencimiento }}</td>
+		        	<td>{{ alimento.contenido }}</td>
+		        	<td>{{ alimento.peso_paquete }}</td>
+		        	<td>{{ alimento.stock }}</td>
+		        	<td>{{ alimento.reservado }}</td>
+		        	<td> <a href="./modAlimentos.php?
+									 p1={{alimento.id}}
+									&p2={{alimento.descripcion}}
+									&p3={{alimento.fecha_vencimiento}}
+									&p4={{alimento.contenido}}
+									&p5={{alimento.peso_paquete}}
+									&p6={{alimento.stock}}
+									&p7={{alimento.reservado}}"><img src="./img/lapiz.jpg"></a></a></td>
+		        	<td> <a href="./controlador.php?action=eliminarAlimento&p1={{alimento.id}}"><img src="./img/cruz.png"></a></td>
+			</tr>
+			
+		{% endfor %}
+
+		</tbody>
+</table>
+
+{% endblock %}
