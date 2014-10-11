@@ -25,7 +25,7 @@
 
      }
 
-     public function dameAlimentos()
+     public function listar()
      {
          $sql = "select * from alimento INNER JOIN detalle_alimento where alimento.codigo=detalle_alimento.alimento_codigo order by descripcion";
 

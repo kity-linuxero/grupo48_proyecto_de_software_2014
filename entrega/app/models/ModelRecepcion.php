@@ -1,6 +1,6 @@
 ﻿<?php
 
- class Model
+ class ModelRecepcion
  {
      protected $conexion;
 

@@ -21,9 +21,23 @@
          return $donantes;
      }
 
-     public function agregar()
+     public function agregar($r, $c, $n, $a, $d, $t, $e)
      {
-		
+		 $r = htmlspecialchars($r);
+         $c = htmlspecialchars($c);
+         $n = htmlspecialchars($n);
+         $a = htmlspecialchars($a);
+         $d = htmlspecialchars($d);
+         $t = htmlspecialchars($t);
+         $e = htmlspecialchars($e);
+
+         $sql = $this->conexion->prepare("insert into donantes (razon_social, contacto_id, nombre, apellido, domicilio, telefono, mail) values ('" .
+                 $r . "'," . $c . "," . $n . "," . $a . "," . $d . "," . $t . "," . $e . ")");
+
+				 
+         $sql->execute();
+
+         return $sql;
      
 		}
 
@@ -39,14 +53,15 @@
      
 		}
      
-     public function validarDatos($n, $e, $p, $hc, $f, $g)
+     public function validarDatos($r, $c, $n, $a, $d, $t, $e)
      {
-         return (is_string($n) &
-                 is_numeric($e) &
-                 is_numeric($p) &
-                 is_numeric($hc) &
-                 is_numeric($f) &
-                 is_numeric($g));
+         return (is_string($r) &
+                 is_numeric($c) &
+                 is_string($n) &
+                 is_string($a) &
+                 is_string($d) &
+                 is_string($t) &
+                 is_string($e));
      }
 
  }
