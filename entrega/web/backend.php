@@ -3,12 +3,14 @@
 
  // carga del modelo y los controladores
  require_once '../app/Config.php';
- require_once '../app/Model.php';
- require_once '../app/ModelDonante.php';
- require_once '../app/ModelEntidad.php';
- require_once '../app/ModelAlimento.php';
- require_once '../app/ModelLogin.php';
- require_once '../app/ControllerBack.php';
+ require_once '../app/models/Model.php';
+ require_once '../app/models/ModelAlimento.php';
+ require_once '../app/models/ModelDonante.php';
+ require_once '../app/models/ModelEntidad.php';
+ require_once '../app/models/ModelRecepcion.php';
+ require_once '../app/models/ModelLogin.php';
+ require_once '../app/controllers/ControllerFront.php';
+ require_once '../app/controllers/ControllerBack.php';
 
  // enrutamiento
  $map = array(
