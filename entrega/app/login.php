@@ -1,45 +1,48 @@
 <?php
 
 require_once './Config.php';
-require_once './Model.php';
-require_once './ModelLogin.php';
-
-$usuario= $_POST["usuario"];
-$pass= $_POST["pass"];
-
-$intentoLogin = New ModelLogin(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario, Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-
-$resultado= $intentoLogin->log($usuario,$pass);
-
-session_start();
+require_once './models/Model.php';
+require_once './models/ModelLogin.php';
+require_once './controllers/ControllerLogin.php';
 
 
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+	$usuario= $_POST["usuario"];
+	$pass= $_POST["pass"];
 
-if (!$resultado)	{
-	//echo falló en la autenticación de usuario
-	echo "Falló el login. System halted";
-	die;
+	$intentoLogin = ModelLogin::consultar($usuario,$pass);
+
+
+	
+	if (!$intentoLogin)	{
+		//echo falló en la autenticación de usuario
+		echo "Falló el login. System halted";
+		die;
 	}
 	else{ //login correcto. Hay que verificar el rol
 		
+		session_start();
+		$_SESSION['USUARIO']['userName'] = $_POST["usuario"];
+		$_SESSION['USUARIO']['rol']= $intentoLogin[0]['rol'];
+				
+		header('Location: ../web/backend.php');;
 		
-			if($_SESSION['rol']=='administrador'){
 			
 			
 			
 			
 		}
-		else{ //co
 		
-			//echo "Sesion de consulta";
-			
-		}
+		
+		echo "Sesion de consulta";
 		
 		
 		
-		//echo $_SESSION['rol'];
-		header('Location: ../web/backend.php');
+		
+		
 	
-	}
+	}else {
+	echo "Acceso no autorizado";
+	die;}
 	
 ?>
