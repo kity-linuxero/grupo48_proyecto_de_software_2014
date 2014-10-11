@@ -124,7 +124,7 @@
 		die;
 	}
 			    
-        public function listarAlimentos()
+    public function listarAlimentos()
     {
 		$twig = $this->configTwig();
         $m = new ModelAlimento(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
@@ -135,18 +135,28 @@
 		echo $twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos']));
     }
 
-		public function bajaAlimento() {
+	public function altaAlimento() {
+		echo "probando enlace altaAlimento";
+		die;
+	}
+
+	public function modificarAlimento() {
+		echo "probando enlace modificarAlimento";
+		die;
+	}
+
+	public function bajaAlimento() {
 		echo "probando enlace bajaAlimento";
 		die;
 	}
 	
 
-     public function quienesSomos()
-     {
+    public function quienesSomos()
+    {
          require Config::$plantillas . 'quienesSomos.html';
      }
 
-	 public function logout()
+	public function logout()
 	 {
 	 
 	 }
