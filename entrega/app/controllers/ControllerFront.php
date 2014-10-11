@@ -5,7 +5,7 @@
 
 	//configura los parámetros de Twig para el controllerFront
 	private static function configTwig(){
-		require_once __DIR__ . '/twig/lib/Twig/Autoloader.php';
+		require_once __DIR__ . '/../twig/lib/Twig/Autoloader.php';
 		Twig_Autoloader::register();
 
 		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');

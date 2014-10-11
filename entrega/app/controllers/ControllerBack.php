@@ -4,7 +4,7 @@
  {
 	//configura los parámetros de Twig para el controllerBack
 	private static function configTwig(){
-		require_once __DIR__ . '/twig/lib/Twig/Autoloader.php';
+		require_once __DIR__ . '/../twig/lib/Twig/Autoloader.php';
 		Twig_Autoloader::register();
 
 		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
@@ -40,11 +40,46 @@
     }
 
 	public function altaDonante() {
-		$twig = $this->configTwig();
+
+		$params = array(
+             'razon_social' => '',
+             'contacto_id' => '',
+             'nombre' => '',
+             'apellido' => '',
+             'domicilio' => '',
+             'telefono' => '',
+             'mail' => '',
+         );
+
         $m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
                      Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-		echo "probando enlace altaDonante";
-		die;
+		$twig = $this->configTwig();
+		
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+             // comprobar campos formulario
+             if ($m->validarDatos($_POST['razon_social'], $_POST['contacto_id'],
+                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
+                      $_POST['telefono'], $_POST['mail'])) {
+                 $m->agregar($_POST['razon_social'], $_POST['contacto_id'],
+                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
+                      $_POST['telefono'], $_POST['mail']);
+                 header('Location: backend.php?accion=listar');
+
+             } else {
+                 $params = array(
+                     'razon_social' => $_POST['razon_social'],
+                     'contacto_id' => $_POST['contacto_id'],
+                     'nombre' => $_POST['nombre'],
+                     'apellido' => $_POST['apellido'],
+                     'domicilio' => $_POST['domicilio'],
+                     'telefono' => $_POST['telefono'],
+                     'mail' => $_POST['mail'],
+                 );
+                 $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
+             }
+         }
+         echo $twig->render('abmDonantes.html', array('donantes' => $params['donantes']));
 	}
 
 	public function modificarDonante($id) {
