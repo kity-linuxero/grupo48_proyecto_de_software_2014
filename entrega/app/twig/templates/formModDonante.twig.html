@@ -3,41 +3,38 @@
 {% block contenido %}
 
 
-<form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaDonante">
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarDonante&id={{params.id}}">
 <ul>
     <li>
-         <h2>Alta de Donantes</h2>
+         <h2>Modificación de Donante</h2>
 
 		<!-- Fechass -->
          <span class="textoChico">Fecha de alta<input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" ></span>      
     </li>
     <li>
         <label for="razon">*Razón Social:</label>
-        <input type="text" id="razon_social" name="razon_social" required/>
+        <input type="text" id="razon_social" name="razon_social" value='{{ params.razon_social }}' required/>
     </li>
     <li>
         <label for="nombre">*Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required/>
+        <input type="text" id="nombre" name="nombre" value="{{ params['nombre'] }}" required/>
     </li>
     <li>
         <label for="apellido">*Apellido:</label>
-        <input type="text" id="apellido" name="apellido" required/>
+        <input type="text" id="apellido" name="apellido" value="{{ params['apellido'] }}" required/>
     </li>
     <li>
         <label for="tel">Teléfono:</label>
-        <input type="text" id="telefono" name="telefono" }}"/>
+        <input type="text" id="telefono" name="telefono" value="{{ params['telefono'] }}"/>
     </li>
 	<li>
 		<label for="email">Email:</label>
-		<input type="email" id="mail" name="mail" />
+		<input type="email" id="mail" name="mail" value="{{ params['mail'] }}" />
 		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
 	</li>
 
-	
-	
-
 <li>
-    <button type="submit" name= "boton">Generar Alta</button>
+    <button type="submit" name= "boton">Modificar</button>
 	<button onclick="window.location.href='./backend.php'">Cancelar</button>
 
 </li>
