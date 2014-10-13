@@ -1,5 +1,7 @@
 ﻿<?php
 
+require_once __DIR__ . '/ControllerLogin.php';
+
  class ControllerBack
  {
 	//configura los parámetros de Twig para el controllerBack
@@ -18,7 +20,8 @@
 	public function inicio()
      {
 		$twig = $this::configTwig();
-		echo $twig->render('backend.twig.html', array('usuario' => $_SESSION['usuario']));
+	//	echo $twig->render('backend.twig.html', array('usuario' => $_SESSION['usuario']));
+		echo $twig->render('backend.twig.html', array('usuario' => dameUsuario()));
      }
 	 
 	public function contacto()
@@ -33,13 +36,22 @@
 // ------------------------------------------------------------------------------------------------------------------------------------
 	
 	public function listarDonantes()
-    {	 
+    {	
+		if (postaTengoPermiso('listarDonantes')){
+		
+		//print_r(postaTengoPermiso('listarDonantes'));
+		//die;
+		 
 		$twig = $this->configTwig();
         $m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
                      Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 
         $params = array('donantes' => $m->listar());
-		echo $twig->render('abmDonantes.html', array('donantes' => $params['donantes'], 'usuario' => $_SESSION['usuario']));
+
+		echo $twig->render('abmDonantes.html', array('donantes' => $params['donantes'], 'usuario' => dameUsuario()));
+	}
+	else
+		{echo "no tengo permisos"; die;}
     }
 
 	public function altaDonante() {
@@ -77,7 +89,7 @@
                  $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
              }
         }
-		echo $twig->render('formInsDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['usuario']));
+		echo $twig->render('formInsDonante.twig.html', array('params' => $params , 'usuario' => dameUsuario()));
 	}
 
 	public function modificarDonante()
@@ -107,7 +119,7 @@
 				 'telefono' => $donante['telefono'],
 				 'mail' => $donante['mail'],
 				);
-         echo $twig->render('formModDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['usuario']));					
+         echo $twig->render('formModDonante.twig.html', array('params' => $params , 'usuario' => dameUsuario()));					
 	}
 
 	public function bajaDonante() {
@@ -130,7 +142,7 @@
         
         $params = array('entidades' => $m->listar()   );
         
-		echo $twig->render('abmEntidades.html', array('entidades' => $params['entidades'], 'usuario' => $_SESSION['usuario']));
+		echo $twig->render('abmEntidades.html', array('entidades' => $params['entidades'], 'usuario' => dameUsuario()));
     }
 
 	public function altaEntidad() {
@@ -160,7 +172,7 @@
         
         $params = array('alimentos' => $m->listar()   );
         
-		echo $twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => $_SESSION['usuario']));
+		echo $twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => dameUsuario()));
     }
 
 	public function altaAlimento() {

@@ -11,6 +11,7 @@
  require_once '../app/models/ModelLogin.php';
  require_once '../app/controllers/ControllerFront.php';
  require_once '../app/controllers/ControllerBack.php';
+ require_once '../app/controllers/ControllerLogin.php';
 
 // enrutamiento
 $map = array(
@@ -37,7 +38,7 @@ $map = array(
 
 session_start();
 
-if (!isset($_SESSION['usuario'])) {
+if (!estoyLogueado()){
 	echo "<script>window.alert('El usuario no está logueado.'); window.location = './index.php';</script>";
 }
 

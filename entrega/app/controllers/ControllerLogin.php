@@ -7,6 +7,9 @@
  * Veridica si el usuario está logeado
  * @return bool
  */
+ 
+require_once __DIR__ . '/../models/Permisos.php';
+ 
 function estoyLogueado () {
     @session_start(); //inicia sesion (la @ evita los mensajes de error si la session ya está iniciada)
     
@@ -39,42 +42,20 @@ if (estoyLogueado()){
 }
 
 }
-/*
-function log($user,$pass){
-         
-         
-		
-         if(!estoyLogueado()) //si no hay sesión de usuario activa
-		{
-			echo "No hay sesión. La va a hacer nueva";
-			$consulta = $this->consultar($user,$pass);
-			//print_r($consulta);
-			//die;
-			
-			if($consulta) {
-				//login correcto. 
-				
-				session_start();
-				$_SESSION['USUARIO']['userName'] = $_POST["usuario"];
-				$_SESSION['USUARIO']['rol']= $consulta[0]['rol'];
-				
-				
-				
-				
 
-				}
-			else{ //login incorrecto
-				 echo "incorrecto";
-				 
-				 
-				 return 0;
-				}
-		}
-        
-			
-         
-    // retorna 1
-	return 1;
-	 
+function soyAdmin(){
+	if (estoyLogueado()){
+		if ($_SESSION['USUARIO']['rol'] == 'administrador'){
+			return true;
+			}
+			else{ return false;}
+				
 	}
-*/
+}
+
+function postaTengoPermiso(){
+	
+	return (Permisos::tengoPermiso('listarAlimentos'));
+	
+	}
+

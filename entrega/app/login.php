@@ -24,11 +24,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	else{
 		//login correcto. Hay que verificar el rol
 		session_start();
-		$_SESSION['usuario'] = $_POST["usuario"];
-		$_SESSION['rol'] = $intentoLogin[0]['rol'];
+		
+		$_SESSION['USUARIO']['userName']= $_POST["usuario"];
+		$_SESSION['USUARIO']['rol'] = $intentoLogin[0]['rol'];
 
-		header('Location: ../web/backend.php');
+		
+		switch (dameRol()) {
+			case "administrador":
+			//sentencias para usuario administrador
+				header('Location: ../web/backend.php');
+			break;
+			case "consulta":
+				//Sentencias para usuario consulta
+				header('Location: ../web/backend.php');
+			
+			break;
+			
+		
 		}
+	
+	}
 }
 	
 ?>
