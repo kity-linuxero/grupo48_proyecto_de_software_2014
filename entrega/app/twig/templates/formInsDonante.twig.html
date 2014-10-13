@@ -1,0 +1,57 @@
+{% extends "backend.twig.html" %}
+
+{% block contenido %}
+
+
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaDonante">
+<ul>
+    <li>
+         <h2>Alta de Donantes</h2>
+
+		<!-- Fechass -->
+         <span class="textoChico">Fecha de alta<input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" ></span>      
+    </li>
+    <li>
+        <label for="razon">*Razón Social:</label>
+        <input type="text" id="razon_social" name="razon_social"required/>
+    </li>
+    <li>
+        <label for="nombre">*Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required/>
+    </li>
+    <li>
+        <label for="apellido">*Apellido:</label>
+        <input type="text" id="apellido" name="apellido"required/>
+    </li>
+<!-- es un campo que no se pide en la base de datos
+    <li>
+        <label for="domicilio">Domicilio:</label>
+        <input type="text" id="domicilio" name="domicilio">
+    </li>
+-->
+    <li>
+        <label for="tel">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono">
+    </li>
+	<li>
+		<label for="email">Email:</label>
+		<input type="email" id="mail" name="mail" />
+		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
+	</li>
+
+	
+	
+
+<li>
+    <button type="submit" name= "boton">Generar Alta</button>
+	<button onclick="window.location.href='./backend.php'">Cancelar</button>
+
+</li>
+
+</ul>
+<div class="obligatorios">*Campos obligatorios</div>
+
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "backend.twig.html" %}
+
+{% block contenido %}
+
+<table class="reference" style="width:100%">
+		<tbody>
+			<tr>
+				<th>Razón Social</th>
+				<th>Domicilio</th>
+				<th>Teléfono</th>
+				<th>Estado</th>
+				<th>Contacto</th>
+			</tr>
+
+			
+		{% for entidad in entidades %}
+			<tr>
+			       	<td>{{ entidad.razon_social }}</td>
+		        	<td>{{ entidad.domicilio }}</td>
+		        	<td>{{ entidad.telefono }}</td>
+		        	<td>{{ entidad.estado_entidad_id }}</td>
+		        	<td>{{ entidad.contacto_id }}</td>
+		        	<td> <a href="./backend.php?accion=modificarEntidad&id={{entidad.id}}">
+							<img src="./img/lapiz.jpg" alt="lapiz"></a></td>
+		        	<td> <a href="./backend.php?accion=bajaEntidad&id={{entidad.id}}">
+							<img src="./img/cruz.png" alt="crucecita"></a></td>					
+			</tr>
+			
+			
+		{% endfor %}
+
+		</tbody>
+</table>
+ 
+{% endblock %}
