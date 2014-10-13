@@ -16,80 +16,68 @@
  
   </head>
   <body>
-  
-    
     
 	<div id="global">
 
-	<div id="cabecera">
+		<div id="cabecera">
+		 
+			<img src="./img/logo.jpg" alt="logo de la fundacion" />
 	 
-	<img src="./img/logo.jpg" alt="logo de la fundacion" />
- 
- 
-
-	</div>
-	<div id="navegacion">
-	<div id = "menu">
-				<ul id="boton"> 
-			
-					<li><a href="./index.php">Home</a></li>
-					<li><a href="#">Quienes somos</a></li>
-					<li><a href="#">A quien ayudamos</a></li>
-					<li><a href="./index.php?accion=listarDonantes">Donantes</a></li>
-					<li><a href="./index.php?accion=listarEntidades">Entidades Receptoras</a></li>
-					<li><a href="#">Como colaborar</a></li>
-					<li><a href="./index.php?accion=contacto">Contacto</a></li>
-					<li><a href="#login">Login</a></li>
-					
-			
-				</ul>
-	</div>
-</div>
-
-
- <div id="principal"> 
- 
- <!-- Contenido din醡ico a mostrar -->
-	
-    <div>
-      {% block contenido %}
-      {% endblock %}
-    </div>
-	</div>
-			
-			
- 
-
- 
-
-
-</div>
-
-
-<div id="login" class="modalDialog">
-	<div>
-		<a href="#close" title="Close" class="close">X</a>
-		<h2>Login</h2>
-		<p>Inicie sesi贸n para continuar.</p>
-		
-	<form class="log"  method="post" name="formulario"  action='./../app/login.php'>
-		<div>
-			<input type="text" name="usuario" placeholder="Usuario" required/>
 		</div>
-		<div>
-			<input type="password" name="pass" placeholder="Contrase帽a" required/>
+
+		<div id="navegacion">
+
+			<div id = "menu">
+						<ul id="boton"> 
+							<li><a href="./index.php">Home</a></li>
+							<li><a href="#">Quienes somos</a></li>
+							<li><a href="#">A quien ayudamos</a></li>
+							<li><a href="./index.php?accion=listarDonantes">Donantes</a></li>
+							<li><a href="./index.php?accion=listarEntidades">Entidades Receptoras</a></li>
+							<li><a href="#">Como colaborar</a></li>
+							<li><a href="./index.php?accion=contacto">Contacto</a></li>
+							<li><a href="#login">Login</a></li>
+						</ul>
+			</div>
 		</div>
-		<div>
-			<button type="submit" name= "boton" class="button">Iniciar sesi贸n</button>
+
+		 <div id="principal"> 
+		 
+			<!-- Contenido din醡ico a mostrar -->
+			<div>
+			  <br>
+			  {% block contenido %}
+			  {% endblock %}
+			</div>
 		</div>
-	</form>
+				
 	</div>
-</div>
+
+
+	<div id="login" class="modalDialog">
+		<div>
+			<a href="#close" title="Close" class="close">X</a>
+			<h2>Login</h2>
+			<p>Inicie sesi贸n para continuar.</p>
+			
+			<form class="log"  method="post" name="formulario"  action='./../app/login.php'>
+				<div>
+					<input type="text" name="usuario" placeholder="Usuario" required/>
+				</div>
+				<div>
+					<input type="password" name="pass" placeholder="Contrase帽a" required/>
+				</div>
+				<div>
+					<button type="submit" name= "boton" class="button">Iniciar sesi贸n</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
 
 	
-<footer>
-Banco Alimentario La Plata | Seguinos en: <a href="https://www.facebook.com/pages/Banco-Alimentario-La-Plata/87991129502">Facebook</a> y <a href="https://twitter.com/bancoalimlp">Twitter.</a>
- </footer>
+	<footer>
+	Banco Alimentario La Plata | Seguinos en: <a href="https://www.facebook.com/pages/Banco-Alimentario-La-Plata/87991129502">Facebook</a> y <a href="https://twitter.com/bancoalimlp">Twitter.</a>
+	</footer>
   </body>
 </html>

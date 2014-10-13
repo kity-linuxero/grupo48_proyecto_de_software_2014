@@ -1,93 +1,44 @@
 ﻿<?php
 
- class ModelAlimento
+ class ModelAlimento extends Model
  {
      protected $conexion;
 
      public function __construct($dbname,$dbuser,$dbpass,$dbhost)
      {
-       $bd_conexion = mysql_connect($dbhost, $dbuser, $dbpass);
-
-       if (!$bd_conexion) {
-           die('No ha sido posible realizar la conexión con la base de datos: ' . mysql_error());
-       }
-       mysql_select_db($dbname, $bd_conexion);
-
-       mysql_set_charset('utf8');
-
-       $this->conexion = $bd_conexion;
-     }
-
-
-
-     public function bd_conexion()
-     {
-
+		parent::__construct($dbname,$dbuser,$dbpass,$dbhost);
      }
 
      public function listar()
      {
-         $sql = "select * from alimento INNER JOIN detalle_alimento where alimento.codigo=detalle_alimento.alimento_codigo order by descripcion";
+         $sql = $this->conexion->prepare("select * from alimento INNER JOIN detalle_alimento where alimento.codigo=detalle_alimento.alimento_codigo order by descripcion");
 
-         $result = mysql_query($sql, $this->conexion);
-
-         $alimentos = array();
-         while ($row = mysql_fetch_assoc($result))
-         {
-             $alimentos[] = $row;
-         }
-
-         return $alimentos;
+		 $sql->execute();
+		 
+         $alimentos = $sql->fetchAll(PDO::FETCH_ASSOC);
+			
+        return $alimentos;
      }
 
-     public function buscarAlimentosPorNombre($nombre)
+     public function agregar($r, $c, $n, $a, $d, $t, $e)
      {
-         $nombre = htmlspecialchars($nombre);
-
-         $sql = "select * from alimentos where nombre like '" . $nombre . "' order by energia desc";
-
-         $result = mysql_query($sql, $this->conexion);
-
-         $alimentos = array();
-         while ($row = mysql_fetch_assoc($result))
-         {
-             $alimentos[] = $row;
-         }
-
-         return $alimentos;
-     }
-
-     public function dameAlimento($id)
-     {
-         $id = htmlspecialchars($id);
-
-         $sql = "select * from alimentos where id=".$id;
-
-         $result = mysql_query($sql, $this->conexion);
-
-         $alimentos = array();
-         $row = mysql_fetch_assoc($result);
-
-         return $row;
-
-     }
-
-     public function insertarAlimento($n, $e, $p, $hc, $f, $g)
-     {
+		 $r = htmlspecialchars($r);
+         $c = htmlspecialchars($c);
          $n = htmlspecialchars($n);
+         $a = htmlspecialchars($a);
+         $d = htmlspecialchars($d);
+         $t = htmlspecialchars($t);
          $e = htmlspecialchars($e);
-         $p = htmlspecialchars($p);
-         $hc = htmlspecialchars($hc);
-         $f = htmlspecialchars($f);
-         $g = htmlspecialchars($g);
 
-         $sql = "insert into alimentos (nombre, energia, proteina, hidratocarbono, fibra, grasatotal) values ('" .
-                 $n . "'," . $e . "," . $p . "," . $hc . "," . $f . "," . $g . ")";
+         $sql = $this->conexion->prepare("insert into donantes (razon_social, contacto_id, nombre, apellido, domicilio, telefono, mail) values ('" .
+                 $r . "'," . $c . "," . $n . "," . $a . "," . $d . "," . $t . "," . $e . ")");
 
-         $result = mysql_query($sql, $this->conexion);
+				 
+         $sql->execute();
 
-         return $result;
-     }
+         return $sql;
+     
+		}
 
      public function validarDatos($n, $e, $p, $hc, $f, $g)
      {

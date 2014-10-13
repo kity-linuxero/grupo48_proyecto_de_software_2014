@@ -18,7 +18,7 @@
 	public function inicio()
      {
 		$twig = $this::configTwig();
-		echo $twig->render('backend.twig.html');
+		echo $twig->render('backend.twig.html', array('usuario' => $_SESSION['usuario']));
      }
 	 
 	public function contacto()
@@ -36,7 +36,7 @@
 
          $params = array('donantes' => $m->listar()   );
 
-		echo $twig->render('abmDonantes.html', array('donantes' => $params['donantes']));
+		echo $twig->render('abmDonantes.html', array('donantes' => $params['donantes'], 'usuario' => $_SESSION['usuario']));
     }
 
 	public function altaDonante() {
@@ -56,20 +56,18 @@
 		$twig = $this->configTwig();
 		
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-             // comprobar campos formulario
-             if ($m->validarDatos($_POST['razon_social'], $_POST['contacto_id'],
+		// comprobar campos formulario
+             if ($m->validarDatos($_POST['razon_social'],
                       $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
-                      $_POST['telefono'], $_POST['mail'])) {
-                 $m->agregar($_POST['razon_social'], $_POST['contacto_id'],
+                      $_POST['telefono'], $_POST['mail']))
+			{
+                 $m->agregar($_POST['razon_social'],
                       $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
                       $_POST['telefono'], $_POST['mail']);
-                 header('Location: backend.php?accion=listar');
-
+                 header('Location: backend.php?accion=listarDonantes');
              } else {
                  $params = array(
                      'razon_social' => $_POST['razon_social'],
-                     'contacto_id' => $_POST['contacto_id'],
                      'nombre' => $_POST['nombre'],
                      'apellido' => $_POST['apellido'],
                      'domicilio' => $_POST['domicilio'],
@@ -79,23 +77,25 @@
                  $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
              }
          }
-         echo $twig->render('abmDonantes.html', array('donantes' => $params['donantes']));
+         echo $twig->render('formInsDonante.twig.html', array('usuario' => $_SESSION['usuario']));
 	}
 
 	public function modificarDonante($id) {
 		$twig = $this->configTwig();
-        $m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-                     Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
-
-		$params = array('donantes' => $m->modificar($id)   );
+		$m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+                     Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+		$m->modificar($_GET('id'));
+		// aca no termina...
 		
-		echo $twig->render('formDonantes.html', array('donantes' => $params['donantes']));
-		
+		header('Location: backend.php?accion=listarDonantes');
 	}
 
-	public function bajaDonante($id) {
-		echo "probando enlace bajaDonante con $id";
-		die;
+	public function bajaDonante() {
+		$twig = $this->configTwig();
+		$m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+                     Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+		$m->eliminar($_GET['id']);
+		header('Location: backend.php?accion=listarDonantes');
 	}
 	
     public function listarEntidades()
@@ -106,7 +106,7 @@
         
         $params = array('entidades' => $m->listar()   );
         
-		echo $twig->render('abmEntidades.html', array('entidades' => $params['entidades']));
+		echo $twig->render('abmEntidades.html', array('entidades' => $params['entidades'], 'usuario' => $_SESSION['usuario']));
     }
 
 	public function altaEntidad() {
@@ -132,7 +132,7 @@
         
         $params = array('alimentos' => $m->listar()   );
         
-		echo $twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos']));
+		echo $twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => $_SESSION['usuario']));
     }
 
 	public function altaAlimento() {
@@ -158,7 +158,7 @@
 
 	public function logout()
 	 {
-	 
+		echo $twig->render('index.twig.html');
 	 }
 	 
  }

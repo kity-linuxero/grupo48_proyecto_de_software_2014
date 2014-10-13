@@ -12,7 +12,7 @@
 
      public function listar()
      {
-         $sql = $this->conexion->prepare('select * from entidad_receptora order by razon_social');
+         $sql = $this->conexion->prepare('select * from entidad_receptora join contacto where entidad_receptora.contacto_id=contacto.id order by razon_social');
 		
 		 $sql->execute();
 		 
