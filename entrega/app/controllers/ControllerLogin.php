@@ -53,9 +53,9 @@ function soyAdmin(){
 	}
 }
 
-function postaTengoPermiso(){
+function postaTengoPermiso($unaAccion){
 	
-	return (Permisos::tengoPermiso('listarAlimentos'));
+	return (Permisos::tengoPermiso($unaAccion));
 	
 	}
 

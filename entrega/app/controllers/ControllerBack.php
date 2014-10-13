@@ -38,24 +38,22 @@ require_once __DIR__ . '/ControllerLogin.php';
 	public function listarDonantes()
     {	
 		if (postaTengoPermiso('listarDonantes')){
-		
-		//print_r(postaTengoPermiso('listarDonantes'));
-		//die;
-		 
-		$twig = $this->configTwig();
-        $m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+
+			$twig = $this->configTwig();
+			$m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
                      Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 
-        $params = array('donantes' => $m->listar());
+			$params = array('donantes' => $m->listar());
 
-		echo $twig->render('abmDonantes.html', array('donantes' => $params['donantes'], 'usuario' => dameUsuario()));
+			echo $twig->render('abmDonantes.html', array('donantes' => $params['donantes'], 'usuario' => dameUsuario()));
 	}
-	else
-		{echo "no tengo permisos"; die;}
+	else{
+		echo "<script>window.alert('No tiene permisos para realizar esta operación.'); window.location = './index.php';</script>";
+    }
     }
 
 	public function altaDonante() {
-
+	if (postaTengoPermiso('listarDonantes')){
 		$params = array(
              'razon_social' => '',
              'nombre' => '',
@@ -90,10 +88,18 @@ require_once __DIR__ . '/ControllerLogin.php';
              }
         }
 		echo $twig->render('formInsDonante.twig.html', array('params' => $params , 'usuario' => dameUsuario()));
+		
+		}
+	else{
+		echo "<script>window.alert('No tiene permisos para realizar esta operación.'); window.location = './index.php';</script>";
+    }
+		
 	}
 
 	public function modificarDonante()
 	{
+	if (postaTengoPermiso('listarDonantes')){
+		
 		$m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
                      Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 		$twig = $this->configTwig();
@@ -120,15 +126,30 @@ require_once __DIR__ . '/ControllerLogin.php';
 				 'mail' => $donante['mail'],
 				);
          echo $twig->render('formModDonante.twig.html', array('params' => $params , 'usuario' => dameUsuario()));					
+	
+	}
+	else{
+		echo "<script>window.alert('No tiene permisos para realizar esta operación.'); window.location = './index.php';</script>";
+    }
+	
 	}
 
 	public function bajaDonante() {
+	  if (postaTengoPermiso('listarDonantes')){
+		
 		$twig = $this->configTwig();
 		$m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
                      Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 		$m->eliminar($_GET['id']);
 		header('Location: backend.php?accion=listarDonantes');
+	
+	
+	
 	}
+	else{ //NO TIENE PERMISOS PARA REALIZAR ESTA OPERACIÓN.
+		echo "<script>window.alert('No tiene permisos para realizar esta operación.'); window.location = './index.php';</script>";
+    }
+}
 
 // ------------------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------- DECLARACION DE FUNCIONES PARA LAS ENTIDADES RECEPTORAS -------------------------------------
@@ -202,4 +223,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 	 }
 	 
  }
+ 
+ 
+ 
 ?>
