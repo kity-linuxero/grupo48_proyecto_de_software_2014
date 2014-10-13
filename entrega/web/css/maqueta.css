@@ -3,7 +3,8 @@ body {
 
 }
 #global {
- width:700px; height:720px;
+ width:1024px; 
+ min-height:720px;
  margin: 0 auto 0 auto;
  background-color: #FFFFFF;
 }
@@ -22,14 +23,14 @@ body {
  font: 13px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
  width:700px;
  margin: 0 auto 0 auto;
- float: left;
+ float: center;
 }
 
 #pie {
  width:700px;
+ height:30px;
  margin: 0 auto 0 auto;
  background-color: #FFFFFF;
- 
  float: none;
 }
 /* Pie del documento*/

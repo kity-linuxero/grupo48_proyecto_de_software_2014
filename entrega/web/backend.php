@@ -12,8 +12,8 @@
  require_once '../app/controllers/ControllerFront.php';
  require_once '../app/controllers/ControllerBack.php';
 
- // enrutamiento
- $map = array(
+// enrutamiento
+$map = array(
      'inicio' => array('controller' =>'ControllerBack', 'accion' =>'inicio'),
 
      'listarDonantes' => array('controller' =>'ControllerBack', 'accion' =>'listarDonantes'),
@@ -33,15 +33,14 @@
 
      'quienesSomos' => array('controller' =>'ControllerBack', 'accion' =>'quienesSomos'),
      'contacto' => array('controller' =>'ControllerBack', 'accion' =>'contacto'),
- );
-/*
+);
+
+session_start();
+
 if (!isset($_SESSION['usuario'])) {
-	echo "<script>window.alert('El usuario no está logueado'); window.location = './index.php';</script>";
-	
-	//header('Location:./index.php');
-	//die;
+	echo "<script>window.alert('El usuario no está logueado.'); window.location = './index.php';</script>";
 }
-*/
+
  // Parseo de la ruta
  if (isset($_GET['accion'])) {
      if (isset($map[$_GET['accion']])) {
