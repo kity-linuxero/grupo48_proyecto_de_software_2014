@@ -27,15 +27,18 @@
 		$template =  $twig->loadTemplate('contacto.twig.html');
 		echo $template->render(array());
     }
-    	 
+    
+// ------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------- DECLARACION DE FUNCIONES PARA LOS DONANTES --------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------
+	
 	public function listarDonantes()
     {	 
 		$twig = $this->configTwig();
         $m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
                      Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 
-         $params = array('donantes' => $m->listar()   );
-
+        $params = array('donantes' => $m->listar());
 		echo $twig->render('abmDonantes.html', array('donantes' => $params['donantes'], 'usuario' => $_SESSION['usuario']));
     }
 
@@ -43,7 +46,6 @@
 
 		$params = array(
              'razon_social' => '',
-             'contacto_id' => '',
              'nombre' => '',
              'apellido' => '',
              'domicilio' => '',
@@ -54,15 +56,14 @@
         $m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
                      Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 		$twig = $this->configTwig();
-		
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
              if ($m->validarDatos($_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
+                      $_POST['nombre'], $_POST['apellido'],
                       $_POST['telefono'], $_POST['mail']))
 			{
-                 $m->agregar($_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
+				 $m->agregar($_POST['razon_social'],
+                      $_POST['nombre'], $_POST['apellido'],
                       $_POST['telefono'], $_POST['mail']);
                  header('Location: backend.php?accion=listarDonantes');
              } else {
@@ -70,24 +71,43 @@
                      'razon_social' => $_POST['razon_social'],
                      'nombre' => $_POST['nombre'],
                      'apellido' => $_POST['apellido'],
-                     'domicilio' => $_POST['domicilio'],
                      'telefono' => $_POST['telefono'],
                      'mail' => $_POST['mail'],
                  );
                  $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
              }
-         }
-         echo $twig->render('formInsDonante.twig.html', array('usuario' => $_SESSION['usuario']));
+        }
+		echo $twig->render('formInsDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['usuario']));
 	}
 
-	public function modificarDonante($id) {
-		$twig = $this->configTwig();
+	public function modificarDonante()
+	{
 		$m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
                      Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-		$m->modificar($_GET('id'));
-		// aca no termina...
-		
-		header('Location: backend.php?accion=listarDonantes');
+		$twig = $this->configTwig();
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		// comprobar campos formulario
+             if ($m->validarDatos($_POST['razon_social'],
+                      $_POST['nombre'], $_POST['apellido'],
+                      $_POST['telefono'], $_POST['mail']))
+			 {
+				 $m->modificar($_GET['id'], $_POST['razon_social'],
+                      $_POST['nombre'], $_POST['apellido'],
+                      $_POST['telefono'], $_POST['mail']);
+                 header('Location: backend.php?accion=listarDonantes');
+			 }
+		}
+		$donante = $m->obtenerPorID($_GET['id']);
+		$params = array(
+				 'id' => $donante['id'],
+				 'razon_social' => $donante['razon_social'],
+				 'nombre' => $donante['nombre'],
+				 'apellido' => $donante['apellido'],
+				 'telefono' => $donante['telefono'],
+				 'mail' => $donante['mail'],
+				);
+         echo $twig->render('formModDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['usuario']));					
 	}
 
 	public function bajaDonante() {
@@ -97,6 +117,10 @@
 		$m->eliminar($_GET['id']);
 		header('Location: backend.php?accion=listarDonantes');
 	}
+
+// ------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------- DECLARACION DE FUNCIONES PARA LAS ENTIDADES RECEPTORAS -------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------
 	
     public function listarEntidades()
     {
@@ -123,7 +147,11 @@
 		echo "probando enlace bajaEntidad";
 		die;
 	}
-			    
+
+// ------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------- DECLARACION DE FUNCIONES PARA LOS ALIMENTOS--------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------
+
     public function listarAlimentos()
     {
 		$twig = $this->configTwig();
