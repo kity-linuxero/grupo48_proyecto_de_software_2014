@@ -2,45 +2,35 @@
 
 require_once __DIR__ . '/ControllerLogin.php';
 
- class ControllerBack
+ class ControllerBack extends Controller
  {
-	//configura los parámetros de Twig para el controllerBack
-	private static function configTwig(){
-		require_once __DIR__ . '/../twig/lib/Twig/Autoloader.php';
-		Twig_Autoloader::register();
-
-		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
-
-		$twig = new Twig_Environment($loader, array(
-		//	'cache' => 'cache',
-			'debug' => 'true'));
-		return $twig;
-	}
 	
+	public function __construct()
+	{		
+		if (isset($_GET['accion'])) {
+			parent::__construct($_GET['accion']);
+		} else {
+			parent::__construct('inicio');
+		}
+	}
+ 
 	public function inicio()
      {
-		$twig = $this::configTwig();
-	//	echo $twig->render('backend.twig.html', array('usuario' => $_SESSION['usuario']));
-		
-		
 		switch (dameRol()) {
 			case "administrador":
-			//sentencias para usuario administrador
-				echo $twig->render('backend.twig.html', array('usuario' => dameUsuario()));
+				//sentencias para usuario administrador
+				echo $this->twig->render('backend.twig.html', array('usuario' => dameUsuario()));
 			break;
 			case "consulta":
 				//Sentencias para usuario consulta
-				echo $twig->render('layoutBackConsulta.twig.html', array('usuario' => dameUsuario()));
-			
+				echo $this->twig->render('layoutBackConsulta.twig.html', array('usuario' => dameUsuario()));
 			break;
+		}
      }
-    }
 	 
 	public function contacto()
     {
-		$twig = $this::configTwig();
-		$template =  $twig->loadTemplate('contacto.twig.html');
-		echo $template->render(array());
+		echo $this->twig->render('contacto.twig.html', array('usuario' => $_SESSION['usuario']));
     }
     
 // ------------------------------------------------------------------------------------------------------------------------------------
@@ -48,24 +38,13 @@ require_once __DIR__ . '/ControllerLogin.php';
 // ------------------------------------------------------------------------------------------------------------------------------------
 	
 	public function listarDonantes()
-    {	
-		if (postaTengoPermiso('listarDonantes')){
-
-			$twig = $this->configTwig();
-			$m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-                     Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-
-			$params = array('donantes' => $m->listar());
-
-			echo $twig->render('abmDonantes.html', array('donantes' => $params['donantes'], 'usuario' => dameUsuario()));
-	}
-	else{
-		echo "<script>window.alert('No tiene permisos para realizar esta operación.'); window.location = './index.php';</script>";
-    }
+    {	 
+        $params = array('donantes' => $this->mD->listar());
+		echo $this->twig->render('abmDonantes.html', array('donantes' => $params['donantes'], 'usuario' => $_SESSION['usuario']));
     }
 
 	public function altaDonante() {
-	if (postaTengoPermiso('listarDonantes')){
+
 		$params = array(
              'razon_social' => '',
              'nombre' => '',
@@ -75,20 +54,17 @@ require_once __DIR__ . '/ControllerLogin.php';
              'mail' => '',
          );
 
-        $m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-                     Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-		$twig = $this->configTwig();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
-             if ($m->validarDatos($_POST['razon_social'],
+             if ($this->mD->validarDatos($_POST['razon_social'],
                       $_POST['nombre'], $_POST['apellido'],
                       $_POST['telefono'], $_POST['mail']))
 			{
-				 $m->agregar($_POST['razon_social'],
+				 $this->mD->agregar($_POST['razon_social'],
                       $_POST['nombre'], $_POST['apellido'],
                       $_POST['telefono'], $_POST['mail']);
                  header('Location: backend.php?accion=listarDonantes');
-             } else {
+             } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
                  $params = array(
                      'razon_social' => $_POST['razon_social'],
                      'nombre' => $_POST['nombre'],
@@ -99,36 +75,24 @@ require_once __DIR__ . '/ControllerLogin.php';
                  $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
              }
         }
-		echo $twig->render('formInsDonante.twig.html', array('params' => $params , 'usuario' => dameUsuario()));
-		
-		}
-	else{
-		echo "<script>window.alert('No tiene permisos para realizar esta operación.'); window.location = './index.php';</script>";
-    }
-		
+		echo $this->twig->render('formInsDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['usuario']));
 	}
 
 	public function modificarDonante()
 	{
-	if (postaTengoPermiso('listarDonantes')){
-		
-		$m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-                     Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-		$twig = $this->configTwig();
-
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
-             if ($m->validarDatos($_POST['razon_social'],
+             if ($this->mD->validarDatos($_POST['razon_social'],
                       $_POST['nombre'], $_POST['apellido'],
                       $_POST['telefono'], $_POST['mail']))
 			 {
-				 $m->modificar($_GET['id'], $_POST['razon_social'],
+				 $this->mD->modificar($_GET['id'], $_POST['razon_social'],
                       $_POST['nombre'], $_POST['apellido'],
                       $_POST['telefono'], $_POST['mail']);
                  header('Location: backend.php?accion=listarDonantes');
 			 }
 		}
-		$donante = $m->obtenerPorID($_GET['id']);
+		$donante = $this->mD->obtenerPorID($_GET['id']);
 		$params = array(
 				 'id' => $donante['id'],
 				 'razon_social' => $donante['razon_social'],
@@ -137,31 +101,14 @@ require_once __DIR__ . '/ControllerLogin.php';
 				 'telefono' => $donante['telefono'],
 				 'mail' => $donante['mail'],
 				);
-         echo $twig->render('formModDonante.twig.html', array('params' => $params , 'usuario' => dameUsuario()));					
-	
-	}
-	else{
-		echo "<script>window.alert('No tiene permisos para realizar esta operación.'); window.location = './index.php';</script>";
-    }
-	
+         echo $this->twig->render('formModDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['usuario']));					
 	}
 
-	public function bajaDonante() {
-	  if (postaTengoPermiso('listarDonantes')){
-		
-		$twig = $this->configTwig();
-		$m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-                     Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-		$m->eliminar($_GET['id']);
+	public function bajaDonante()
+	{
+		$this->mD->eliminar($_GET['id']);
 		header('Location: backend.php?accion=listarDonantes');
-	
-	
-	
 	}
-	else{ //NO TIENE PERMISOS PARA REALIZAR ESTA OPERACIÓN.
-		echo "<script>window.alert('No tiene permisos para realizar esta operación.'); window.location = './index.php';</script>";
-    }
-}
 
 // ------------------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------- DECLARACION DE FUNCIONES PARA LAS ENTIDADES RECEPTORAS -------------------------------------
@@ -169,13 +116,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 	
     public function listarEntidades()
     {
-		$twig = $this->configTwig();
-        $m = new ModelEntidad(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-                    Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-        
-        $params = array('entidades' => $m->listar()   );
-        
-		echo $twig->render('abmEntidades.html', array('entidades' => $params['entidades'], 'usuario' => dameUsuario()));
+        $params = array('entidades' => $this->mE->listar()   );
+		echo $this->twig->render('abmEntidades.html', array('entidades' => $params['entidades'], 'usuario' => $_SESSION['usuario']));
     }
 
 	public function altaEntidad() {
@@ -197,28 +139,18 @@ require_once __DIR__ . '/ControllerLogin.php';
 // -------------------------------------------- DECLARACION DE FUNCIONES PARA LOS ALIMENTOS--------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------------------
 
+	public function listarAlimentosSoloStock()
+	{
+		$params = array('alimentos' => $this->mA->listarSoloStock());
+		echo $this->twig->render('alimentosConsulta.html', array('alimentos' => $params['alimentos'], 'usuario' => dameUsuario()));
+	}
+
+
     public function listarAlimentos()
     {
-		$twig = $this->configTwig();
-        $m = new ModelAlimento(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-                    Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-        
-        $params = array('alimentos' => $m->listar()   );
-        
-		echo $twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => dameUsuario()));
+        $params = array('alimentos' => $this->mA->listar()   );
+		echo $this->twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => $_SESSION['usuario']));
     }
-
-	public function listarAlimentosSoloStock()
-    {
-		$twig = $this->configTwig();
-        $m = new ModelAlimento(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-                    Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-        
-        $params = array('alimentos' => $m->listarSoloStock()   );
-        
-		echo $twig->render('alimentosConsulta.html', array('alimentos' => $params['alimentos'], 'usuario' => dameUsuario()));
-    }
-
 
 	public function altaAlimento() {
 		echo "probando enlace altaAlimento";
@@ -234,20 +166,6 @@ require_once __DIR__ . '/ControllerLogin.php';
 		echo "probando enlace bajaAlimento";
 		die;
 	}
-	
 
-    public function quienesSomos()
-    {
-         require Config::$plantillas . 'quienesSomos.html';
-     }
-
-	public function logout()
-	 {
-		echo $twig->render('index.twig.html');
-	 }
-	 
  }
- 
- 
- 
 ?>

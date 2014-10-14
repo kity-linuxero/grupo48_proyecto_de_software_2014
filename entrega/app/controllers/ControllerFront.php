@@ -1,78 +1,43 @@
 ﻿<?php
- 
- class ControllerFront
+
+ class ControllerFront extends Controller
  {
-
-	//configura los parámetros de Twig para el controllerFront
-	private static function configTwig(){
-		require_once __DIR__ . '/../twig/lib/Twig/Autoloader.php';
-		Twig_Autoloader::register();
-
-		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
-
-		$twig = new Twig_Environment($loader, array(
-		//	'cache' => 'cache',
-			'debug' => 'true'));
-		return $twig;
 	
+	public function __construct()
+	{
+		parent::__construct('publico');
 	}
  
- 
-     public function inicio()
+	public function inicio()
      {
-		$twig = $this::configTwig();
-        $template = $twig->loadTemplate('index.twig.html');
-		echo $template->render(array());
+		echo $this->twig->render('index.twig.html', array());
      }
 	 
 	public function contacto()
     {
-		$twig = $this::configTwig();
-        $template = $twig->loadTemplate('contacto.twig.html');
-		echo $template->render(array());
+		echo $this->twig->render('contacto.twig.html', array());
     }
-    
-   /* public function login()
-    {
-		
-		$intento = New ModelLogin(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario, Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-		$intento->log($_POST);
-		
-    }*/
-	 
-	 
+    	 
 	public function mensaje()
     {
-		$twig = $this->configTwig();
-        $template = $twig->loadTemplate('mensajeFront.twig.html');
-		echo $template->render(array('mensaje' => $_GET));
+		echo $this->twig->render('mensajeFront.twig.html', array('mensaje' => $_GET));
     }
 	 
 	public function listarDonantes()
     {	 
-		$twig = $this->configTwig();
-         $m = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-                     Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-
-         $params = array('donantes' => $m->listar()   );
-
-		echo $twig->render('listadoDonantes.html', array('donantes' => $params['donantes']));
+        $params = array('donantes' => $this->mD->listar());
+		echo $this->twig->render('listadoDonantes.html', array('donantes' => $params['donantes']));
     }
 
     public function listarEntidades()
     {
-		$twig = $this->configTwig();
-        $m = new ModelEntidad(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-                    Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-        
-        $params = array('entidades' => $m->listar()   );
-        
-		echo $twig->render('listadoEntidades.html', array('entidades' => $params['entidades']));
+        $params = array('entidades' => $this->mE->listar());
+		echo $this->twig->render('listadoEntidades.html', array('entidades' => $params['entidades']));
     }
 
-     public function quienesSomos()
-     {
-         require Config::$plantillas . 'quienesSomos.html';
+    public function quienesSomos()
+    {
+         echo $this->twig->render('quienesSomos.twig.html', array());
      }
 
  }

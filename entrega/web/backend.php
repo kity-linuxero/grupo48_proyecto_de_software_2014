@@ -9,6 +9,7 @@
  require_once '../app/models/ModelEntidad.php';
  require_once '../app/models/ModelRecepcion.php';
  require_once '../app/models/ModelLogin.php';
+ require_once '../app/controllers/Controller.php';
  require_once '../app/controllers/ControllerFront.php';
  require_once '../app/controllers/ControllerBack.php';
  require_once '../app/controllers/ControllerLogin.php';
@@ -16,13 +17,13 @@
 // enrutamiento
 $map = array(
      'inicio' => array('controller' =>'ControllerBack', 'accion' =>'inicio'),
-
+	 
+	 'listarAlimentosSoloStock' => array('controller' =>'ControllerBack', 'accion' =>'listarAlimentosSoloStock'),
      'listarDonantes' => array('controller' =>'ControllerBack', 'accion' =>'listarDonantes'),
      'altaDonante' => array('controller' =>'ControllerBack', 'accion' =>'altaDonante'),
      'modificarDonante' => array('controller' =>'ControllerBack', 'accion' =>'modificarDonante'),
      'bajaDonante' => array('controller' =>'ControllerBack', 'accion' =>'bajaDonante'),
 
-	 'listarAlimentosSoloStock' => array('controller' =>'ControllerBack', 'accion' =>'listarAlimentosSoloStock'),
      'listarEntidades' => array('controller' =>'ControllerBack', 'accion' =>'listarEntidades'),
      'altaEntidad' => array('controller' =>'ControllerBack', 'accion' =>'altaEntidad'),
      'modificarEntidad' => array('controller' =>'ControllerBack', 'accion' =>'modificarEntidad'),
@@ -36,12 +37,7 @@ $map = array(
      'quienesSomos' => array('controller' =>'ControllerBack', 'accion' =>'quienesSomos'),
      'contacto' => array('controller' =>'ControllerBack', 'accion' =>'contacto'),
 );
-
 session_start();
-
-if (!estoyLogueado()){
-	echo "<script>window.alert('El usuario no está logueado.'); window.location = './index.php';</script>";
-}
 
  // Parseo de la ruta
  if (isset($_GET['accion'])) {
