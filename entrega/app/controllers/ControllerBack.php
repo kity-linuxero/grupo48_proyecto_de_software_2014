@@ -12,7 +12,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
 
 		$twig = new Twig_Environment($loader, array(
-			'cache' => 'cache',
+		//	'cache' => 'cache',
 			'debug' => 'true'));
 		return $twig;
 	}
@@ -21,8 +21,20 @@ require_once __DIR__ . '/ControllerLogin.php';
      {
 		$twig = $this::configTwig();
 	//	echo $twig->render('backend.twig.html', array('usuario' => $_SESSION['usuario']));
-		echo $twig->render('backend.twig.html', array('usuario' => dameUsuario()));
+		
+		
+		switch (dameRol()) {
+			case "administrador":
+			//sentencias para usuario administrador
+				echo $twig->render('backend.twig.html', array('usuario' => dameUsuario()));
+			break;
+			case "consulta":
+				//Sentencias para usuario consulta
+				echo $twig->render('layoutBackConsulta.twig.html', array('usuario' => dameUsuario()));
+			
+			break;
      }
+    }
 	 
 	public function contacto()
     {
@@ -195,6 +207,18 @@ require_once __DIR__ . '/ControllerLogin.php';
         
 		echo $twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => dameUsuario()));
     }
+
+	public function listarAlimentosSoloStock()
+    {
+		$twig = $this->configTwig();
+        $m = new ModelAlimento(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+                    Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+        
+        $params = array('alimentos' => $m->listarSoloStock()   );
+        
+		echo $twig->render('alimentosConsulta.html', array('alimentos' => $params['alimentos'], 'usuario' => dameUsuario()));
+    }
+
 
 	public function altaAlimento() {
 		echo "probando enlace altaAlimento";

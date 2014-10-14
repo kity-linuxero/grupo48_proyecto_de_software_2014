@@ -11,7 +11,7 @@
 		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
 
 		$twig = new Twig_Environment($loader, array(
-			'cache' => 'cache',
+		//	'cache' => 'cache',
 			'debug' => 'true'));
 		return $twig;
 	

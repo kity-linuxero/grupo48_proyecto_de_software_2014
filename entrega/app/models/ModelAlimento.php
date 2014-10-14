@@ -19,6 +19,17 @@
 			
         return $alimentos;
      }
+     
+     public function listarSoloStock()
+     {
+         $sql = $this->conexion->prepare("select * from alimento INNER JOIN detalle_alimento where alimento.codigo=detalle_alimento.alimento_codigo and detalle_alimento.stock > 0 order by descripcion");
+
+		 $sql->execute();
+		 
+         $alimentos = $sql->fetchAll(PDO::FETCH_ASSOC);
+			
+        return $alimentos;
+     }
 
      public function agregar($r, $c, $n, $a, $d, $t, $e)
      {

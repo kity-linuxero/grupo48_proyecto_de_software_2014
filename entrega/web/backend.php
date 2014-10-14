@@ -22,6 +22,7 @@ $map = array(
      'modificarDonante' => array('controller' =>'ControllerBack', 'accion' =>'modificarDonante'),
      'bajaDonante' => array('controller' =>'ControllerBack', 'accion' =>'bajaDonante'),
 
+	 'listarAlimentosSoloStock' => array('controller' =>'ControllerBack', 'accion' =>'listarAlimentosSoloStock'),
      'listarEntidades' => array('controller' =>'ControllerBack', 'accion' =>'listarEntidades'),
      'altaEntidad' => array('controller' =>'ControllerBack', 'accion' =>'altaEntidad'),
      'modificarEntidad' => array('controller' =>'ControllerBack', 'accion' =>'modificarEntidad'),

@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		//echo falló en la autenticación de usuario
 		echo('		
 				<script type="text/javascript">; 
-				alert("Usuario y/o contraseña incorrectos. Intente nuevamente."); 
+				alert("Usuario y/o contraseña incorrectos. Intente nuevamente con admin/admin o consulta/consulta"); 
 				window.location= "../web/index.php";
 				</script>;
 		');
