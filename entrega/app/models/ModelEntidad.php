@@ -2,36 +2,66 @@
 
  class ModelEntidad extends Model
  {
- //    protected $conexion;
-
      public function __construct($dbname,$dbuser,$dbpass,$dbhost)
      {
 		parent::__construct($dbname,$dbuser,$dbpass,$dbhost);
      }
 
-
      public function listar()
      {
-         $sql = $this->conexion->prepare('select * from entidad_receptora join contacto where entidad_receptora.contacto_id=contacto.id order by razon_social');
+         $sql = $this->conexion->prepare(
+			 'SELECT entidad_receptora.*, estado_entidad.descripcion, necesidad_entidad.descripcion, servicio_prestado.descripcion
+			  FROM entidad_receptora INNER JOIN estado_entidad INNER JOIN necesidad_entidad INNER JOIN servicio_prestado
+			  WHERE (entidad_receptora.estado_entidad_id=estado_entidad.id) AND
+				 (entidad_receptora.necesidad_entidad_id=necesidad_entidad.id) AND
+				 (entidad_receptora.servicio_prestado_id=servicio_prestado.id)
+			  ORDER BY entidad_receptora.razon_social');
 		
 		 $sql->execute();
 		 
          $entidades = $sql->fetchAll(PDO::FETCH_ASSOC);
-
+			
          return $entidades;
      }
 
-     public function agregar()
+     public function agregar($r, $t, $d, $s, $n, $e) //razon social, telefono, domicilio, servicio prestado, necesidad, estado
      {
-		
-     
+		 $r = htmlspecialchars($r);
+         $t = htmlspecialchars($t);
+         $d = htmlspecialchars($d);
+         $s = htmlspecialchars($s);
+         $n = htmlspecialchars($n);
+         $e = htmlspecialchars($e);
+	
+		 $sql = $this->conexion->prepare(
+			"insert into entidad_receptora (razon_social, telefono, domicilio, servicio_prestado_id,
+											necesidad_entidad_id, estado_entidad_id)
+			 values ('$r', '$t', '$d', '$s', '$n', '$e')");
+		 $sql->execute();
 		}
+		
+	public function agregarContacto($id, $a, $n, $t, $e) //le agrega un contacto a esta entidad
+	{
+		 $a = htmlspecialchars($a);
+         $n = htmlspecialchars($n);
+         $t = htmlspecialchars($t);
+         $e = htmlspecialchars($e);
+		 
+         $sql_contacto = $this->conexion->prepare("insert into contacto (apellido, nombre, telefono, mail)
+													values ('$a','$n', '$t','$m')");
 
-     public function modificar()
+		 $c = $this->conexion->lastInsertId(); // contacto_id recien creado
+
+         $sql = $this->conexion->prepare("update entidad_receptora set contacto_id='$c' where id='$id'");
+		 
+         $sql->execute();
+	 }
+
+     public function modificar($id)
      {
-		
-     
-		}
+		$sql = $this->conexion->prepare("DELETE FROM entidad_receptora WHERE id=$id");
+		$sql->execute();     
+	 }
 
      public function eliminar()
      {
