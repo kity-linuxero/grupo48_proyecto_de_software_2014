@@ -120,9 +120,39 @@ require_once __DIR__ . '/ControllerLogin.php';
 		echo $this->twig->render('abmEntidades.html', array('entidades' => $params['entidades'], 'usuario' => $_SESSION['usuario']));
     }
 
-	public function altaEntidad() {
-		echo "probando enlace bajaEntidad";
-		die;
+	public function altaEntidad()
+	{
+		$params = array(
+             'razon_social' => '',
+             'nombre' => '',
+             'apellido' => '',
+             'domicilio' => '',
+             'telefono' => '',
+             'mail' => '',
+         );
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		// comprobar campos formulario
+             if ($this->mD->validarDatos($_POST['razon_social'],
+                      $_POST['nombre'], $_POST['apellido'],
+                      $_POST['telefono'], $_POST['mail']))
+			{
+				 $this->mD->agregar($_POST['razon_social'],
+                      $_POST['nombre'], $_POST['apellido'],
+                      $_POST['telefono'], $_POST['mail']);
+                 header('Location: backend.php?accion=listarDonantes');
+             } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
+                 $params = array(
+                     'razon_social' => $_POST['razon_social'],
+                     'nombre' => $_POST['nombre'],
+                     'apellido' => $_POST['apellido'],
+                     'telefono' => $_POST['telefono'],
+                     'mail' => $_POST['mail'],
+                 );
+                 $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
+             }
+        }
+		echo $this->twig->render('formInsEntidad.twig.html', array('params' => $params , 'usuario' => $_SESSION['usuario']));
 	}
 
 	public function modificarEntidad() {
