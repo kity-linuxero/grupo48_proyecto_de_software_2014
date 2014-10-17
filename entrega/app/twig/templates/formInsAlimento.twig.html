@@ -1,31 +1,25 @@
-﻿<form class="formulario" method="post" name="formulario" >
+{% extends "backend.twig.html" %}
 
+{% block contenido %}
+
+
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaAlimento">
 <ul>
+    <p>
+         <h2>Alta de Donación de Alimento</h2>
+    </p>
     <li>
-         <h2>Alta de Alimentos</h2>
+        <label for="razon">*Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" required/>
     </li>
     <li>
-       
-        <input type="text" id="codigo" required/>
-         <label for="codigo">Código:</label>
+        <input type="text" id="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" required/>
+         <label for="fecha">*Fecha de vencimiento</label>
     </li>
     <li>
-       
-        <input type="text" id="nombre" required/>
-         <label for="nombre">Descripción:</label>
-    </li>
-    
-    <li>
-    <!-- Fecha -->
-         
-         <input type="text" id="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" required/>
-         <label for="fecha">Fecha de vencimiento</label>
-    
-    </li>
-	<li>
-		<textarea id="contenido" cols="40" rows="6" > </textarea>
+        <textarea id="contenido" cols="40" rows="6" > </textarea>
 		<label for="contenido">Contenido:</label>
-	</li>
+    </li>
     <li>
         <input type="number" min="0" id="peso">
         <label for="peso">Peso:</label>
@@ -39,20 +33,28 @@
        
         <input type="text" id="reservado" required/>
          <label for="reservado">Reservado:</label>
-    </li>    <li>
-       
-        <input type="text" id="donante" required/>
-         <label for="donante">Donante:</label>
     </li>
-
-
-
 	<li>
-		<button type="submit" name="boton">Aceptar</button>   <!-- No está implementado -->
-		<button onclick="window.location.href='./backend.php'">Cancelar</button>
+		<div class="formRow">
+					<label>Donante</label>
+					<select id="donanteSelect" name="donante">
+						{% for donante in donantes %}
+							<option value="{{ donante.id }}"  > 
+								{{ donante.razon_social }}</option>
+						{% endfor %}
+					</select>	
+		</div>
 	</li>
+
+	<br>
+	
+    <button type="submit" name= "boton">Generar Alta</button>
+	<button onclick="window.location.href='./backend.php?accion=listarAlimentos'">Cancelar</button>
 
 </ul>
 <div class="obligatorios">*Campos obligatorios</div>
 
+
 </form>
+
+{% endblock %}

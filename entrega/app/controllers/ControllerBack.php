@@ -57,11 +57,11 @@ require_once __DIR__ . '/ControllerLogin.php';
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
              if ($this->mD->validarDatos($_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'],
+                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
                       $_POST['telefono'], $_POST['mail']))
 			{
 				 $this->mD->agregar($_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'],
+                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
                       $_POST['telefono'], $_POST['mail']);
                  header('Location: backend.php?accion=listarDonantes');
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
@@ -69,6 +69,7 @@ require_once __DIR__ . '/ControllerLogin.php';
                      'razon_social' => $_POST['razon_social'],
                      'nombre' => $_POST['nombre'],
                      'apellido' => $_POST['apellido'],
+					 'domicilio' => $_POST['domicilio'],
                      'telefono' => $_POST['telefono'],
                      'mail' => $_POST['mail'],
                  );
@@ -83,11 +84,11 @@ require_once __DIR__ . '/ControllerLogin.php';
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
              if ($this->mD->validarDatos($_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'],
+                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
                       $_POST['telefono'], $_POST['mail']))
 			 {
 				 $this->mD->modificar($_GET['id'], $_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'],
+                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
                       $_POST['telefono'], $_POST['mail']);
                  header('Location: backend.php?accion=listarDonantes');
 			 }
@@ -102,6 +103,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 				 'razon_social' => $donante['razon_social'],
 				 'nombre' => $donante['nombre'],
 				 'apellido' => $donante['apellido'],
+				 'domicilio' => $donante['domicilio'],
 				 'telefono' => $donante['telefono'],
 				 'mail' => $donante['mail'],
 				);
@@ -219,9 +221,44 @@ require_once __DIR__ . '/ControllerLogin.php';
 		echo $this->twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => $_SESSION['USUARIO']['userName']));
     }
 
-	public function altaAlimento() {
-		echo "probando enlace altaAlimento";
-		die;
+	public function altaAlimento()
+	{
+		$params = array(
+             'razon_social' => '',
+             'telefono' => '',
+             'domicilio' => '',
+             'estado' => '',
+             'necesidad' => '',
+             'servicio' => '',
+        );
+		 
+		$donantes = $this->mD->obtenerDonantesActivos();
+		 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		// comprobar campos formulario
+             if ($this->mE->validarDatos($_POST['descripcion'],
+                      $_POST['fecha'], $_POST['contenido'],
+                      $_POST['peso'], $_POST['stock'], $_POST['reservado'], $_POST['donante']))
+			{
+				 $this->mE->agregar($_POST['razon_social'],
+                      $_POST['telefono'], $_POST['domicilio'],
+                      $_POST['estado'], $_POST['necesidad'], $_POST['servicio']);
+                 header('Location: backend.php?accion=listarEntidades');
+             } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
+                 $params = array(
+					 'razon_social' => $_POST['razon_social'],
+					 'telefono' => $_POST['telefono'],
+					 'domicilio' => $_POST['domicilio'],
+					 'estado' => $_POST['estado'],
+					 'necesidad' => $_POST['necesidad'],
+					 'servicio' => $_POST['servicio']
+				 );
+                 $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
+             }
+		}
+		 echo $this->twig->render('formInsAlimento.twig.html', array('params' => $params,
+																		 'donantes' => $donantes,
+																		 'usuario' => $_SESSION['USUARIO']['userName']));
 	}
 
 	public function modificarAlimento() {

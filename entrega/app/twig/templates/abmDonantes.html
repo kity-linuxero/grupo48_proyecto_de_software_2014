@@ -11,6 +11,7 @@
 				<th>Razón Social</th>
 				<th>Nombre</th>
 				<th>Apellido</th>
+				<th>Domicilio</th>
 				<th>Teléfono</th>
 				<th>E-mail</th>
 			</tr>
@@ -19,6 +20,7 @@
 			       	<td>{{ donante.razon_social }}</td>
 		        	<td>{{ donante.nombre }}</td>
 		        	<td>{{ donante.apellido }}</td>
+		        	<td>{{ donante.domicilio }}</td>
 		        	<td>{{ donante.telefono }}</td>
 		        	<td>{{ donante.mail }}</td>
 		        	<td> <a href="./backend.php?accion=modificarDonante&id={{donante.id}}">

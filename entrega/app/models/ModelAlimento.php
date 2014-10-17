@@ -2,8 +2,6 @@
 
  class ModelAlimento extends Model
  {
-     protected $conexion;
-
      public function __construct($dbname,$dbuser,$dbpass,$dbhost)
      {
 		parent::__construct($dbname,$dbuser,$dbpass,$dbhost);
@@ -11,7 +9,12 @@
 
      public function listar()
      {
-         $sql = $this->conexion->prepare("select * from alimento INNER JOIN detalle_alimento where alimento.codigo=detalle_alimento.alimento_codigo order by descripcion");
+         $sql = $this->conexion->prepare("SELECT alimento.*, donante.id, donante.razon_social
+										  FROM alimento INNER JOIN detalle_alimento INNER JOIN alimento_donante INNER JOIN donante
+										  WHERE alimento.codigo=detalle_alimento.alimento_codigo AND
+												detalle_alimento.id=alimento_donante.detalle_alimento_id AND
+												alimento_donante.donante_id=donante.id
+										  ORDER BY descripcion");
 
 		 $sql->execute();
 		 
@@ -22,7 +25,10 @@
      
      public function listarSoloStock()
      {
-         $sql = $this->conexion->prepare("select * from alimento INNER JOIN detalle_alimento where alimento.codigo=detalle_alimento.alimento_codigo and detalle_alimento.stock > 0 order by descripcion");
+         $sql = $this->conexion->prepare("SELECT *
+										  FROM alimento INNER JOIN detalle_alimento
+										  WHERE alimento.codigo=detalle_alimento.alimento_codigo and detalle_alimento.stock > 0
+										  ORDER BY descripcion");
 
 		 $sql->execute();
 		 
@@ -51,14 +57,15 @@
      
 		}
 
-     public function validarDatos($n, $e, $p, $hc, $f, $g)
+     public function validarDatos($desc, $fec, $cont, $peso, $stock, $reser, $don)
      {
-         return (is_string($n) &
-                 is_numeric($e) &
-                 is_numeric($p) &
-                 is_numeric($hc) &
-                 is_numeric($f) &
-                 is_numeric($g));
+         return (is_string($desc) &
+                 is_string($fec) &
+                 is_string($cont) &
+                 is_numeric($peso) &
+                 is_numeric($stock) &
+                 is_numeric($reser) &
+                 is_numeric($don));
      }
 
  }

@@ -2,6 +2,9 @@
 
 {% block contenido %}
 
+<a href="./backend.php?accion=altaAlimento">
+							<img src="./img/mas.png" alt="boton mas"></a>
+
 <table class="reference" style="width:100%">
 		<tbody>
 			<tr>
@@ -11,6 +14,7 @@
 				<th>Peso</th>
 				<th>Stock</th>
 				<th>Reservado</th>
+				<th>Donante</th>
 			</tr>
 
 		{% for alimento in alimentos %}
@@ -21,6 +25,7 @@
 		        	<td>{{ alimento.peso_paquete }}</td>
 		        	<td>{{ alimento.stock }}</td>
 		        	<td>{{ alimento.reservado }}</td>
+					<td>{{ alimento.donante }}</td>
 		        	<td> <a href="./backend.php?accion=modificarAlimento&id={{alimento.id}}">
 							<img src="./img/lapiz.jpg" alt="lapiz"></a></td>
 		        	<td> <a href="./backend.php?accion=bajaAlimento&id={{alimento.id}}">
