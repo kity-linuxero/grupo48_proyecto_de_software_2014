@@ -14,7 +14,7 @@
 				<th>Donante</th>
 				<th></th>
 				<th><a href="./backend.php?accion=altaAlimento">
-							<img src="./img/mas.png" alt="boton mas"></a></th>
+							<img src="./img/mas.png" alt="Agregar alimento" title="Agregar alimento"></a></th>
 			</tr>
 
 		{% for alimento in alimentos %}
@@ -27,9 +27,9 @@
 		        	<td>{{ alimento.reservado }}</td>
 					<td>{{ alimento.razon_social }}</td>
 		        	<td> <a href="./backend.php?accion=modificarAlimento&id={{alimento.id}}">
-							<img src="./img/lapiz.jpg" alt="lapiz"></a></td>
+							<img src="./img/lapiz.jpg" alt="Modificar alimento" title="Modificar alimento"></a></td>
 		        	<td> <a href="./backend.php?accion=bajaAlimento&id={{alimento.id}}">
-							<img src="./img/cruz.png" alt="crucecita"></a></td>
+							<img src="./img/cruz.png" alt="Borrar alimento" title="Borrar alimento"></a></td>
 			</tr>
 			
 		{% endfor %}

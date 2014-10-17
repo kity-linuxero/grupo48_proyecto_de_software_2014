@@ -15,7 +15,7 @@
 				<th>E-mail</th>
 				<th></th>
 				<th><a href="./backend.php?accion=altaDonante">
-							<img src="./img/mas.png" alt="boton mas"></a></th>
+							<img src="./img/mas.png" alt="Agregar donante" title="Agregar donante"></a></th>
 			</tr>
 		{% for donante in donantes %}
 			<tr>
@@ -26,10 +26,10 @@
 		        	<td>{{ donante.telefono }}</td>
 		        	<td>{{ donante.mail }}</td>
 		        	<td> <a href="./backend.php?accion=modificarDonante&id={{donante.id}}">
-							<img src="./img/lapiz.jpg" alt="lapiz"></a></td>
+							<img src="./img/lapiz.jpg" alt="modificar donante" title="Modificar donante"></a></td>
 		        	<td><a href="javascript: if (confirm('Confirmar la eliminación?'))
 							{ window.location.href='./backend.php?accion=bajaDonante&id={{donante.id}}' } else { void('') };"> 
-						<img src="./img/cruz.png" alt="crucecita"></a></td>
+						<img src="./img/cruz.png" alt="Borrar donante" title="Borrar donante" ></a></td>
 			</tr>
 		{% endfor %}
 		</tbody>
