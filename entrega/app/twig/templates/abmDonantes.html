@@ -25,10 +25,10 @@
 		        	<td>{{ donante.domicilio }}</td>
 		        	<td>{{ donante.telefono }}</td>
 		        	<td>{{ donante.mail }}</td>
-		        	<td> <a href="./backend.php?accion=modificarDonante&id={{donante.id}}">
+		        	<td> <a href="./backend.php?accion=modificarDonante&amp;id={{donante.id}}">
 							<img src="./img/lapiz.jpg" alt="modificar donante" title="Modificar donante"></a></td>
 		        	<td><a href="javascript: if (confirm('Confirmar la eliminación?'))
-							{ window.location.href='./backend.php?accion=bajaDonante&id={{donante.id}}' } else { void('') };"> 
+							{ window.location.href='./backend.php?accion=bajaDonante&amp;id={{donante.id}}' } else { void('') };"> 
 						<img src="./img/cruz.png" alt="Borrar donante" title="Borrar donante" ></a></td>
 			</tr>
 		{% endfor %}

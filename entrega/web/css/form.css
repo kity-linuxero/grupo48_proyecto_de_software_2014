@@ -1,16 +1,10 @@
-.formulario ul {
-    width:750px;
-    list-style-type:none;
-    list-style-position:outside;
-    margin:0px;
-    padding:0px;
-}
-.formulario li{
+
+.formulario div{
+	list-style-type:none;
     padding:12px;
     border-bottom:1px solid #eee;
     position:relative;
 }
-
 
 .formulario h2 {
     margin:0;
@@ -29,18 +23,17 @@
     float:left;
     padding:3px;
 }
-.formulario input {
-    height:25px;
-    width:220px;
-    padding:5px 8px;
-}
+
 .formulario textarea {padding:8px; width:300px;}
 .formulario button {margin-left:156px;}
 
 .formulario input{
     border:1px solid #aaa;
-    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
-    border-radius:2px;
+
+    
+    height:25px;
+    width:220px;
+    padding:5px 8px;
 }
 
 .obligatorios{

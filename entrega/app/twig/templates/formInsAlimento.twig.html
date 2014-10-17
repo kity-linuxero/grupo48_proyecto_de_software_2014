@@ -4,12 +4,9 @@
 
 
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaAlimento">
-<ul>
-    <p>
-         <h2>Alta de Donación de Alimento</h2>
-    </p>
-    <li>
-        <label for="razon">*Descripción:</label>
+     <h2>Alta de Donación de Alimento</h2>
+    <div>
+        <label>*Descripción:</label>
         
         
         <input list="descripcionAlimentos" name="descripcion" placeholder="Buscar" required/>
@@ -21,34 +18,34 @@
 			{% endfor %}
 		</datalist>
         
-    </li>
-    <li>
+    </div>
+    <div>
         <input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" required/>
-         <label for="fecha">*Fecha de vencimiento</label>
-    </li>
-    <li>
+         <label>*Fecha de vencimiento</label>
+    </div>
+    <div>
         <textarea name="contenido" cols="40" rows="6" > </textarea>
-		<label for="contenido">Contenido:</label>
-    </li>
-    <li>
+		<label>Contenido:</label>
+    </div>
+    <div>
         <input type="number" min="0" name="peso">
-        <label for="peso">Peso:</label>
-    </li>
+        <label>Peso:</label>
+    </div>
     
-	<li>
+	<div>
         <input type="number" min="0" name="stock" placeholder="0"> 
-		<label for="stock">Stock</label>
-    </li>
-    <li>
+		<label>Stock</label>
+    </div>
+    <div>
        
         <input type="text" name="reservado" required/>
-         <label for="reservado">Reservado:</label>
-    </li>
-	<li>
+         <label>Reservado:</label>
+    </div>
+	<div>
         <input type="number" min="1" name="cantidad" placeholder="1"> 
-		<label for="cantidad">Cantidad</label>
-    </li>
-	<li>
+		<label>Cantidad</label>
+    </div>
+
 		<div class="formRow">
 					<label>Donante</label>
 					<select id="donanteSelect" name="donante">
@@ -58,14 +55,13 @@
 						{% endfor %}
 					</select>	
 		</div>
-	</li>
+
 
 	<br>
 	
     <button type="submit" name= "boton">Generar Alta</button>
 	<button onclick="window.location.href='./backend.php?accion=listarAlimentos'">Cancelar</button>
 
-</ul>
 <div class="obligatorios">*Campos obligatorios</div>
 
 

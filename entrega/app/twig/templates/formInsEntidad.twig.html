@@ -4,23 +4,19 @@
 
 
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaEntidad">
-<ul>
-    <p>
-         <h2>Alta de Entidad Receptora</h2>
-    </p>
-    <li>
-        <label for="razon">*Razón Social:</label>
+    <h2>Alta de Entidad Receptora</h2>
+    <div>
+        <label>*Razón Social:</label>
         <input type="text" id="razon_social" name="razon_social" required/>
-    </li>
-    <li>
-        <label for="telefono">*Teléfono:</label>
+    </div>
+    <div>
+        <label>*Teléfono:</label>
         <input type="text" id="telefono" name="telefono" required/>
-    </li>
-    <li>
-        <label for="domicilio">*Domicilio:</label>
+    </div>
+    <div>
+        <label>*Domicilio:</label>
         <input type="text" id="domicilio" name="domicilio" required/>
-    </li>
-    <li>
+    </div>
 		<div class="formRow">
 					<label>Estado de Entidad</label>
 					<select id="estadoSelect" name="estado">
@@ -34,8 +30,7 @@
 							Baja</option>
 										</select>	
 		</div>
-    </li>
-	<li>
+
 		<div class="formRow">
 					<label>Necesidad</label>
 					<select id="necesidadSelect" name="necesidad">
@@ -47,8 +42,7 @@
 							Minima</option>
 										</select>	
 		</div>
-	</li>
-	<li>
+
 		<div class="formRow">
 					<label>Servicio Prestado</label>
 					<select id="servicioSelect" name="servicio">
@@ -58,14 +52,12 @@
 					{% endfor %}
 										</select>	
 		</div>
-	</li>
 
 	<br>
 	
     <button type="submit" name= "boton">Generar Alta</button>
 	<button onclick="window.location.href='./backend.php?accion=listarEntidades'">Cancelar</button>
 
-</ul>
 <div class="obligatorios">*Campos obligatorios</div>
 
 

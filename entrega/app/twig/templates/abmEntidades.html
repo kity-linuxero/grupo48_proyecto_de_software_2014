@@ -24,10 +24,10 @@
 		        	<td>{{ entidad.estado }}</td>
 		        	<td>{{ entidad.necesidad }}</td>
 		        	<td>{{ entidad.servicio }}</td>
-		        	<td> <a href="./backend.php?accion=modificarEntidad&id={{entidad.id}}">
+		        	<td> <a href="./backend.php?accion=modificarEntidad&amp;id={{entidad.id}}">
 							<img src="./img/lapiz.jpg" alt="modificar entidad" title="Modificar entidad"></a></td>
 		        	<td><a href="javascript: if (confirm('Confirmar la eliminación?'))
-							{ window.location.href='./backend.php?accion=bajaEntidad&id={{entidad.id}}' } else { void('') };"> 
+							{ window.location.href='./backend.php?accion=bajaEntidad&amp;id={{entidad.id}}' } else { void('') };"> 
 						<img src="./img/cruz.png" alt="Borrar entidad" title="Borrar entidad"></a></td>
 			</tr>
 		{% endfor %}

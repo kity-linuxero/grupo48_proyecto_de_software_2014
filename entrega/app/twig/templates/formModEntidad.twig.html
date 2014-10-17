@@ -3,27 +3,24 @@
 {% block contenido %}
 
 
-<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarEntidad&id={{params.id}}">
-<ul>
-    <p>
-         <h2>Modificación de Entidad Receptora</h2>
-    </p>
-    <li>
-        <label for="razon">*Razón Social:</label>
-        <input type="text" id="razon_social" name="razon_social" value="{{params.razon_social}}"required/>
-    </li>
-    <li>
-        <label for="telefono">*Teléfono:</label>
-        <input type="text" id="telefono" name="telefono" value="{{params.telefono}}"required/>
-    </li>
-    <li>
-        <label for="domicilio">*Domicilio:</label>
-        <input type="text" id="domicilio" name="domicilio" value="{{params.domicilio}}"equired/>
-    </li>
-    <li>
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarEntidad&amp;id={{params.id}}">
+    <h2>Modificación de Entidad Receptora</h2>
+    <div>
+        <label>*Razón Social:</label>
+        <input type="text" id="razon_social" name="razon_social" value="{{params.razon_social}}" required/>
+    </div>
+    <div>
+        <label>*Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" value="{{params.telefono}}" required/>
+    </div>
+    <div>
+        <label>*Domicilio:</label>
+        <input type="text" id="domicilio" name="domicilio" value="{{params.domicilio}}" required/>
+    </div>
+    
 		<div class="formRow">
 					<label>Estado de Entidad</label>
-					<select id="estadoSelect" name="estado" value="3">
+					<select id="estadoSelect" name="estado">
 						<option value="1"  > 
 							Alta</option>
 						<option value="2"  > 
@@ -32,11 +29,13 @@
 							Suspendida</option>
 						<option value="4"  > 
 							Baja</option>
-										</select>	
+					</select>	
+				<br>
+				<span>Valor anterior: {{params.estado}}</span>
+
 		</div>
-		<span>Valor anterior: {{params.estado}}</span>
-    </li>
-	<li>
+    
+	
 		<div class="formRow">
 					<label>Necesidad</label>
 					<select id="necesidadSelect" name="necesidad">
@@ -47,10 +46,11 @@
 						<option value="3"  > 
 							Minima</option>
 										</select>	
+					<br>
+					<span>Valor anterior: {{params.necesidad}}</span>
+
 		</div>
-		<span>Valor anterior: {{params.necesidad}}</span>
-	</li>
-	<li>
+	
 		<div class="formRow">
 					<label>Servicio Prestado</label>
 					<select id="servicioSelect" name="servicio">
@@ -59,17 +59,19 @@
 							{{ servicio.descripcion }}</option>
 					{% endfor %}
 										</select>	
-		</div>
-		<span>Valor anterior: {{params.servicio}}</span>
+			<br>
+			<span>Valor anterior: {{params.servicio}}</span>
 
-	</li>
+		</div>
+
+	
 
 	<br>
 	
     <button type="submit" name= "boton">Modificar</button>
 	<button onclick="window.location.href='./backend.php?accion=listarEntidades'">Cancelar</button>
 
-</ul>
+
 <div class="obligatorios">*Campos obligatorios</div>
 
 

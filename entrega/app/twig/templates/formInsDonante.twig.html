@@ -4,35 +4,32 @@
 
 
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaDonante">
-<ul>
-    <p>
          <h2>Alta de Donantes</h2>
-    </p>
-    <li>
-        <label for="razon">*Razón Social:</label>
+    <div>
+        <label>*Razón Social:</label>
         <input type="text" id="razon_social" name="razon_social" required/>
-    </li>
-    <li>
-        <label for="nombre">*Nombre:</label>
+    </div>
+    <div>
+        <label>*Nombre:</label>
         <input type="text" id="nombre" name="nombre" required/>
-    </li>
-    <li>
-        <label for="apellido">*Apellido:</label>
+    </div>
+    <div>
+        <label>*Apellido:</label>
         <input type="text" id="apellido" name="apellido" required/>
-    </li>
-    <li>
-        <label for="domicilio">Domicilio:</label>
+    </div>
+    <div>
+        <label>Domicilio:</label>
         <input type="text" id="domicilio" name="domicilio" }}"/>
-    </li>
-    <li>
-        <label for="tel">Teléfono:</label>
+    </div>
+    <div>
+        <label>Teléfono:</label>
         <input type="text" id="telefono" name="telefono" }}"/>
-    </li>
-	<li>
-		<label for="email">Email:</label>
+    </div>
+	<div>
+		<label>Email:</label>
 		<input type="email" id="mail" name="mail" />
 		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
-	</li>
+	</div>
 
 	<br>
 
@@ -40,7 +37,6 @@
 	<button onclick="window.location.href='./backend.php?accion=listarDonantes'">Cancelar</button>
 	
 
-</ul>
 <div class="obligatorios">*Campos obligatorios</div>
 
 
