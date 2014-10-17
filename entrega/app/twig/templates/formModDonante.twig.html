@@ -5,12 +5,9 @@
 
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarDonante&id={{params.id}}">
 <ul>
-    <li>
+    <p>
          <h2>Modificación de Donante</h2>
-
-		<!-- Fechass -->
-         <span class="textoChico">Fecha de modificación<input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" ></span>      
-    </li>
+    </p>
     <li>
         <label for="razon">*Razón Social:</label>
         <input type="text" id="razon_social" name="razon_social" value='{{ params.razon_social }}' required/>
@@ -32,8 +29,8 @@
 		<input type="email" id="mail" name="mail" value="{{ params['mail'] }}" />
 		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
 	</li>
-
 <li>
+	<br>
     <button type="submit" name= "boton">Modificar</button>
 	<button onclick="window.location.href='./backend.php'">Cancelar</button>
 

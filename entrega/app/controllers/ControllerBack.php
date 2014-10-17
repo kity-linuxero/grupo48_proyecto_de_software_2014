@@ -30,7 +30,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 	 
 	public function contacto()
     {
-		echo $this->twig->render('contacto.twig.html', array('usuario' => $_SESSION['usuario']));
+		echo $this->twig->render('contacto.twig.html', array('usuario' => $_SESSION['USUARIO']));
     }
     
 // ------------------------------------------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 	public function listarDonantes()
     {	 
         $params = array('donantes' => $this->mD->listar());
-		echo $this->twig->render('abmDonantes.html', array('donantes' => $params['donantes'], 'usuario' => $_SESSION['usuario']));
+		echo $this->twig->render('abmDonantes.html', array('donantes' => $params['donantes'], 'usuario' => $_SESSION['USUARIO']['userName']));
     }
 
 	public function altaDonante() {
@@ -75,7 +75,7 @@ require_once __DIR__ . '/ControllerLogin.php';
                  $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
              }
         }
-		echo $this->twig->render('formInsDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['usuario']));
+		echo $this->twig->render('formInsDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['USUARIO']['userName']));
 	}
 
 	public function modificarDonante()
@@ -92,7 +92,11 @@ require_once __DIR__ . '/ControllerLogin.php';
                  header('Location: backend.php?accion=listarDonantes');
 			 }
 		}
-		$donante = $this->mD->obtenerPorID($_GET['id']);
+		if (isset($_GET['id'])) {
+			$donante = $this->mD->obtenerPorID($_GET['id']);
+		} else {
+			header('Location: backend.php?accion=listarDonantes');
+		}
 		$params = array(
 				 'id' => $donante['id'],
 				 'razon_social' => $donante['razon_social'],
@@ -101,12 +105,14 @@ require_once __DIR__ . '/ControllerLogin.php';
 				 'telefono' => $donante['telefono'],
 				 'mail' => $donante['mail'],
 				);
-         echo $this->twig->render('formModDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['usuario']));					
+         echo $this->twig->render('formModDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['USUARIO']['userName']));					
 	}
 
 	public function bajaDonante()
-	{
-		$this->mD->eliminar($_GET['id']);
+	{	
+		if (isset($_GET['id'])) {
+			$this->mD->eliminar($_GET['id']);
+		}
 		header('Location: backend.php?accion=listarDonantes');
 	}
 
@@ -117,52 +123,83 @@ require_once __DIR__ . '/ControllerLogin.php';
     public function listarEntidades()
     {
         $params = array('entidades' => $this->mE->listar()   );
-		echo $this->twig->render('abmEntidades.html', array('entidades' => $params['entidades'], 'usuario' => $_SESSION['usuario']));
+		echo $this->twig->render('abmEntidades.html', array('entidades' => $params['entidades'], 'usuario' => $_SESSION['USUARIO']['userName']));
     }
 
 	public function altaEntidad()
 	{
 		$params = array(
              'razon_social' => '',
-             'nombre' => '',
-             'apellido' => '',
-             'domicilio' => '',
              'telefono' => '',
-             'mail' => '',
+             'domicilio' => '',
+             'estado' => '',
+             'necesidad' => '',
+             'servicio' => '',
          );
-
+		 
+		 $servicios = $this->mE->obtenerServiciosDisponibles();
+		 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
-             if ($this->mD->validarDatos($_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'],
-                      $_POST['telefono'], $_POST['mail']))
+             if ($this->mE->validarDatos($_POST['razon_social'],
+                      $_POST['telefono'], $_POST['domicilio'],
+                      $_POST['estado'], $_POST['necesidad'], $_POST['servicio']))
 			{
-				 $this->mD->agregar($_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'],
-                      $_POST['telefono'], $_POST['mail']);
-                 header('Location: backend.php?accion=listarDonantes');
+				 $this->mE->agregar($_POST['razon_social'],
+                      $_POST['telefono'], $_POST['domicilio'],
+                      $_POST['estado'], $_POST['necesidad'], $_POST['servicio']);
+                 header('Location: backend.php?accion=listarEntidades');
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
                  $params = array(
-                     'razon_social' => $_POST['razon_social'],
-                     'nombre' => $_POST['nombre'],
-                     'apellido' => $_POST['apellido'],
-                     'telefono' => $_POST['telefono'],
-                     'mail' => $_POST['mail'],
-                 );
+					 'razon_social' => $_POST['razon_social'],
+					 'telefono' => $_POST['telefono'],
+					 'domicilio' => $_POST['domicilio'],
+					 'estado' => $_POST['estado'],
+					 'necesidad' => $_POST['necesidad'],
+					 'servicio' => $_POST['servicio']
+				 );
                  $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
              }
         }
-		echo $this->twig->render('formInsEntidad.twig.html', array('params' => $params , 'usuario' => $_SESSION['usuario']));
+		echo $this->twig->render('formInsEntidad.twig.html', array('params' => $params,
+																   'servicios' => $servicios,
+																   'usuario' => $_SESSION['USUARIO']['userName']));
 	}
 
-	public function modificarEntidad() {
-		echo "probando enlace bajaEntidad";
-		die;
+	public function modificarEntidad()
+	{	
+		$servicios = $this->mE->obtenerServiciosDisponibles();
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		// comprobar campos formulario
+             if ($this->mE->validarDatos($_POST['razon_social'],
+                      $_POST['telefono'], $_POST['domicilio'],
+                      $_POST['estado'], $_POST['necesidad'], $_POST['servicio']))
+			 {
+				 $this->mE->modificar($_GET['id'], $_POST['razon_social'],
+                      $_POST['telefono'], $_POST['domicilio'],
+                      $_POST['estado'], $_POST['necesidad'], $_POST['servicio']);
+                 header('Location: backend.php?accion=listarEntidades');
+			 }
+		}
+		
+		// comprobar si se recibió un ID en la URL
+		if (isset($_GET['id'])) {
+			$params = $this->mE->obtenerPorID($_GET['id']);
+		} else {
+			header('Location: backend.php?accion=listarEntidades');
+		}
+        echo $this->twig->render('formModEntidad.twig.html', array('params' => $params,
+																	'servicios' => $servicios,
+																	'usuario' => $_SESSION['USUARIO']['userName']));					
 	}
 
-	public function bajaEntidad() {
-		echo "probando enlace bajaEntidad";
-		die;
+	public function bajaEntidad()
+	{
+		if (isset($_GET['id'])) {
+			$this->mE->eliminar($_GET['id']);
+		}
+		header('Location: backend.php?accion=listarEntidades');
 	}
 
 // ------------------------------------------------------------------------------------------------------------------------------------
@@ -179,7 +216,7 @@ require_once __DIR__ . '/ControllerLogin.php';
     public function listarAlimentos()
     {
         $params = array('alimentos' => $this->mA->listar()   );
-		echo $this->twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => $_SESSION['usuario']));
+		echo $this->twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => $_SESSION['USUARIO']['userName']));
     }
 
 	public function altaAlimento() {

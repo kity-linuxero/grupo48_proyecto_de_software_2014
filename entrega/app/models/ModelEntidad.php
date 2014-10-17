@@ -10,12 +10,13 @@
      public function listar()
      {
          $sql = $this->conexion->prepare(
-			 'SELECT entidad_receptora.*, estado_entidad.descripcion, necesidad_entidad.descripcion, servicio_prestado.descripcion
+			 "SELECT entidad_receptora.*, estado_entidad.descripcion as 'estado', necesidad_entidad.descripcion as 'necesidad',
+				     servicio_prestado.descripcion as 'servicio'
 			  FROM entidad_receptora INNER JOIN estado_entidad INNER JOIN necesidad_entidad INNER JOIN servicio_prestado
 			  WHERE (entidad_receptora.estado_entidad_id=estado_entidad.id) AND
 				 (entidad_receptora.necesidad_entidad_id=necesidad_entidad.id) AND
 				 (entidad_receptora.servicio_prestado_id=servicio_prestado.id)
-			  ORDER BY entidad_receptora.razon_social');
+			  ORDER BY entidad_receptora.razon_social");
 		
 		 $sql->execute();
 		 
@@ -24,7 +25,7 @@
          return $entidades;
      }
 
-     public function agregar($r, $t, $d, $s, $n, $e) //razon social, telefono, domicilio, servicio prestado, necesidad, estado
+     public function agregar($r, $t, $d, $e, $n, $s) //razon social, telefono, domicilio, necesidad, estado, servicio prestado
      {
 		 $r = htmlspecialchars($r);
          $t = htmlspecialchars($t);
@@ -32,11 +33,11 @@
          $s = htmlspecialchars($s);
          $n = htmlspecialchars($n);
          $e = htmlspecialchars($e);
-	
+
 		 $sql = $this->conexion->prepare(
-			"insert into entidad_receptora (razon_social, telefono, domicilio, servicio_prestado_id,
-											necesidad_entidad_id, estado_entidad_id)
-			 values ('$r', '$t', '$d', '$s', '$n', '$e')");
+			"insert into entidad_receptora (razon_social, telefono, domicilio, estado_entidad_id,
+											necesidad_entidad_id, servicio_prestado_id)
+			 values ('$r', '$t', '$d', '$e', '$n', '$s')");
 		 $sql->execute();
 		}
 		
@@ -60,13 +61,13 @@
      public function modificar($id, $r, $t, $d, $e_id, $n_id, $s_id)
      {
 		$sql = $this->conexion->prepare("UPDATE entidad_receptora
-										 SET razon_social='$id',
+										 SET razon_social='$r',
 											 telefono='$t',
-											 direccion='$d',
+											 domicilio='$d',
 											 estado_entidad_id='$e_id',
 											 necesidad_entidad_id='$n_id',
 											 servicio_prestado_id='$s_id'											 
-										 WHERE id=$id");
+										 WHERE id='$id'");
 		$sql->execute();
 	 }
 
@@ -92,29 +93,37 @@
 	public function obtenerPorID($id)
      {
          $sql = $this->conexion->prepare(
-			 'SELECT *, estado_entidad.descripcion, necesidad_entidad.descripcion, servicio_prestado.descripcion
+			 "SELECT entidad_receptora.*, estado_entidad.descripcion as 'estado', necesidad_entidad.descripcion as 'necesidad',
+				     servicio_prestado.descripcion as 'servicio'
 			  FROM entidad_receptora INNER JOIN estado_entidad INNER JOIN necesidad_entidad INNER JOIN servicio_prestado
-			  WHERE (entidad_receptora.id="$id") AND
-				 (entidad_receptora.estado_entidad_id=estado_entidad.id) AND
-				 (entidad_receptora.necesidad_entidad_id=necesidad_entidad.id) AND
-				 (entidad_receptora.servicio_prestado_id=servicio_prestado.id)
-			  ORDER BY entidad_receptora.razon_social');
+			  WHERE (entidad_receptora.estado_entidad_id=estado_entidad.id) AND
+					(entidad_receptora.necesidad_entidad_id=necesidad_entidad.id) AND
+					(entidad_receptora.servicio_prestado_id=servicio_prestado.id) AND (entidad_receptora.id=$id)"
+			 );
 		
 		 $sql->execute();
 		 
-         $entidades = $sql->fetchAll(PDO::FETCH_ASSOC);
-			
-         return $entidades["0"];
+         $entidad = $sql->fetchAll(PDO::FETCH_ASSOC);
+         return $entidad["0"];
      }
+	 
+	 public function obtenerServiciosDisponibles()
+	 {
+		$sql = $this->conexion->prepare('SELECT * FROM servicio_prestado');
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+		return $res;
+	 }
      
-     public function validarDatos($n, $e, $p, $hc, $f, $g)
+     public function validarDatos($r, $t, $d, $e, $n, $s)
      {
-         return (is_string($n) &
+         return (is_string($r) &
+                 is_string($t) &
+                 is_string($d) &
                  is_numeric($e) &
-                 is_numeric($p) &
-                 is_numeric($hc) &
-                 is_numeric($f) &
-                 is_numeric($g));
+                 is_numeric($n) &
+                 is_numeric($s));
      }
 
  }

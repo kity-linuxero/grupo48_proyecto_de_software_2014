@@ -58,11 +58,11 @@
 		 $c = $res["0"]["contacto_id"];
 
 		 //actualizamos al contacto con los parametros recibidos en el post
-		 $sql_contacto = $this->conexion->prepare("update contacto set nombre='$n', apellido='$a', telefono='$t', mail='$e' where id=$c");
+		 $sql_contacto = $this->conexion->prepare("update contacto set nombre='$n', apellido='$a', telefono='$t', mail='$e' where id='$c'");
 		 $sql_contacto->execute();
 	     
 		 //actualizamos al donante con los parametros recibidos en el post
-		 $sql_donante = $this->conexion->prepare("update donante set razon_social='$r', contacto_id='$c' where id=$i");
+		 $sql_donante = $this->conexion->prepare("update donante set razon_social='$r', contacto_id='$c' where id='$i'");
          $sql_donante->execute();
 	 }
 

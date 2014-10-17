@@ -5,12 +5,9 @@
 
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaDonante">
 <ul>
-    <li>
+    <p>
          <h2>Alta de Donantes</h2>
-
-		<!-- Fechass -->
-         <span class="textoChico">Fecha de alta<input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" ></span>      
-    </li>
+    </p>
     <li>
         <label for="razon">*Razón Social:</label>
         <input type="text" id="razon_social" name="razon_social" required/>
@@ -33,14 +30,11 @@
 		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
 	</li>
 
-	
-	
+	<br>
 
-<li>
     <button type="submit" name= "boton">Generar Alta</button>
-	<button onclick="window.location.href='./backend.php'">Cancelar</button>
-
-</li>
+	<button onclick="window.location.href='./backend.php?accion=listarDonantes'">Cancelar</button>
+	
 
 </ul>
 <div class="obligatorios">*Campos obligatorios</div>
