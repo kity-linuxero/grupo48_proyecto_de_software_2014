@@ -13,7 +13,7 @@
 				<th>Servicio Prestado</th>
 				<th></th>
 				<th><a href="./backend.php?accion=altaEntidad">
-							<img src="./img/mas.png" alt="boton mas"></a>
+							<img src="./img/mas.png" alt="Agregar entidad" title="Agregar entidad"></a>
 </th>
 			</tr>
 		{% for entidad in entidades %}
@@ -25,10 +25,10 @@
 		        	<td>{{ entidad.necesidad }}</td>
 		        	<td>{{ entidad.servicio }}</td>
 		        	<td> <a href="./backend.php?accion=modificarEntidad&id={{entidad.id}}">
-							<img src="./img/lapiz.jpg" alt="lapiz"></a></td>
+							<img src="./img/lapiz.jpg" alt="modificar entidad" title="Modificar entidad"></a></td>
 		        	<td><a href="javascript: if (confirm('Confirmar la eliminación?'))
 							{ window.location.href='./backend.php?accion=bajaEntidad&id={{entidad.id}}' } else { void('') };"> 
-						<img src="./img/cruz.png" alt="crucecita"></a></td>
+						<img src="./img/cruz.png" alt="Borrar entidad" title="Borrar entidad"></a></td>
 			</tr>
 		{% endfor %}
 		</tbody>
