@@ -10,29 +10,43 @@
     </p>
     <li>
         <label for="razon">*Descripción:</label>
-        <input type="text" id="descripcion" name="descripcion" required/>
+        
+        
+        <input list="descripcionAlimentos" name="descripcion" placeholder="Buscar" required/>
+		
+		<datalist id="descripcionAlimentos">
+			
+			{% for alimento in alimentos %}
+							<option value="{{ alimento.descripcion }}"> 
+			{% endfor %}
+		</datalist>
+        
     </li>
     <li>
-        <input type="text" id="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" required/>
+        <input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" required/>
          <label for="fecha">*Fecha de vencimiento</label>
     </li>
     <li>
-        <textarea id="contenido" cols="40" rows="6" > </textarea>
+        <textarea name="contenido" cols="40" rows="6" > </textarea>
 		<label for="contenido">Contenido:</label>
     </li>
     <li>
-        <input type="number" min="0" id="peso">
+        <input type="number" min="0" name="peso">
         <label for="peso">Peso:</label>
     </li>
     
 	<li>
-        <input type="number" min="0" id="stock" placeholder="0"> 
+        <input type="number" min="0" name="stock" placeholder="0"> 
 		<label for="stock">Stock</label>
     </li>
     <li>
        
-        <input type="text" id="reservado" required/>
+        <input type="text" name="reservado" required/>
          <label for="reservado">Reservado:</label>
+    </li>
+	<li>
+        <input type="number" min="1" name="cantidad" placeholder="1"> 
+		<label for="cantidad">Cantidad</label>
     </li>
 	<li>
 		<div class="formRow">

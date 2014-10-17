@@ -217,7 +217,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 
     public function listarAlimentos()
     {
-        $params = array('alimentos' => $this->mA->listar()   );
+        $params = array('alimentos' => $this->mA->listar());
+//		print_r($params); die;
 		echo $this->twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => $_SESSION['USUARIO']['userName']));
     }
 
@@ -231,20 +232,23 @@ require_once __DIR__ . '/ControllerLogin.php';
              'necesidad' => '',
              'servicio' => '',
         );
-		 
+
 		$donantes = $this->mD->obtenerDonantesActivos();
+
+		$alimentos = $this->mA->obtenerAlimentos();
 		 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
-             if ($this->mE->validarDatos($_POST['descripcion'],
+             if ($this->mA->validarDatos($_POST['descripcion'],
                       $_POST['fecha'], $_POST['contenido'],
-                      $_POST['peso'], $_POST['stock'], $_POST['reservado'], $_POST['donante']))
+                      $_POST['peso'], $_POST['stock'], $_POST['reservado'], $_POST['cantidad'], $_POST['donante']))
 			{
-				 $this->mE->agregar($_POST['razon_social'],
-                      $_POST['telefono'], $_POST['domicilio'],
-                      $_POST['estado'], $_POST['necesidad'], $_POST['servicio']);
-                 header('Location: backend.php?accion=listarEntidades');
+				 $this->mA->agregar($_POST['descripcion'],
+                      $_POST['fecha'], $_POST['contenido'],
+                      $_POST['peso'], $_POST['stock'], $_POST['reservado'], $_POST['cantidad'], $_POST['donante']);
+                 header('Location: backend.php?accion=listarAlimentos');
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
+				echo "no validó"; die;
                  $params = array(
 					 'razon_social' => $_POST['razon_social'],
 					 'telefono' => $_POST['telefono'],
@@ -257,8 +261,9 @@ require_once __DIR__ . '/ControllerLogin.php';
              }
 		}
 		 echo $this->twig->render('formInsAlimento.twig.html', array('params' => $params,
-																		 'donantes' => $donantes,
-																		 'usuario' => $_SESSION['USUARIO']['userName']));
+																	 'donantes' => $donantes,
+																	 'alimentos' => $alimentos,
+																	 'usuario' => $_SESSION['USUARIO']['userName']));
 	}
 
 	public function modificarAlimento() {

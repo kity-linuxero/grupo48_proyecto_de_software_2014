@@ -18,20 +18,14 @@
 		 $sql->execute();
 		 
          $donantes = $sql->fetchAll(PDO::FETCH_ASSOC);
-			
+
          return $donantes;
      }
 
-     public function agregar($r, $n, $a, $d, $t, $e)
+     public function agregar($detalle, $donante, $alimento)
      {
-		 $r = htmlspecialchars($r);
-         $a = htmlspecialchars($a);
-         $n = htmlspecialchars($n);
-         $d = htmlspecialchars($d);
-         $t = htmlspecialchars($t);
-         $e = htmlspecialchars($e);
-	
-		 $sql_contacto = $this->conexion->prepare("insert into contacto (apellido, nombre, telefono, mail)
+		 
+		 $sql_contacto = $this->conexion->prepare("insert into contacto (apellido, nombre, domicilio, telefono, mail)
 													values ('$a', '$n', '$d', '$t', '$e')");
 		 $sql_contacto->execute();
 	

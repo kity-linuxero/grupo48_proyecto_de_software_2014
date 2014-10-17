@@ -2,9 +2,6 @@
 
 {% block contenido %}
 
-<a href="./backend.php?accion=altaEntidad">
-							<img src="./img/mas.png" alt="boton mas"></a>
-
 <table class="reference" style="width:100%">
 		<tbody>
 			<tr>
@@ -14,6 +11,10 @@
 				<th>Estado</th>
 				<th>Necesidad</th>
 				<th>Servicio Prestado</th>
+				<th></th>
+				<th><a href="./backend.php?accion=altaEntidad">
+							<img src="./img/mas.png" alt="boton mas"></a>
+</th>
 			</tr>
 		{% for entidad in entidades %}
 			<tr>

@@ -2,8 +2,7 @@
 
 {% block contenido %}
 
-<a href="./backend.php?accion=altaDonante">
-							<img src="./img/mas.png" alt="boton mas"></a>
+
 
 <table class="reference" style="width:100%">
 		<tbody>
@@ -14,6 +13,9 @@
 				<th>Domicilio</th>
 				<th>Teléfono</th>
 				<th>E-mail</th>
+				<th></th>
+				<th><a href="./backend.php?accion=altaDonante">
+							<img src="./img/mas.png" alt="boton mas"></a></th>
 			</tr>
 		{% for donante in donantes %}
 			<tr>
