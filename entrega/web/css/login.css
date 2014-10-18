@@ -11,28 +11,13 @@
 		-webkit-transition: opacity 400ms ease-in;
 		-moz-transition: opacity 400ms ease-in;
 		transition: opacity 400ms ease-in;
-		/* La siguiente línea no valida por puro capricho de la w3c
-		 * en realidad debería andar: http://www.w3.org/TR/SVG/interact.html#PointerEventsProperty
-		 */
 		pointer-events: none;
-
-   
+		
 	}
-	
-	
-	
-}
-	
 
 	.modalDialog:target {
 		opacity:1;
-		/* La siguiente línea no valida por puro capricho de la w3c
-		 * en realidad debería andar: http://www.w3.org/TR/SVG/interact.html#PointerEventsProperty
-		 */
 		pointer-events: auto;
-
-		
-		
 		
 	}
 
