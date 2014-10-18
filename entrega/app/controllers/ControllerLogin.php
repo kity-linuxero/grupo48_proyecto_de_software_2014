@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Libreria para validar un usuario comprobando su usuario y contraseña
  */

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
  // web/backend.php
 
  // carga del modelo y los controladores
