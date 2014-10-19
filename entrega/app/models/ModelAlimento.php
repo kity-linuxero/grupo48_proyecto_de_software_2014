@@ -62,15 +62,15 @@
 		
 		$id_detalle = $this->conexion->lastInsertId(); // detalle_alimento recien creado
 		
-		$sql_alimento_donante = $this->conexion->prepare("insert into donante_alimento (detalle_alimento_id, donante_id, cantidad)
-														  values ('$alimento_codigo', '$don', '$cant')");
+		$sql_alimento_donante = $this->conexion->prepare("insert into alimento_detalle (detalle_alimento_id, donante_id, cantidad)
+														  values ('$id_detalle', '$don', '$cant')");
 		$sql_alimento_donante->execute();
 
          return $sql;
      
 	}
 
-	public function modificar($id, $desc, $fec, $cont, $peso, $stock, $reser, $cant, $don)
+	public function modificar($id, $desc, $fec, $cont, $peso, $stock, $reser, $cant, $donAnt, $donNue)
      {
 		$alimento_codigo = $this->agregarAlimento($desc); // si fue modificado lo agrega como nuevo, sino no
 
@@ -84,12 +84,10 @@
 												 WHERE id='$id'");
 		$sql_detalle->execute();
 		
-		$sql_alimento_donante = $this->conexion->prepare("UPDATE donante_alimento SET cantidad='$cant')
-														  WHERE (detalle_alimento_id='$alimento_codigo') AND (donante_id='$don')");
+		$sql_alimento_donante = $this->conexion->prepare("UPDATE alimento_donante SET cantidad='$cant', donante_id='$donNue'
+														  WHERE (detalle_alimento_id='$id') AND (donante_id='$donAnt')");
 		$sql_alimento_donante->execute();
 
-         return $sql;
-     
 	}
 	
 	public function eliminar($id)
@@ -109,17 +107,36 @@
 		
 		return $res;
 	}
-		
-     public function validarDatos($desc, $fec, $cont, $peso, $stock, $reser, $cant, $don)
-     {
-         return (is_string($desc) &
-                 is_string($fec) &
-                 is_string($cont) &
-                 is_numeric($peso) &
-                 is_numeric($stock) &
-                 is_numeric($reser) &
-                 is_numeric($cant) &
-                 is_numeric($don));
-     }
+	
+    public function obtenerPorID($id)
+    {
+		$sql = $this->conexion->prepare("SELECT detalle_alimento.id,
+												alimento.descripcion,
+												detalle_alimento.fecha_vencimiento as 'fecha',	
+												detalle_alimento.contenido,
+												detalle_alimento.peso_paquete as 'peso',
+												detalle_alimento.stock, 
+												detalle_alimento.reservado,
+												alimento_donante.donante_id as 'donante',
+												alimento_donante.cantidad
+										 FROM detalle_alimento INNER JOIN alimento_donante INNER JOIN alimento
+										 WHERE (detalle_alimento.id=alimento_donante.detalle_alimento_id) 
+											   AND (detalle_alimento.id='$id') AND (detalle_alimento.alimento_codigo=alimento.codigo)");
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $res["0"];
+	}
+    
+    public function validarDatos($desc, $fec, $cont, $peso, $stock, $reser, $cant, $don)
+    {
+        return (is_string($desc) &
+                is_string($fec) &
+                is_string($cont) &
+                is_numeric($peso) &
+                is_numeric($stock) &
+                is_numeric($reser) &
+                is_numeric($cant) &
+                is_numeric($don));
+    }
 
  }

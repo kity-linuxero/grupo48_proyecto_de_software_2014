@@ -21,46 +21,43 @@
 		<div class="formRow">
 					<label>Estado de Entidad</label>
 					<select id="estadoSelect" name="estado">
-						<option value="1"  > 
+						<option value="1"  {% if params.estado == "Alta" %} selected="selected" {% endif %}> 
 							Alta</option>
-						<option value="2"  > 
+						<option value="2"  {% if params.estado == "En tramite" %} selected="selected" {% endif %}> 
 							En trámite</option>
-						<option value="3"  > 
+						<option value="3"  {% if params.estado == "Suspendida" %} selected="selected" {% endif %}> 
 							Suspendida</option>
-						<option value="4"  > 
+						<option value="4"  {% if params.estado == "Baja" %} selected="selected" {% endif %}> 
 							Baja</option>
 					</select>	
-				<br>
-				<span>Valor anterior: {{params.estado}}</span>
-
 		</div>
     
 	
 		<div class="formRow">
 					<label>Necesidad</label>
 					<select id="necesidadSelect" name="necesidad">
-						<option value="1"  > 
+						<option value="1"  {% if params.necesidad == "Maxima" %} selected="selected" {% endif %}> 
 							Maxima</option>
-						<option value="2"  > 
+						<option value="2"  {% if params.necesidad == "Mediana" %} selected="selected" {% endif %}> 
 							Mediana</option>
-						<option value="3"  > 
+						<option value="3"  {% if params.necesidad == "Minima" %} selected="selected" {% endif %}> 
 							Minima</option>
 										</select>	
-					<br>
-					<span>Valor anterior: {{params.necesidad}}</span>
-
 		</div>
 	
 		<div class="formRow">
-					<label>Servicio Prestado</label>
-					<select id="servicioSelect" name="servicio">
-					{% for servicio in servicios %}
-						<option value="{{ servicio.id }}"  > 
+			<label>Servicio Prestado</label>
+			<select id="servicioSelect" name="servicio">
+				{% for servicio in servicios %}
+					{% if params.servicio == servicio.descripcion %}
+						<option value="{{ servicio.id }}" selected="selected" > 
 							{{ servicio.descripcion }}</option>
-					{% endfor %}
-										</select>	
-			<br>
-			<span>Valor anterior: {{params.servicio}}</span>
+					{% else %}
+						<option value="{{ servicio.id }}"> 
+							{{ servicio.descripcion }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
 
 		</div>
 
