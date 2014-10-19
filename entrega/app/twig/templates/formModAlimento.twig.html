@@ -1,0 +1,75 @@
+{% extends "backend.twig.html" %}
+
+{% block contenido %}
+
+
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarAlimento&amp;id={{params.id}}">
+    <h2>Modificación de Donación de Alimento</h2>
+    <div>
+        <label>*Descripción:</label>
+        
+        
+        <input list="descripcionAlimentos" name="descripcion" placeholder="Buscar" value="{{ params.descripcion }}"required/>
+		
+		<datalist id="descripcionAlimentos">
+			
+			{% for alimento in alimentos %}
+							<option value="{{ alimento.descripcion }}"> 
+			{% endfor %}
+		</datalist>
+        
+    </div>
+    <div>
+        <input type="text" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" title="Ingrese una fecha válida" placeholder="DD/MM/AAAA" value="{{ params.fecha }}"required/>
+         <label>*Fecha de vencimiento</label>
+    </div>
+    <div>
+        <textarea name="contenido" cols="40" rows="6">{{ params.contenido }}</textarea>
+		<label>Contenido:</label>
+    </div>
+    <div>
+        <input type="number" min="0" name="peso" value="{{ params.peso }}">
+        <label>Peso:</label>
+    </div>
+    
+	<div>
+        <input type="number" min="0" name="stock" placeholder="0" value="{{ params.stock }}"> 
+		<label>Stock</label>
+    </div>
+    <div>
+       
+        <input type="number" name="reservado" value="{{ params.reservado }}">
+         <label>Reservado:</label>
+    </div>
+	<div>
+        <input type="number" min="1" name="cantidad" placeholder="1" value="{{ params.cantidad }}"> 
+		<label>Cantidad</label>
+    </div>
+
+		<div class="formRow">
+					<label>Donante</label>
+					<select id="donanteSelect" name="donante">
+						{% for donante in donantes %}
+							{% if params.donante == donante.id %}
+								<option value="{{ donante.id }}" selected="selected" > 
+									{{ donante.razon_social }}</option>
+							{% else %}
+								<option value="{{ donante.id }}"> 
+									{{ donante.razon_social }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+		</div>
+
+
+	<br>
+	
+    <button type="submit" name= "boton">Modificar</button>
+	<button onclick="window.location.href='./backend.php?accion=listarAlimentos'">Cancelar</button>
+
+<div class="obligatorios">*Campos obligatorios</div>
+
+
+</form>
+
+{% endblock %}
