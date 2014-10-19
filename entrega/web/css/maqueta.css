@@ -43,23 +43,26 @@ footer{
  
 }
 
+/* Chrome Botón agregar
 #principal > div:nth-child(2) > table > tbody > tr:nth-child(1) > th:nth-child(8) > a{
 	float: right;
 }
 
 #principal > div:nth-child(2) > table > tbody > tr:nth-child(1) > th:nth-child(8) > a > img{
-width:24px; /* you can use % */
+width:24px; 
 height: 24px;
 }
 
 #principal > div:nth-child(2) > table > tbody > tr:nth-child(1) > th:nth-child(9) > a > img{
-width:24px; /* you can use % */
+width:24px; 
 height: 24px;
 }
 
 #principal > div:nth-child(2) > table > tbody > tr:nth-child(1) > th:nth-child(9) > a{
 	float: right;
-}
+}*/
+
+
 
 
 
