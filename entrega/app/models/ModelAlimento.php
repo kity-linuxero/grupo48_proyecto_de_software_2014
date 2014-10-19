@@ -37,7 +37,7 @@
         return $alimentos;
      }
 
-	 public function agregarAlimento($desc)
+	 public function agregarAlimento($desc) // agrega a la tabla alimento si todavia no fue agregado
 	 {
 		$sql = $this->conexion->prepare("SELECT codigo FROM alimento WHERE descripcion=(UPPER('$desc'))");
 		$sql->execute();
@@ -64,9 +64,41 @@
 		
 		$sql_alimento_donante = $this->conexion->prepare("insert into donante_alimento (detalle_alimento_id, donante_id, cantidad)
 														  values ('$alimento_codigo', '$don', '$cant')");
+		$sql_alimento_donante->execute();
 
          return $sql;
      
+	}
+
+	public function modificar($id, $desc, $fec, $cont, $peso, $stock, $reser, $cant, $don)
+     {
+		$alimento_codigo = $this->agregarAlimento($desc); // si fue modificado lo agrega como nuevo, sino no
+
+		$sql_detalle = $this->conexion->prepare("UPDATE detalle_alimento 
+												 SET alimento_codigo='$alimento_codigo',
+													 fecha_vencimiento='$fec',
+													 contenido='$cont',
+													 peso_paquete='$peso',
+													 stock='$stock',
+													 reservado='$reser'
+												 WHERE id='$id'");
+		$sql_detalle->execute();
+		
+		$sql_alimento_donante = $this->conexion->prepare("UPDATE donante_alimento SET cantidad='$cant')
+														  WHERE (detalle_alimento_id='$alimento_codigo') AND (donante_id='$don')");
+		$sql_alimento_donante->execute();
+
+         return $sql;
+     
+	}
+	
+	public function eliminar($id)
+    {
+		$sql_detalle = $this->conexion->prepare("DELETE FROM detalle_alimento WHERE id=$id");
+		$sql_detalle->execute();
+
+		$sql_alimento_donante = $this->conexion->prepare("DELETE FROM donante_alimento WHERE detalle_alimento_id='$id'");
+		$sql_alimento_donante->execute();
 	}
 
 	public function obtenerAlimentos()
