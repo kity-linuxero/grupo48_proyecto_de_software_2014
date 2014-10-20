@@ -62,7 +62,7 @@
 		
 		$id_detalle = $this->conexion->lastInsertId(); // detalle_alimento recien creado
 		
-		$sql_alimento_donante = $this->conexion->prepare("insert into alimento_detalle (detalle_alimento_id, donante_id, cantidad)
+		$sql_alimento_donante = $this->conexion->prepare("insert into alimento_donante (detalle_alimento_id, donante_id, cantidad)
 														  values ('$id_detalle', '$don', '$cant')");
 		$sql_alimento_donante->execute();
 
