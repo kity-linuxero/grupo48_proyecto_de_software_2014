@@ -292,7 +292,6 @@ require_once __DIR__ . '/ControllerLogin.php';
                       $_POST['peso'], $_POST['stock'], $_POST['reservado'], $_POST['cantidad'], $donAnt['donante'], $_POST['donante']);
                  header('Location: backend.php?accion=listarAlimentos');
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-				echo "no validó"; die;
                  $params = array(
 					 'razon_social' => $_POST['razon_social'],
 					 'telefono' => $_POST['telefono'],
@@ -317,8 +316,10 @@ require_once __DIR__ . '/ControllerLogin.php';
 	}
 
 	public function bajaAlimento() {
-		echo "probando enlace bajaAlimento";
-		die;
+		if (isset($_GET['id'])) {
+			$this->mA->eliminar($_GET['id']);
+		}
+		header('Location: backend.php?accion=listarAlimentos');
 	}
 
  }

@@ -95,7 +95,7 @@
 		$sql_detalle = $this->conexion->prepare("DELETE FROM detalle_alimento WHERE id=$id");
 		$sql_detalle->execute();
 
-		$sql_alimento_donante = $this->conexion->prepare("DELETE FROM donante_alimento WHERE detalle_alimento_id='$id'");
+		$sql_alimento_donante = $this->conexion->prepare("DELETE FROM alimento_donante WHERE detalle_alimento_id='$id'");
 		$sql_alimento_donante->execute();
 	}
 

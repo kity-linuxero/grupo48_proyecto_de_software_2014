@@ -22,9 +22,8 @@
          return $donantes;
      }
 
-     public function agregar($detalle, $donante, $alimento)
+     public function agregar($r, $n, $a, $d, $t, $e)
      {
-		 
 		 $sql_contacto = $this->conexion->prepare("insert into contacto (apellido, nombre, domicilio, telefono, mail)
 													values ('$a', '$n', '$d', '$t', '$e')");
 		 $sql_contacto->execute();
@@ -65,7 +64,7 @@
      public function eliminar($id)
      {
 		$sql = $this->conexion->prepare("DELETE FROM donante WHERE id=$id");
-		$sql->execute();     
+		$sql->execute();
 	 }
      
 	 public function obtenerPorID($id)
