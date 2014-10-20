@@ -248,7 +248,6 @@ require_once __DIR__ . '/ControllerLogin.php';
                       $_POST['peso'], $_POST['stock'], $_POST['reservado'], $_POST['cantidad'], $_POST['donante']);
                  header('Location: backend.php?accion=listarAlimentos');
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-				echo "no validó"; die;
                  $params = array(
 					 'razon_social' => $_POST['razon_social'],
 					 'telefono' => $_POST['telefono'],
