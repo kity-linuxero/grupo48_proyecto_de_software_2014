@@ -28,9 +28,9 @@
 					<td>{{ alimento.razon_social }}</td>
 		        	<td> <a href="./backend.php?accion=modificarAlimento&amp;id={{alimento.id}}">
 							<img src="./img/lapiz.jpg" alt="Modificar alimento" title="Modificar alimento"></a></td>
-					<td><a href="javascript: if (confirm('Confirmar la eliminación?'))
+					<td> <a href="javascript: if (confirm('Confirmar la eliminación?'))
 							{ window.location.href='./backend.php?accion=bajaAlimento&amp;id={{alimento.id}}' } else { void('') };"> 
-						<img src="./img/cruz.png" alt="Borrar donante" title="Borrar donante" ></a></td>		
+							<img src="./img/cruz.png" alt="Borrar alimento" title="Borrar alimento" ></a> </td>
 			</tr>
 			
 		{% endfor %}

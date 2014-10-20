@@ -45,14 +45,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 
 	public function altaDonante() {
 
-		$params = array(
-             'razon_social' => '',
-             'nombre' => '',
-             'apellido' => '',
-             'domicilio' => '',
-             'telefono' => '',
-             'mail' => '',
-         );
+		$params = array();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
@@ -65,15 +58,7 @@ require_once __DIR__ . '/ControllerLogin.php';
                       $_POST['telefono'], $_POST['mail']);
                  header('Location: backend.php?accion=listarDonantes');
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-                 $params = array(
-                     'razon_social' => $_POST['razon_social'],
-                     'nombre' => $_POST['nombre'],
-                     'apellido' => $_POST['apellido'],
-					 'domicilio' => $_POST['domicilio'],
-                     'telefono' => $_POST['telefono'],
-                     'mail' => $_POST['mail'],
-                 );
-                 $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
+                 $params['mensaje'] = 'No se ha podido insertar el donante. Revisa el formulario';
              }
         }
 		echo $this->twig->render('formInsDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['USUARIO']['userName']));
@@ -91,7 +76,9 @@ require_once __DIR__ . '/ControllerLogin.php';
                       $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
                       $_POST['telefono'], $_POST['mail']);
                  header('Location: backend.php?accion=listarDonantes');
-			 }
+			} else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
+				$params['mensaje'] = 'No se ha podido modificar al donante. Revisa el formulario';
+			}
 		}
 		if (isset($_GET['id'])) {
 			$donante = $this->mD->obtenerPorID($_GET['id']);
@@ -130,16 +117,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 
 	public function altaEntidad()
 	{
-		$params = array(
-             'razon_social' => '',
-             'telefono' => '',
-             'domicilio' => '',
-             'estado' => '',
-             'necesidad' => '',
-             'servicio' => '',
-         );
-		 
-		 $servicios = $this->mE->obtenerServiciosDisponibles();
+		$params = array();
+		$servicios = $this->mE->obtenerServiciosDisponibles();
 		 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
@@ -152,15 +131,7 @@ require_once __DIR__ . '/ControllerLogin.php';
                       $_POST['estado'], $_POST['necesidad'], $_POST['servicio']);
                  header('Location: backend.php?accion=listarEntidades');
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-                 $params = array(
-					 'razon_social' => $_POST['razon_social'],
-					 'telefono' => $_POST['telefono'],
-					 'domicilio' => $_POST['domicilio'],
-					 'estado' => $_POST['estado'],
-					 'necesidad' => $_POST['necesidad'],
-					 'servicio' => $_POST['servicio']
-				 );
-                 $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
+                 $params['mensaje'] = 'No se ha podido insertar la entidad receptora. Revisa el formulario';
              }
         }
 		echo $this->twig->render('formInsEntidad.twig.html', array('params' => $params,
@@ -170,6 +141,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 
 	public function modificarEntidad()
 	{	
+		$params = array();
 		$servicios = $this->mE->obtenerServiciosDisponibles();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -182,7 +154,9 @@ require_once __DIR__ . '/ControllerLogin.php';
                       $_POST['telefono'], $_POST['domicilio'],
                       $_POST['estado'], $_POST['necesidad'], $_POST['servicio']);
                  header('Location: backend.php?accion=listarEntidades');
-			 }
+			 } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
+                 $params['mensaje'] = 'No se ha podido modificar la entidad receptora. Revisa el formulario';
+             }
 		}
 		
 		// comprobar si se recibió un ID en la URL
@@ -224,15 +198,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 
 	public function altaAlimento()
 	{
-		$params = array(
-             'razon_social' => '',
-             'telefono' => '',
-             'domicilio' => '',
-             'estado' => '',
-             'necesidad' => '',
-             'servicio' => '',
-        );
-
+		$params = array();
+		
 		$donantes = $this->mD->obtenerDonantesActivos();
 
 		$alimentos = $this->mA->obtenerAlimentos();
@@ -248,14 +215,6 @@ require_once __DIR__ . '/ControllerLogin.php';
                       $_POST['peso'], $_POST['stock'], $_POST['reservado'], $_POST['cantidad'], $_POST['donante']);
                  header('Location: backend.php?accion=listarAlimentos');
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-                 $params = array(
-					 'razon_social' => $_POST['razon_social'],
-					 'telefono' => $_POST['telefono'],
-					 'domicilio' => $_POST['domicilio'],
-					 'estado' => $_POST['estado'],
-					 'necesidad' => $_POST['necesidad'],
-					 'servicio' => $_POST['servicio']
-				 );
                  $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
              }
 		}
@@ -265,15 +224,9 @@ require_once __DIR__ . '/ControllerLogin.php';
 																	 'usuario' => $_SESSION['USUARIO']['userName']));
 	}
 
-	public function modificarAlimento() {
-		$params = array(
-             'razon_social' => '',
-             'telefono' => '',
-             'domicilio' => '',
-             'estado' => '',
-             'necesidad' => '',
-             'servicio' => '',
-        );
+	public function modificarAlimento()
+	{
+		$params = array();
 
 		$donantes = $this->mD->obtenerDonantesActivos();
 
@@ -291,15 +244,7 @@ require_once __DIR__ . '/ControllerLogin.php';
                       $_POST['peso'], $_POST['stock'], $_POST['reservado'], $_POST['cantidad'], $donAnt['donante'], $_POST['donante']);
                  header('Location: backend.php?accion=listarAlimentos');
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-                 $params = array(
-					 'razon_social' => $_POST['razon_social'],
-					 'telefono' => $_POST['telefono'],
-					 'domicilio' => $_POST['domicilio'],
-					 'estado' => $_POST['estado'],
-					 'necesidad' => $_POST['necesidad'],
-					 'servicio' => $_POST['servicio']
-				 );
-                 $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
+                 $params['mensaje'] = 'No se ha podido modificar el alimento. Revisa el formulario';
              }
 		}
 		// comprobar si se recibió un ID en la URL
