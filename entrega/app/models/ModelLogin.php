@@ -16,12 +16,13 @@
 		$cn= New ModelLogin(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario, Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 		
 		
-		$sql = $cn->conexion->prepare("SELECT * FROM shadow where nombre='".$user."' and pass='".$pass."';");
+		$sql = $cn->conexion->prepare("SELECT * FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id ) where nombre='".$user."' and pass='".$pass."';");
 		
 		$sql->execute();
 		 
         $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
         
+           
         //consulto la cantidad de coincidencias.
         if (count($resultado) == 0){ 
 			

@@ -11,23 +11,19 @@
     </div>
     <div>
         <label>*Nombre:</label>
-        <input type="text" id="nombre" name="nombre" value="{{ params['nombre'] }}" required/>
+        <input type="text" id="nombre" name="nombre" value="{{ params['nombre_contacto'] }}" required/>
     </div>
     <div>
         <label>*Apellido:</label>
-        <input type="text" id="apellido" name="apellido" value="{{ params['apellido'] }}" required/>
-    </div>
-    <div>
-        <label>Domicilio:</label>
-        <input type="text" id="domicilio" name="domicilio" value="{{ params['domicilio'] }}"/>
+        <input type="text" id="apellido" name="apellido" value="{{ params['apellido_contacto'] }}" required/>
     </div>
     <div>
         <label>Teléfono:</label>
-        <input type="text" id="telefono" name="telefono" value="{{ params['telefono'] }}"/>
+        <input type="text" id="telefono" name="telefono" value="{{ params['telefono_contacto'] }}"/>
     </div>
 	<div>
 		<label>Email:</label>
-		<input type="email" id="mail" name="mail" value="{{ params['mail'] }}" />
+		<input type="email" id="mail" name="mail" value="{{ params['mail_contacto'] }}" />
 		<span class="form_hint">Ejemplo "direccion@dominio.com"</span>
 	</div>
 	<div>

@@ -9,6 +9,7 @@
  require_once '../app/models/ModelEntidad.php';
  require_once '../app/models/ModelRecepcion.php';
  require_once '../app/models/ModelLogin.php';
+ require_once '../app/models/ModelUsers.php';
  require_once '../app/controllers/Controller.php';
  require_once '../app/controllers/ControllerFront.php';
  require_once '../app/controllers/ControllerBack.php';
@@ -36,6 +37,8 @@ $map = array(
 
      'quienesSomos' => array('controller' =>'ControllerBack', 'accion' =>'quienesSomos'),
      'contacto' => array('controller' =>'ControllerBack', 'accion' =>'contacto'),
+     'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),
+     'modificarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'modificarUsuario'),
 );
 session_start();
 

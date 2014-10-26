@@ -3,7 +3,7 @@
 <head>
     <title>{% block title %}Banco Alimentario La Plata{% endblock %}</title>
 	<meta charset="utf8" />
-	<!-- <link href="css/estilos.css" rel="stylesheet" /> -->
+	
  <link rel="stylesheet" media="(min-width: 481px)" href="./css/maqueta.css" type="text/css">
  <link rel="stylesheet" media="(min-width: 481px)" href="./css/botonera.css" type="text/css"/>
  <link rel="stylesheet" media="(max-width: 480px)" href="./css/maquetaMobile.css" />
@@ -12,6 +12,25 @@
  <link rel="stylesheet" href="./css/form.css" type="text/css"/>
  <link rel="stylesheet" href="./css/login.css" type="text/css"/>
  <link rel="stylesheet" href="./css/listado.css" type="text/css"/> 
+ 
+ 
+ 
+ <!-- Calendario -->
+ <link rel="stylesheet" href="./css/jquery-ui.css"/>
+ <script src="./js/jquery-1.9.1.js"></script>
+ <script src="./js/jquery-ui.js"></script>
+ <script src="./js/jquery.ui.datepicker-es.js"></script>
+ 
+ 
+ <script>
+$(function () {
+$.datepicker.setDefaults($.datepicker.regional["es"]);
+$("#datepicker").datepicker({
+//firstDay: 1
+});
+});
+</script>
+ 
  
  
 </head>

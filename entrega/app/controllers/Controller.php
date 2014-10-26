@@ -9,6 +9,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 	protected $mA; 	 // variable para la conexión del modelo alimentos
 	protected $mD; 	 // variable para la conexión del modelo donantes
 	protected $mR; 	 // variable para la conexión del modelo recepciones
+	protected $us;   // variable para la conexión del modelo usuarios
 	
 	//configura los parámetros de Twig para el controllerBack
 	
@@ -30,6 +31,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 			$this->mR = new ModelRecepcion(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 						 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
 			$this->mA = new ModelAlimento(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+						 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+			$this->us = new ModelUsers(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 						 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 		} else {
 			echo ("<script>window.alert('No tiene permisos para realizar esta operación.');

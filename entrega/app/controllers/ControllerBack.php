@@ -1,4 +1,6 @@
-﻿<?php
+﻿
+
+<?php
 
 require_once __DIR__ . '/ControllerLogin.php';
 
@@ -50,11 +52,11 @@ require_once __DIR__ . '/ControllerLogin.php';
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
              if ($this->mD->validarDatos($_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
+                      $_POST['nombre'], $_POST['apellido'],
                       $_POST['telefono'], $_POST['mail']))
 			{
 				 $this->mD->agregar($_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
+                      $_POST['nombre'], $_POST['apellido'],
                       $_POST['telefono'], $_POST['mail']);
                  header('Location: backend.php?accion=listarDonantes');
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
@@ -69,11 +71,11 @@ require_once __DIR__ . '/ControllerLogin.php';
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
              if ($this->mD->validarDatos($_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
+                      $_POST['nombre'], $_POST['apellido'],
                       $_POST['telefono'], $_POST['mail']))
 			 {
 				 $this->mD->modificar($_GET['id'], $_POST['razon_social'],
-                      $_POST['nombre'], $_POST['apellido'], $_POST['domicilio'],
+                      $_POST['nombre'], $_POST['apellido'],
                       $_POST['telefono'], $_POST['mail']);
                  header('Location: backend.php?accion=listarDonantes');
 			} else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
@@ -88,11 +90,10 @@ require_once __DIR__ . '/ControllerLogin.php';
 		$params = array(
 				 'id' => $donante['id'],
 				 'razon_social' => $donante['razon_social'],
-				 'nombre' => $donante['nombre'],
-				 'apellido' => $donante['apellido'],
-				 'domicilio' => $donante['domicilio'],
-				 'telefono' => $donante['telefono'],
-				 'mail' => $donante['mail'],
+				 'nombre_contacto' => $donante['nombre_contacto'],
+				 'apellido_contacto' => $donante['apellido_contacto'],
+				 'telefono_contacto' => $donante['telefono_contacto'],
+				 'mail_contacto' => $donante['mail_contacto'],
 				);
          echo $this->twig->render('formModDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['USUARIO']['userName']));					
 	}
@@ -265,6 +266,61 @@ require_once __DIR__ . '/ControllerLogin.php';
 		}
 		header('Location: backend.php?accion=listarAlimentos');
 	}
+
+
+// ------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------- DECLARACION DE FUNCIONES PARA USUARIOS ------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------
+	
+	//para listar los usuarios de sistema
+	public function users() {
+	
+	$params = array('users' => $this->us->listar());
+		echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'usuario' => dameUsuario()));
+	}
+	
+	
+	private function verificarUsuarioABorrar($id){
+		$usuarioABorrar= $this->us->usuarioConId($id);
+		//Para que un usuario no pueda borrarse a sí mismo
+		if ($usuarioABorrar!=dameUsuario()){
+			$this->us->borrarUsuarioConId($id);
+		}
+		else
+			{echo "no podés eliminarte a vos mismo, chabón!"; die;}
+	}
+	
+	public function bajaUsuario() {
+		if (isset($_GET['id'])) {
+			
+			
+			$this->mA->eliminar($_GET['id']);
+		}
+		header('Location: backend.php?accion=users');
+	}
+	
+	public function modificarUsuario($id){
+		
+	
+		$roles = $this->us->listarRoles();
+		$usuarios = $this->us->listarUsuarios();
+	
+		echo $this->twig->render('formModUser.twig.html', array('params' => $params,
+																	 'roles' => $roles,
+																	 'usuarios' => $usuarios,
+																	 'usuario' => dameUsuario()));
+	
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+
+
 
  }
 ?>

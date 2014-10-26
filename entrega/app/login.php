@@ -25,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		//login correcto. Hay que verificar el rol
 		session_start();
 		
+		
+		
 		$_SESSION['USUARIO']['userName']= $_POST["usuario"];
 		$_SESSION['USUARIO']['rol'] = $intentoLogin[0]['rol'];
 

@@ -10,7 +10,6 @@
 				<th>Razón Social</th>
 				<th>Nombre</th>
 				<th>Apellido</th>
-				<th>Domicilio</th>
 				<th>Teléfono</th>
 				<th>E-mail</th>
 				<th></th>
@@ -20,11 +19,10 @@
 		{% for donante in donantes %}
 			<tr>
 			       	<td>{{ donante.razon_social }}</td>
-		        	<td>{{ donante.nombre }}</td>
-		        	<td>{{ donante.apellido }}</td>
-		        	<td>{{ donante.domicilio }}</td>
-		        	<td>{{ donante.telefono }}</td>
-		        	<td>{{ donante.mail }}</td>
+		        	<td>{{ donante.nombre_contacto }}</td>
+		        	<td>{{ donante.apellido_contacto }}</td>
+		        	<td>{{ donante.telefono_contacto }}</td>
+		        	<td>{{ donante.mail_contacto }}</td>
 		        	<td> <a href="./backend.php?accion=modificarDonante&amp;id={{donante.id}}">
 							<img src="./img/lapiz.jpg" alt="modificar donante" title="Modificar donante"></a></td>
 		        	<td><a href="javascript: if (confirm('Confirmar la eliminación?'))
