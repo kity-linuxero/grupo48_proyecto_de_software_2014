@@ -93,7 +93,7 @@
 	 public function listarPorId($id){
 	 
 	 
-		$sql = $this->conexion->prepare("SELECT shadow.id, shadow.nombre, rol.nombreRol FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id ) WHERE shadow.id='$id'");
+		$sql = $this->conexion->prepare("SELECT shadow.id, shadow.nombre, rol.nombreRol, shadow.pass FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id ) WHERE shadow.id='$id'");
 
 		 $sql->execute();
 		 

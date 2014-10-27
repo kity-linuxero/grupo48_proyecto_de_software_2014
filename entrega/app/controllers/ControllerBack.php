@@ -336,6 +336,27 @@ require_once __DIR__ . '/ControllerLogin.php';
 		
 		$params = array('users' => $this->us->listarPorId($id));
 		echo $this->twig->render('formModUser.twig.html', array('users' => $params['users']));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	
 	}
 	
@@ -352,17 +373,16 @@ require_once __DIR__ . '/ControllerLogin.php';
 		 
 		if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['p1']==$_POST['p2'])) {
 			// comprueba que el usuario no exista ya
-			
 			if (!$this->us->existeUsuario($_POST['nombre'])){
 				 $this->us->agregar($_POST['nombre'], $_POST['rol'], $_POST['p1']);
-				 
+				 header('Location: backend.php?accion=users');
 			}
             else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-                 echo "EL usuario ya existe"; die;
+                 header('Location: backend.php?accion=users#err2');
              }
 		}
 		
-		header('Location: backend.php?accion=users');
+		
 		
 }
 	
@@ -371,24 +391,16 @@ require_once __DIR__ . '/ControllerLogin.php';
 		//comprueba que el usuario no intente borrarse a sí mismo
 		if ($_SESSION['USUARIO']['id']!=$id){
 				 $this->us->borrar($id);
-				 
+				 header('Location: backend.php?accion=users');
 			}
             else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-                 echo "No podes borrarte vos mismo"; die;
+                 header('Location: backend.php?accion=users#err1');
              }
 		
 	
-		header('Location: backend.php?accion=users');
+		
 		
 	}
-	
-	
-	
-	
-	
-	
-
-
 
  }
 ?>

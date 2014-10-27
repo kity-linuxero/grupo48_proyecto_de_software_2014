@@ -14,7 +14,7 @@
  </script>
 
 
-<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarUsuariod&amp;id={{params.id}}">
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarUsuario&amp;id={{params.id}}">
     <h2>Modificación de usuario</h2>
     <div>
         <label>*Nombre de usuario</label>
@@ -35,12 +35,12 @@
     </div>
     <div>
         <label>*Contraseña:</label>
-        <input type="password" id="p1" name="p1" required/>
+        <input type="password" id="p1" name="p1" value="{{users.0.pass}}" required/>
     </div>
     
     <div>
         <label>*Repetir Contraseña:</label>
-        <input type="password" id="p2" name="p2" required/>
+        <input type="password" id="p2" name="p2" value="{{users.0.pass}}" required/>
     </div>
 
 	
