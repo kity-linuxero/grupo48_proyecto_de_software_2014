@@ -2,27 +2,38 @@
 
 {% block contenido %}
 
+<script>
+   function validarPass(){
 
+    if(!document.getElementById("p1").value==document.getElementById("p2").value)
+		alert("Las contraseñas no coinciden");
+	else
+		alert("Se debería modificar.");
+		
+	//return document.getElementById("p1").value==document.getElementById("p2").value;
+	//return false;
+    }
+ </script>
 
 
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarUsuariod&amp;id={{params.id}}">
     <h2>Modificación de usuario</h2>
     <div>
         <label>*Nombre de usuario</label>
-        <input type="text" id="razon_social" name="razon_social" value="{{params.nombre}}" required/>
+        <input type="text" name="nombre" value="{{users.0.nombre}}" required/>
     </div>
-    <div>
-        <div class="formRow">
+    <div
+         class="formRow">
 					<label>Rol</label>
 					<select id="rolSelect" name="rol">
-						<option value="1"  {% if params.rol == "administrador" %} selected="selected" {% endif %}> 
+						<option value="1"  {% if users.0.nombreRol == "administrador" %} selected="selected" {% endif %}> 
 							Administrador</option>
-						<option value="2"  {% if params.rol == "gestion" %} selected="selected" {% endif %}> 
+						<option value="2"  {% if users.0.nombreRol == "gestion" %} selected="selected" {% endif %}> 
 							Gestión</option>
-						<option value="3"  {% if params.rol == "consulta" %} selected="selected" {% endif %}> 
+						<option value="3"  {% if users.0.nombreRol == "consulta" %} selected="selected" {% endif %}> 
 							Consulta</option>
 										</select>	
-		</div>
+		
     </div>
     <div>
         <label>*Contraseña:</label>
@@ -38,7 +49,7 @@
 
 	<br>
 	
-    <button type="submit" name= "boton">Modificar</button>
+    <button onclick=validarPass() name="boton">Modificar</button>
     
 	<button onclick="window.location.href='./backend.php?accion=users'">Cancelar</button>
 

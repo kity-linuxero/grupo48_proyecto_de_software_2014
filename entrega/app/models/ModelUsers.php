@@ -10,11 +10,12 @@
      public function listar()
      {
          
-         $sql = $this->conexion->prepare("SELECT shadow.id, shadow.nombre, rol.rol FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id )");
+         $sql = $this->conexion->prepare("SELECT shadow.id, shadow.nombre, rol.nombreRol FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id )");
          
 		 $sql->execute();
 		 
          $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+		
 			
         return $listado;
      }
@@ -43,7 +44,7 @@
      
      public function listarRoles(){
 		 
-		 $sql = $this->conexion->prepare("SELECT rol FROM rol");
+		 $sql = $this->conexion->prepare("SELECT nombreRol FROM rol");
 
 		 $sql->execute();
 		 
@@ -65,6 +66,45 @@
 		
 	 }
      
+	  public function listarRol($id){
+		 
+		 $sql = $this->conexion->prepare("SELECT id FROM rol WHERE id='$id'");
+
+		 $sql->execute();
+		 
+         $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+			
+        return $listado; 
+		
+	 }
+	 
+	 public function listarUsuario($id){
+		 
+		 $sql = $this->conexion->prepare("SELECT nombre FROM shadow WHERE id='$id'");
+
+		 $sql->execute();
+		 
+         $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+			
+        return $listado; 
+		
+	 }
+	 
+	 public function listarPorId($id){
+	 
+	 
+		$sql = $this->conexion->prepare("SELECT shadow.id, shadow.nombre, rol.nombreRol FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id ) WHERE shadow.id='$id'");
+
+		 $sql->execute();
+		 
+         $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+			
+        return $listado;
+	 
+	 
+	} 
+	
+	 
      
      /*
      public function listarSoloStock()

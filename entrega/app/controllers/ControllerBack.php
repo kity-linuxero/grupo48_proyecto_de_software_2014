@@ -276,6 +276,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 	public function users() {
 	
 	$params = array('users' => $this->us->listar());
+	
+	
 		echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'usuario' => dameUsuario()));
 	}
 	
@@ -301,14 +303,15 @@ require_once __DIR__ . '/ControllerLogin.php';
 	
 	public function modificarUsuario($id){
 		
+		$params = array('users' => $this->us->listarPorId($id));
+		
+		
+		
 	
-		$roles = $this->us->listarRoles();
-		$usuarios = $this->us->listarUsuarios();
 	
-		echo $this->twig->render('formModUser.twig.html', array('params' => $params,
-																	 'roles' => $roles,
-																	 'usuarios' => $usuarios,
-																	 'usuario' => dameUsuario()));
+	
+		echo $this->twig->render('formModUser.twig.html', array('users' => $params['users']));
+		//, => $usuario['usuarioPedido'], dameUsuario()=>['usuario']));
 	
 		
 	}

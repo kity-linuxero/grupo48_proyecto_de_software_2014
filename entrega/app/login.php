@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once './Config.php';
 require_once './models/Model.php';
@@ -23,12 +24,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 	else{
 		//login correcto. Hay que verificar el rol
-		session_start();
+		
+		
+		
 		
 		
 		
 		$_SESSION['USUARIO']['userName']= $_POST["usuario"];
-		$_SESSION['USUARIO']['rol'] = $intentoLogin[0]['rol'];
+		$_SESSION['USUARIO']['rol'] = $intentoLogin[0]['nombreRol'];
 
 		
 		switch (dameRol()) {
