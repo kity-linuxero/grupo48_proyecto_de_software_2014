@@ -2,9 +2,14 @@
 
 {% block contenido %}
 
-
+{% if accion=="alta" %}
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaAlimento">
+     <h2>Alta de Donación de Alimento</h2>
+{% elseif accion=="modificar" %}
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarAlimento&amp;id={{params.id}}">
     <h2>Modificación de Donación de Alimento</h2>
+{% endif %}
+
     <div>
         <label>*Descripción:</label>
         
@@ -67,7 +72,7 @@
 
 	<br>
 	
-    <button type="submit" name= "boton">Modificar</button>
+    <button type="submit" name= "boton">{% if accion=="alta" %}Generar Alta{% elseif accion=="modificar" %}Modificar{% endif %}</button>
 	<button onclick="window.location.href='./backend.php?accion=listarAlimentos'">Cancelar</button>
 
 <div class="obligatorios">*Campos obligatorios</div>

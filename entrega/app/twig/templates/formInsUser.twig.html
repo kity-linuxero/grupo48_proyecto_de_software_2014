@@ -6,16 +6,18 @@
    function validarPass(){
 
     if(document.getElementById("p1").value!=document.getElementById("p2").value)
-	{   alert("Las contraseñas no coinciden");}
-	else {alert("Se debería modificar.");}
+	{   alert("Las contraseñas no coinciden");
+		//"window.location.href=./backend.php?accion=users";
+		}
+	
 		
-
-    }
+}
+    
  </script>
 
 
-<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarUsuariod&amp;id={{params.id}}">
-    <h2>Modificación de usuario</h2>
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=insertarUsuario">
+    <h2>Alta de usuario</h2>
     <div>
         <label>*Nombre de usuario</label>
         <input type="text" name="nombre" value="{{users.0.nombre}}" required/>
@@ -47,7 +49,7 @@
 
 	<br>
 	
-    <button onclick=validarPass() name="botones">Modificar</button>
+    <button onclick=validarPass() name="botones">Alta</button>
     
 	<button onclick="window.location.href='./backend.php?accion=users'">Cancelar</button>
 

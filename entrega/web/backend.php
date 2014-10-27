@@ -37,8 +37,12 @@ $map = array(
 
      'quienesSomos' => array('controller' =>'ControllerBack', 'accion' =>'quienesSomos'),
      'contacto' => array('controller' =>'ControllerBack', 'accion' =>'contacto'),
+     
      'users' => array('controller' =>'ControllerBack', 'accion' =>'users'),
      'modificarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'modificarUsuario'),
+     'altaUsuario' => array('controller' =>'ControllerBack', 'accion' =>'altaUsuario'),
+     'insertarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'insertarUsuario'),
+     'borrarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'borrarUsuario'),
 );
 session_start();
 

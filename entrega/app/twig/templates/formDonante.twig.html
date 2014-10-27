@@ -3,9 +3,15 @@
 {% block contenido %}
 
 
+    {% if accion=="alta" %}
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaDonante">
+	<h2>Alta de Donante</h2>
+	{% elseif accion=="modificar" %}
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarDonante&amp;id={{params.id}}">
-    <h2>Modificación de Donante</h2>
-    <div>
+	<h2>Modificación de Donante</h2>
+	{% endif %}
+	    
+	<div>
         <label>*Razón Social:</label>
         <input type="text" id="razon_social" name="razon_social" value='{{ params.razon_social }}' required/>
     </div>
@@ -28,8 +34,8 @@
 	</div>
 	<div>
 		<br>
-		<button type="submit" name= "boton">Modificar</button>
-		<button onclick="window.location.href='./backend.php'">Cancelar</button>
+		<button type="submit" name= "boton">{% if accion=="alta" %}Generar Alta{% elseif accion=="modificar" %}Modificar{% endif %}</button>
+		<button onclick="window.location.href='./backend.php?accion=listarDonantes'">Cancelar</button>
 
 	</div>
 

@@ -2,9 +2,14 @@
 
 {% block contenido %}
 
-
+    {% if accion=="alta" %}
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaEntidad">
+    <h2>Alta de Entidad Receptora</h2>
+	{% elseif accion=="modificar" %}
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarEntidad&amp;id={{params.id}}">
     <h2>Modificación de Entidad Receptora</h2>
+	{% endif %}
+	
     <div>
         <label>*Razón Social:</label>
         <input type="text" id="razon_social" name="razon_social" value="{{params.razon_social}}" required/>
@@ -65,7 +70,7 @@
 
 	<br>
 	
-    <button type="submit" name= "boton">Modificar</button>
+    <button type="submit" name= "boton">{% if accion=="alta" %}Generar Alta{% elseif accion=="modificar" %}Modificar{% endif %}</button>
 	<button onclick="window.location.href='./backend.php?accion=listarEntidades'">Cancelar</button>
 
 

@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		$_SESSION['USUARIO']['userName']= $_POST["usuario"];
 		$_SESSION['USUARIO']['rol'] = $intentoLogin[0]['nombreRol'];
+		$_SESSION['USUARIO']['id'] = $intentoLogin[0]['id'];
 
 		
 		switch (dameRol()) {

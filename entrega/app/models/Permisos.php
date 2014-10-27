@@ -17,7 +17,8 @@ class Permisos {
 								  'altaEntidad'=>'0', 'modificarEntidad'=>'0',
 								  'listarAlimentos'=>'0', 'bajaAlimento'=>'0', 
 								  'altaAlimento'=>'0', 'modificarAlimento'=>'0',
-								  'inicio'=>'0', 'users'=>'0', 'modificarUsuario'=>'0'),
+								  'inicio'=>'0', 'users'=>'0', 'modificarUsuario'=>'0', 'altaUsuario'=>'0',
+								  'insertarUsuario'=>'0', 'borrarUsuario' => '0'),
 		 'consulta' => array('listarAlimentosSoloStock'=>'0', 'inicio'=>'0')
 	 );
 	 
