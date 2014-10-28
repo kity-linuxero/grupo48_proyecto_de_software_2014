@@ -40,18 +40,19 @@ class ModelPedido extends Model
 			VALUES ('$f', '$h')
 							");
 		$turno_entrega->execute();
+
 		$turno_id = $this->conexion->lastInsertId();
-		
 		$fecha_hoy = $this->getToday();
 		$er = $pedido['entidad_receptora_id'];
 		$estado = $pedido['estado_pedido_id'];
-		$turno = $pedido['turno_entrega_id'];
 		$envio = $pedido['con_envio'];
 	
 		$pedido = $this->conexion->prepare("
 			INSERT INTO pedido_modelo (entidad_receptora_id, fecha_ingreso, estado_pedido_id, turno_entrega_id, con_envio)
-			VALUES ('$er', '$fecha_hoy', '$estado', '$turno', '$envio')
+			VALUES ('$er', '$fecha_hoy', '$estado', '$turno_id', '$envio')
 											");
+		$pedido->execute();
+		
 		$pedido_id = $this->conexion->lastInsertId();
 		
 		foreach ($alimentos as $alimento) {
@@ -61,7 +62,15 @@ class ModelPedido extends Model
 				INSERT INTO alimento_pedido ('pedido_numero', 'detalle_alimento_id', 'cantidad')
 				VALUES ('$pedido_id', '$detalle', '$cant');
 			");
+			$sql->execute();
+			
 			// actualizar cada detalle de alimento agregado
+			$update = $this->conexion->prepare("
+				UPDATE detalle_alimento
+				SET reservado=reservado+'$cant'
+				WHERE id='$detalle'
+			");
+			$update->execute();
 		}
 	}
 	 

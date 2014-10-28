@@ -138,5 +138,23 @@
                 is_numeric($cant) &
                 is_numeric($don));
     }
+	
+	public function alcanzaStock($id, $cant)
+	{
+		$sql = $this->conexion->prepare("
+			SELECT stock, reservado
+			FROM detalle_alimento
+			WHERE id='$id'
+		");
+		$sql->execute();
+		$detalle = $sql->fetchAll(PDO::FETCH_ASSOC);
+		$stock = $detalle['0']['stock'];
+		$reser = $detalle['0']['reservado'];
+		if ($cant <= ($stock - $reser)){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
  }
