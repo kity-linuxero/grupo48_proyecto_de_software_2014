@@ -19,7 +19,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 		switch (dameRol()) {
 			case "administrador":
 				//sentencias para usuario administrador
-				echo $this->twig->render('backend.twig.html', array('usuario' => dameUsuario()));
+				echo $this->twig->render('layoutBackAdmin.twig.html', array('usuario' => dameUsuario()));
 			break;
 			case "consulta":
 				//Sentencias para usuario consulta
