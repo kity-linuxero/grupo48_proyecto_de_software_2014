@@ -10,6 +10,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 	protected $mD; 	 // variable para la conexión del modelo donantes
 	protected $mR; 	 // variable para la conexión del modelo recepciones
 	protected $us;   // variable para la conexión del modelo usuarios
+	protected $mP;   // variable para la conexion del modelo de pedidos
 	
 	//configura los parámetros de Twig para el controllerBack
 	
@@ -34,6 +35,9 @@ require_once __DIR__ . '/ControllerLogin.php';
 						 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 			$this->us = new ModelUsers(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 						 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+			$this->mP = new ModelPedido(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+						 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
+						 
 		} else {
 			echo ("<script>window.alert('No tiene permisos para realizar esta operación.');
 						   window.location = './index.php';</script>");
