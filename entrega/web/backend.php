@@ -10,6 +10,7 @@
  require_once '../app/models/ModelRecepcion.php';
  require_once '../app/models/ModelLogin.php';
  require_once '../app/models/ModelUsers.php';
+ require_once '../app/models/ModelPedido.php';
  require_once '../app/controllers/Controller.php';
  require_once '../app/controllers/ControllerFront.php';
  require_once '../app/controllers/ControllerBack.php';
