@@ -1,6 +1,4 @@
-﻿
-
-<?php
+﻿<?php
 
 require_once __DIR__ . '/ControllerLogin.php';
 
@@ -27,6 +25,10 @@ require_once __DIR__ . '/ControllerLogin.php';
 				//Sentencias para usuario consulta
 				echo $this->twig->render('layoutBackConsulta.twig.html', array('usuario' => dameUsuario()));
 			break;
+			case "gestion":
+				//Sentencias para usuario consulta
+				echo $this->twig->render('layoutBackGestion.twig.html', array('usuario' => dameUsuario()));
+			break;			
 		}
      }
 	 
@@ -47,7 +49,13 @@ require_once __DIR__ . '/ControllerLogin.php';
 
 	public function altaDonante() {
 
-		$params = array();
+		$params = array(
+				 'razon_social' => (''),
+				 'nombre_contacto' => (''),
+				 'apellido_contacto' => (''),
+				 'telefono_contacto' => (''),
+				 'mail_contacto' => (''),
+				);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// comprobar campos formulario
@@ -62,8 +70,12 @@ require_once __DIR__ . '/ControllerLogin.php';
              } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
                  $params['mensaje'] = 'No se ha podido insertar el donante. Revisa el formulario';
              }
-        }
-		echo $this->twig->render('formInsDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['USUARIO']['userName']));
+        } else {
+				// todavia nada
+		}
+		echo $this->twig->render('formDonante.twig.html', array('params' => $params ,
+																'usuario' => $_SESSION['USUARIO']['userName'], 
+																'accion' => ("alta")));
 	}
 
 	public function modificarDonante()
@@ -95,7 +107,9 @@ require_once __DIR__ . '/ControllerLogin.php';
 				 'telefono_contacto' => $donante['telefono_contacto'],
 				 'mail_contacto' => $donante['mail_contacto'],
 				);
-         echo $this->twig->render('formModDonante.twig.html', array('params' => $params , 'usuario' => $_SESSION['USUARIO']['userName']));					
+         echo $this->twig->render('formDonante.twig.html', array('params' => $params ,
+																 'usuario' => $_SESSION['USUARIO']['userName'],
+																 'accion' => "modificar"));					
 	}
 
 	public function bajaDonante()
@@ -135,14 +149,20 @@ require_once __DIR__ . '/ControllerLogin.php';
                  $params['mensaje'] = 'No se ha podido insertar la entidad receptora. Revisa el formulario';
              }
         }
-		echo $this->twig->render('formInsEntidad.twig.html', array('params' => $params,
-																   'servicios' => $servicios,
-																   'usuario' => $_SESSION['USUARIO']['userName']));
+		echo $this->twig->render('formEntidad.twig.html', array('params' => $params,
+																'servicios' => $servicios,
+																'usuario' => $_SESSION['USUARIO']['userName'],
+																'accion' => "alta"));
 	}
 
 	public function modificarEntidad()
 	{	
-		$params = array();
+		$params = array('razon_social' => "", 
+						'telefono' => "", 
+						'domicilio' => "", 
+						'estado' => "", 
+						'necesidad' => "",
+						'servicio' => "");
 		$servicios = $this->mE->obtenerServiciosDisponibles();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -166,9 +186,10 @@ require_once __DIR__ . '/ControllerLogin.php';
 		} else {
 			header('Location: backend.php?accion=listarEntidades');
 		}
-        echo $this->twig->render('formModEntidad.twig.html', array('params' => $params,
-																	'servicios' => $servicios,
-																	'usuario' => $_SESSION['USUARIO']['userName']));					
+        echo $this->twig->render('formEntidad.twig.html', array('params' => $params,
+																'servicios' => $servicios,
+																'usuario' => $_SESSION['USUARIO']['userName'],
+																'accion' => "modificar"));					
 	}
 
 	public function bajaEntidad()
@@ -199,7 +220,13 @@ require_once __DIR__ . '/ControllerLogin.php';
 
 	public function altaAlimento()
 	{
-		$params = array();
+		$params = array('descripcion' => "",
+						'contenido' => "",
+						'peso' => "",
+						'stock' => "",
+						'reservado' => "",
+						'cantidad' => "",
+						'donante' => "" );
 		
 		$donantes = $this->mD->obtenerDonantesActivos();
 
@@ -219,10 +246,11 @@ require_once __DIR__ . '/ControllerLogin.php';
                  $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
              }
 		}
-		 echo $this->twig->render('formInsAlimento.twig.html', array('params' => $params,
-																	 'donantes' => $donantes,
-																	 'alimentos' => $alimentos,
-																	 'usuario' => $_SESSION['USUARIO']['userName']));
+		 echo $this->twig->render('formAlimento.twig.html', array('params' => $params,
+																  'donantes' => $donantes,
+																  'alimentos' => $alimentos,
+																  'usuario' => $_SESSION['USUARIO']['userName'],
+																  'accion' => "alta"));
 	}
 
 	public function modificarAlimento()
@@ -254,10 +282,11 @@ require_once __DIR__ . '/ControllerLogin.php';
 		} else {
 			header('Location: backend.php?accion=listarAlimentos');
 		}
-		 echo $this->twig->render('formModAlimento.twig.html', array('params' => $params,
-																	 'donantes' => $donantes,
-																	 'alimentos' => $alimentos,
-																	 'usuario' => $_SESSION['USUARIO']['userName']));
+		 echo $this->twig->render('formAlimento.twig.html', array('params' => $params,
+																  'donantes' => $donantes,
+																  'alimentos' => $alimentos,
+																  'usuario' => $_SESSION['USUARIO']['userName'],
+																  'accion' => "modificar"));
 	}
 
 	public function bajaAlimento() {
@@ -304,14 +333,71 @@ require_once __DIR__ . '/ControllerLogin.php';
 	public function modificarUsuario($id){
 		
 		$params = array('users' => $this->us->listarPorId($id));
-	
 		echo $this->twig->render('formModUser.twig.html', array('users' => $params['users']));
-		//, => $usuario['usuarioPedido'], dameUsuario()=>['usuario']));
-	
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
 	}
 	
+	public function altaUsuario($id){
+		
+		$params = array('users' => 'hola');
+		echo $this->twig->render('formInsUser.twig.html', array('users' => $params['users']));
 	
+	}
+	
+	public function insertarUsuario(){
+		
+	
+		 
+		if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['p1']==$_POST['p2'])) {
+			// comprueba que el usuario no exista ya
+			if (!$this->us->existeUsuario($_POST['nombre'])){
+				 $this->us->agregar($_POST['nombre'], $_POST['rol'], $_POST['p1']);
+				 header('Location: backend.php?accion=users');
+			}
+            else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
+                 header('Location: backend.php?accion=users#err2');
+             }
+		}
+	}
+	
+	public function borrarUsuario($id){
+		
+		//comprueba que el usuario no intente borrarse a sí mismo
+		if ($_SESSION['USUARIO']['id']!=$id){
+				 $this->us->borrar($id);
+				 header('Location: backend.php?accion=users');
+			}
+            else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
+                 header('Location: backend.php?accion=users#err1');
+             }
+		
+	
+		
+		
+	}
+
+
 // ------------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------- DECLARACION DE FUNCIONES PARA LAS ALERTAS ---------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------------------
@@ -327,9 +413,5 @@ require_once __DIR__ . '/ControllerLogin.php';
     }
 	
 	
-	
-
-
-
  }
 ?>

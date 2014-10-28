@@ -11,16 +11,16 @@
 class Permisos {
 
     private static $accesos = array(
-		'administrador' => array('modificarDonante'=>'0', 'bajaDonante'=>'0',
-								 'listarDonantes'=>'0', 'altaDonante'=>'0', 
-								 'listarEntidades'=>'0', 'bajaEntidad'=>'0',
-								 'altaEntidad'=>'0', 'modificarEntidad'=>'0',
-								 'listarAlimentos'=>'0', 'bajaAlimento'=>'0', 
-								 'altaAlimento'=>'0', 'modificarAlimento'=>'0',
-								 'inicio'=>'0', 'users'=>'0', 'modificarUsuario'=>'0',
-								 'alertaPedidos'=>'0'
-								),
-		'consulta' => array('listarAlimentosSoloStock'=>'0', 'inicio'=>'0')
+		 'administrador' => array('modificarDonante'=>'0', 'bajaDonante'=>'0',
+								  'listarDonantes'=>'0', 'altaDonante'=>'0', 
+								  'listarEntidades'=>'0', 'bajaEntidad'=>'0',
+								  'altaEntidad'=>'0', 'modificarEntidad'=>'0',
+								  'listarAlimentos'=>'0', 'bajaAlimento'=>'0', 
+								  'altaAlimento'=>'0', 'modificarAlimento'=>'0',
+								  'inicio'=>'0', 'users'=>'0', 'modificarUsuario'=>'0', 'altaUsuario'=>'0',
+								  'insertarUsuario'=>'0', 'borrarUsuario' => '0',
+								  'alertaPedidos'=>'0'),
+		 'consulta' => array('listarAlimentosSoloStock'=>'0', 'inicio'=>'0')
 	 );
 	 
 

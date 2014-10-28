@@ -138,7 +138,7 @@
                 is_numeric($cant) &
                 is_numeric($don));
     }
-	
+
 	public function alcanzaStock($id, $cant)
 	{
 		$sql = $this->conexion->prepare("

@@ -44,6 +44,8 @@ $map = array(
      'altaUsuario' => array('controller' =>'ControllerBack', 'accion' =>'altaUsuario'),
      'insertarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'insertarUsuario'),
      'borrarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'borrarUsuario'),
+	 
+	 'alertaPedidos' => array('controller' => 'ControllerBack', 'accion' => 'alertaPedidos'),
 );
 session_start();
 
