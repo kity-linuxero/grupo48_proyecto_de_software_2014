@@ -3,64 +3,43 @@ body {
 
 }
 #global {
- width:860px; 
+ width:800px; 
  min-height:720px;
  margin: 0 auto 0 auto;
  background-color: #FFFFFF;
 }
 #cabecera {
- width:700px;
+ width:720px;
  margin: 0 auto 0 auto;
  
 }
 
 #navegacion {
- width:700px;
- margin: 0 auto 0 auto;
- background-color: #E2F47C;
+
+ background: #2175bc;
+    height: 30px;
+	position: relative; 
+    width: 100%; 
+ 
+ 
 }
+
 #principal {
  font: 13px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
  width:700px;
  margin: 0 auto 0 auto;
- /*float: center;*/
+ 
 }
 
-#pie {
- width:700px;
- height:30px;
- margin: 0 auto 0 auto;
- background-color: #FFFFFF;
- float: none;
-}
 /* Pie del documento*/
 footer{
  text-align: center;
  font: 11px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
- width:860px;
+ width:800px;
  margin: 0 auto 0 auto;
  background-color: #FFFFFF;
  
 }
-
-/* Chrome Botón agregar
-#principal > div:nth-child(2) > table > tbody > tr:nth-child(1) > th:nth-child(8) > a{
-	float: right;
-}
-
-#principal > div:nth-child(2) > table > tbody > tr:nth-child(1) > th:nth-child(8) > a > img{
-width:24px; 
-height: 24px;
-}
-
-#principal > div:nth-child(2) > table > tbody > tr:nth-child(1) > th:nth-child(9) > a > img{
-width:24px; 
-height: 24px;
-}
-
-#principal > div:nth-child(2) > table > tbody > tr:nth-child(1) > th:nth-child(9) > a{
-	float: right;
-}*/
 
 
 

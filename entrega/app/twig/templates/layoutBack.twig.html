@@ -5,9 +5,8 @@
 	<meta charset="utf8" />
 	
  <link rel="stylesheet" media="(min-width: 481px)" href="./css/maqueta.css" type="text/css">
- <link rel="stylesheet" media="(min-width: 481px)" href="./css/botonera.css" type="text/css"/>
  <link rel="stylesheet" media="(max-width: 480px)" href="./css/maquetaMobile.css" />
- <link rel="stylesheet" media="(max-width: 480px)" href="./css/botoneraMobile.css" />
+ <link rel="stylesheet" href="./css/responsive.css" type="text/css"/>
  <link rel="stylesheet" media="(max-width: 480px)" href="./css/formMobile.css" />
  <link rel="stylesheet" href="./css/form.css" type="text/css"/>
  <link rel="stylesheet" href="./css/login.css" type="text/css"/>
@@ -44,15 +43,14 @@ $("#datepicker").datepicker({
 		</div>
 		<div id="navegacion">
 			
-			<div id = "menu">
-						<ul id="boton"> 
+			<ul class="egmenu">
 						{% block botonera %}
 						{% endblock %}
 		<!-- desde acá se preguntaria por el usuario, o se hace un case o se mapea -->
 							
 		<!-- hasta acá -->
-						</ul>
-			</div>
+			</ul>
+			
 		</div>
 
 

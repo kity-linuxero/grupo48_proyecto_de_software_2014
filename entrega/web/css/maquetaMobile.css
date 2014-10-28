@@ -3,34 +3,36 @@ body {
 
 }
 #global {
- width:380px; height:800px;
+ width:400px; 
+ /*height:800px;*/
  margin: 0 auto 0 auto;
  background-color: #FFFFFF;
 }
 #cabecera {
- width:380px;
+ width:100%;
  margin: 0 auto 0 auto;
  
 }
 
 #navegacion {
- width:380px;
+ width:100%;
  margin: 0 auto 0 auto;
  background-color: #E2F47C;
 }
 #principal {
 font: 13px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
- width:380px;
+ width:100%;
  margin: 0 auto 0 auto;
  float: left;
 }
 
-#pie {
- width:380px;
+footer {
+ width:100%;
  margin: 0 auto 0 auto;
  background-color: #FFFFFF;
- 
+ font: 10px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
  float: none;
+ text-align: center;
 }
 
 .imagenCuerpo {
