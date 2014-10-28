@@ -15,12 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	
 	if ($intentoLogin == 0)	{
 		//echo falló en la autenticación de usuario
-		echo('		
-				<script type="text/javascript">; 
-				alert("Usuario y/o contraseña incorrectos. Intente nuevamente con admin/admin o consulta/consulta"); 
-				window.location= "../web/index.php";
-				</script>;
-		');
+		header('Location: ../web/index.php#err1');
     }
 	else{
 		//login correcto. Hay que verificar el rol

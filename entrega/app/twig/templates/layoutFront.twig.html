@@ -37,7 +37,8 @@
 		 
 			<!-- Contenido dinamico a mostrar -->
 			<div>
-				<br>
+			  <br>
+			  
 			  {% block contenido %}
 			  {% endblock %}
 			</div>
@@ -65,6 +66,15 @@
 			</form>
 		</div>
 	</div>
+	
+	<div id="err1" class="modalDialog">
+		<div>
+			<a href="#close" title="Close" class="close">X</a>
+			<h2>Error</h2>
+			<p>Usuario o contraseña incorrectos.</p>
+		</div>
+	</div>
+
 
 
 	
