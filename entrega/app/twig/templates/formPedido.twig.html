@@ -1,58 +1,68 @@
 {% extends "layoutBackAdmin.twig.html" %}
 
+{% block funciones %}
+
+	// aca irian las funciones a declarar
+
+{% endblock %}
+
+
+
 {% block contenido %}
 
+<form action="./backend.php?accion=generarPedido" method="post">
+ <p>
+ <fieldset>
+  <legend>Información del Pedido</legend>
+		<div class="formRow">
+			<label>Entidad Receptora</label>
+			<select id="entidadSelect" name="entidad">
+				{% for entidad in entidades %}
+						<option value="{{ entidad.id }}"> 
+							{{ entidad.razon_social }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div>
+			<label>Fecha de Entrega</label>
+			<input type="text" id="datepicker" name="fecha" required/>
+		</div>
 
-<FORM action="./backend.php?accion=generarPedido" method="post">
- <P>
- <FIELDSET>
-  <LEGEND>Personal Information</LEGEND>
-  Last Name: <INPUT name="personal_lastname" type="text" tabindex="1">
-  First Name: <INPUT name="personal_firstname" type="text" tabindex="2">
-  Address: <INPUT name="personal_address" type="text" tabindex="3">
-  ...more personal information...
- </FIELDSET>
- <FIELDSET>
-  <LEGEND>Medical History</LEGEND>
-  <INPUT name="history_illness[]" 
+
+
+ </fieldset>
+ <fieldset>
+  <legend>Alimentos disponibles</legend>
+  <input name="detalle[]" 
          type="checkbox" 
          value="Smallpox" tabindex="20"> Smallpox
-  <INPUT name="history_illness[]" 
-         type="checkbox" 
-         value="Mumps" tabindex="21"> Mumps
-  <INPUT name="history_illness[]" 
-         type="checkbox" 
-         value="Dizziness" tabindex="22"> Dizziness
-  <INPUT name="history_illness[]" 
-         type="checkbox" 
-         value="Sneezing" tabindex="23"> Sneezing
-  ...more medical history...
- </FIELDSET>
- <FIELDSET>
-  <LEGEND>Current Medication</LEGEND>
-  Are you currently taking any medication? 
-  <INPUT name="medication_now" 
-         type="radio" 
-         value="Yes" tabindex="35">Yes
-  <INPUT name="medication_now" 
-         type="radio" 
-         value="No" tabindex="35">No
+  </input>
 
-  If you are currently taking medication, please indicate
-  it in the space below:
-  <TEXTAREA name="current_medication" 
-            rows="20" cols="50"
-            tabindex="40">
-  </TEXTAREA>
- </FIELDSET>
+
+
+
+
+
+  </fieldset>
+ <fieldset>
+  <legend>Opción de Envío</legend>
+  Seleccione si quiere el pedido con envío: 
+  <input name="con_envio" 
+         type="radio" 
+         value="1" tabindex="35">Si
+  <input name="con_envio" 
+         type="radio" 
+         value="0" tabindex="35" checked="selected">No
+
+ </fieldset>
 	
-    <button type="submit" name= "boton">{% if accion=="alta" %}Generar Alta{% elseif accion=="modificar" %}Modificar{% endif %}</button>
-	<button onclick="window.location.href='./backend.php?accion=listarEntidades'">Cancelar</button>
+    <button type="submit" name= "boton">{% if accion=="alta" %}Generar Pedido{% elseif accion=="modificar" %}Modificar{% endif %}</button>
+	<button onclick="window.location.href='./backend.php'">Cancelar</button>
 
 
 <div class="obligatorios">*Campos obligatorios</div>
 
 
-</FORM>
+</form>
 
 {% endblock %}
