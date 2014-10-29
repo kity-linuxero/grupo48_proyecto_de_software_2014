@@ -19,17 +19,18 @@ class ModelPedido extends Model
 	{
 		$hoy = $this->getToday();
 		$sql = $this->conexion->prepare("
-			SELECT pedido_modelo.*, turno_entrega.*, entidad_receptora.razon_social
-			FROM pedido_modelo INNER JOIN turno_entrega INNER JOIN entidad_receptora
+			SELECT pedido_modelo.*, turno_entrega.*, entidad_receptora.razon_social, estado_pedido.descripcion
+			FROM pedido_modelo INNER JOIN turno_entrega INNER JOIN entidad_receptora INNER JOIN estado_pedido
 			WHERE (pedido_modelo.turno_entrega_id=turno_entrega.id)
 					AND (turno_entrega.fecha='$hoy')
 					AND (entidad_receptora.id=pedido_modelo.entidad_receptora_id)
+					AND (pedido_modelo.estado_pedido_id=estado_pedido.id)
 										");
 		$sql->execute();
 		$pedidos = $sql->fetchAll(PDO::FETCH_ASSOC);
 		
 		/* CAMPOS DEL ARREGLO QUE DEVUELVE:
-numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 	con_envio 	id 	fecha 	hora 	razon_social
+numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 	con_envio 	id 	fecha 	hora 	razon_social	descripcion
 		*/
 		return $pedidos;
 	}
