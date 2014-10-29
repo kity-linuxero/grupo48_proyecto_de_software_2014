@@ -28,6 +28,9 @@ class ModelPedido extends Model
 		$sql->execute();
 		$pedidos = $sql->fetchAll(PDO::FETCH_ASSOC);
 		
+		/* CAMPOS DEL ARREGLO QUE DEVUELVE:
+numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 	con_envio 	id 	fecha 	hora 	razon_social
+		*/
 		return $pedidos;
 	}
 	 

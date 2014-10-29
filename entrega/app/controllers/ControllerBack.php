@@ -19,11 +19,13 @@ require_once __DIR__ . '/ControllerLogin.php';
 		switch (dameRol()) {
 			case "administrador":
 				//sentencias para usuario administrador
-				echo $this->twig->render('layoutBackAdmin.twig.html', array('usuario' => dameUsuario()));
+				$pedidosHoy = $this->mP->pedidosHoy();
+				echo $this->twig->render('layoutBackAdmin.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario()));
 			break;
 			case "consulta":
 				//Sentencias para usuario consulta
-				echo $this->twig->render('layoutBackConsulta.twig.html', array('usuario' => dameUsuario()));
+				$pedidosHoy = $this->mP->pedidosHoy();
+				echo $this->twig->render('layoutBackConsulta.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario()));
 			break;
 			case "gestion":
 				//Sentencias para usuario consulta
@@ -405,12 +407,10 @@ require_once __DIR__ . '/ControllerLogin.php';
 	public function alertaPedidos()
     {
 		$prueba = $this->mP->pedidosHoy();
-		print_r($prueba); die;
 	
         $params = array('alimentos' => $this->mP->pedidosHoy());
-//		print_r($params); die;
-		echo $this->twig->render('abmAlimentos.html', array('alimentos' => $params['alimentos'], 'usuario' => $_SESSION['USUARIO']['userName']));
-    }
+		return $params;
+	}
 	
 	
  }

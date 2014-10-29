@@ -68,6 +68,35 @@ $("#datepicker").datepicker({
 				{% block contenido %}
 				{% endblock %}
 			</div>
+			
+			<div>
+
+				<h2>
+					Pedidos pendientes para el día de hoy:
+				</h2>
+<!-- numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 	con_envio 	id 	fecha 	hora 	razon_social -->
+				<table class="reference" style="width:100%">
+					<tbody>
+						<tr>
+							<th>Nº</th>
+							<th>Razón Social</th>
+							<th>Estado del Pedido</th>
+							<th>Fecha de Entrega</th>
+							<th>Envío</th>
+							<th></th>
+						</tr>
+					{% for pedido in params %}
+						<tr>
+								<td>{{ pedido.numero }}</td>
+								<td>{{ pedido.razon_social }}</td>
+								<td>{{ pedido.estado_pedido_id }}</td>
+								<td>{{ pedido.fecha}} {{ pedido.hora}}</td>
+								<td>{% if pedido.con_envio %} Si {% else %} No {% endif %}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
 
 	</div>
