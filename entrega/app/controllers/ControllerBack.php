@@ -383,17 +383,22 @@ require_once __DIR__ . '/ControllerLogin.php';
 	
 	public function generarPedido()
     {
-		echo "sitio en proceso de construccion"; die;
-		
 		$pedido = array();
 		$entidades = $this->mE->listarReducido(); // devuelve arreglo de arreglos con (id, razon_social)
 		$detalles = $this->mA->listarSoloStock();
 		
-		echo $this->twig->render('formPedido.twig.html', array('pedido' => $pedido,
-															   'entidades' => $entidades,
-															   'detalles' => $detalles,
-															   'usuario' => $_SESSION['USUARIO']['userName'],
-															   'accion' => "alta"));
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+			print_r($_POST); print_r($_POST['history_illness']); die;
+		
+		} else {
+		
+			echo $this->twig->render('formPedido.twig.html', array('pedido' => $pedido,
+																   'entidades' => $entidades,
+																   'detalles' => $detalles,
+																   'usuario' => $_SESSION['USUARIO']['userName'],
+																   'accion' => "alta"));
+		}
 	}
 	
 	public function generarEntrega()
