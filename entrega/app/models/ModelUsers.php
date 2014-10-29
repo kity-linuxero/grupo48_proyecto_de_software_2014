@@ -136,8 +136,21 @@
 	}
 	
 	 public function borrar($id)
-     {
+    {
          $sql = $this->conexion->prepare("DELETE from shadow
+										WHERE id = '$id'");
+         $sql->execute();
+     
+	}
+	
+	 public function modificar($id, $n, $r, $p)
+     {
+         
+		 
+		 $sql = $this->conexion->prepare("UPDATE shadow
+										SET nombre='$n',
+											id_rol='$r',
+											pass='$p'
 										WHERE id = '$id'");
          $sql->execute();
      

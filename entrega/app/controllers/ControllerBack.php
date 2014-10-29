@@ -20,17 +20,18 @@ require_once __DIR__ . '/ControllerLogin.php';
 			case "administrador":
 				//sentencias para usuario administrador
 				$pedidosHoy = $this->mP->pedidosHoy();
-				echo $this->twig->render('layoutBackAdmin.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario()));
+				echo $this->twig->render('layoutBackAdmin.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario(), 'inicio' => '1'));
 			break;
 			case "consulta":
 				//Sentencias para usuario consulta
 				$pedidosHoy = $this->mP->pedidosHoy();
-				echo $this->twig->render('layoutBackConsulta.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario()));
+				echo $this->twig->render('layoutBackConsulta.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario(), 'inicio' => '1'));
 			break;
 			case "gestion":
 				//Sentencias para usuario consulta
-				echo $this->twig->render('layoutBackGestion.twig.html', array('usuario' => dameUsuario()));
-			break;			
+				$pedidosHoy = $this->mP->pedidosHoy();
+				echo $this->twig->render('layoutBackGestion.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario(), 'inicio' => '1'));
+			break;		
 		}
      }
 	 
@@ -312,17 +313,6 @@ require_once __DIR__ . '/ControllerLogin.php';
 		echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'usuario' => dameUsuario()));
 	}
 	
-	
-	private function verificarUsuarioABorrar($id){
-		$usuarioABorrar= $this->us->usuarioConId($id);
-		//Para que un usuario no pueda borrarse a sí mismo
-		if ($usuarioABorrar!=dameUsuario()){
-			$this->us->borrarUsuarioConId($id);
-		}
-		else
-			{echo "no podés eliminarte a vos mismo, chabón!"; die;}
-	}
-	
 	public function bajaUsuario() {
 		if (isset($_GET['id'])) {
 			
@@ -334,30 +324,22 @@ require_once __DIR__ . '/ControllerLogin.php';
 	
 	public function modificarUsuario($id){
 		
-		$params = array('users' => $this->us->listarPorId($id));
-		echo $this->twig->render('formModUser.twig.html', array('users' => $params['users']));
 		
 		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+			
+			
+			
+			$this->us->modificar($_GET['id'], $_POST['nombre'], $_POST['rol'], $_POST['p1']);
+			header('Location: backend.php?accion=users');
+			
+			
+		} else{
+			$params = array('users' => $this->us->listarPorId($id));
+			echo $this->twig->render('formModUser.twig.html', array('users' => $params['users']));
+		}
+
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
 	}
 	
 	public function altaUsuario($id){
@@ -393,25 +375,31 @@ require_once __DIR__ . '/ControllerLogin.php';
             else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
                  header('Location: backend.php?accion=users#err1');
              }
-		
-	
-		
-		
 	}
 
-
 // ------------------------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------- DECLARACION DE FUNCIONES PARA LAS ALERTAS ---------------------------------------------
+// --------------------------------------- DECLARACION DE FUNCIONES PARA LOS PEDIDOS/ENTREGAS -----------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------------------
 	
-	public function alertaPedidos()
+	public function generarPedido()
     {
-		$prueba = $this->mP->pedidosHoy();
-	
-        $params = array('alimentos' => $this->mP->pedidosHoy());
-		return $params;
+		echo "sitio en proceso de construccion"; die;
+		
+		$pedido = array();
+		$entidades = $this->mE->listarReducido(); // devuelve arreglo de arreglos con (id, razon_social)
+		$detalles = $this->mA->listarSoloStock();
+		
+		echo $this->twig->render('formPedido.twig.html', array('pedido' => $pedido,
+															   'entidades' => $entidades,
+															   'detalles' => $detalles,
+															   'usuario' => $_SESSION['USUARIO']['userName'],
+															   'accion' => "alta"));
 	}
 	
-	
- }
+	public function generarEntrega()
+    {
+		echo "sitio en proceso de construccion"; die;
+	}
+
+	}
 ?>

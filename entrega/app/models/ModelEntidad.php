@@ -25,6 +25,21 @@
          return $entidades;
      }
 
+	 public function listarReducido() // devuelve las entidades en ALTA (estado id=1)
+     {
+         $sql = $this->conexion->prepare(
+			 "SELECT entidad_receptora.id, entidad_receptora.razon_social
+			  FROM entidad_receptora
+			  WHERE estado_entidad_id='1'
+			  ORDER BY entidad_receptora.razon_social");
+		
+		 $sql->execute();
+		 
+         $entidades = $sql->fetchAll(PDO::FETCH_ASSOC);
+			
+         return $entidades;
+     }
+
      public function agregar($r, $t, $d, $e, $n, $s) //razon social, telefono, domicilio, necesidad, estado, servicio prestado
      {
 		 $r = htmlspecialchars($r);

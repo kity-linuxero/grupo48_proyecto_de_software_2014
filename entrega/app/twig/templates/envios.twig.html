@@ -1,0 +1,52 @@
+{% extends "layoutBackAdmin.twig.html" %}
+
+{% block contenido %}
+<h3>Envío del pedido </h3>
+
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=insertarUsuario">
+    <h2>Alta de usuario</h2>
+    
+	
+	
+	<div>
+        <label>*Nombre de usuario</label>
+        <input type="text" name="nombre" value="{{users.0.nombre}}" required/>
+    </div>
+    <div
+         class="formRow">
+					<label>Rol</label>
+					<select id="rolSelect" name="rol">
+						<option value="1"  {% if users.0.nombreRol == "administrador" %} selected="selected" {% endif %}> 
+							Administrador</option>
+						<option value="2"  {% if users.0.nombreRol == "gestion" %} selected="selected" {% endif %}> 
+							Gestión</option>
+						<option value="3"  {% if users.0.nombreRol == "consulta" %} selected="selected" {% endif %}> 
+							Consulta</option>
+					</select>	
+		
+    </div>
+    <div>
+        <label>*Contraseña:</label>
+        <input type="password" id="p1" name="p1" required/>
+    </div>
+    
+    <div>
+        <label>*Repetir Contraseña:</label>
+        <input type="password" id="p2" name="p2" required/>
+    </div>
+
+	
+
+	<br>
+	
+    <button onclick=validarPass() name="botones">Alta</button>
+    
+	<button onclick="window.location.href='./backend.php?accion=users'">Cancelar</button>
+
+
+<div class="obligatorios">*Campos obligatorios</div>
+
+
+</form>
+
+{% endblock %}

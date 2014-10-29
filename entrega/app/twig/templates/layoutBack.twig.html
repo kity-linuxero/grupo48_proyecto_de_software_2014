@@ -58,7 +58,6 @@ $("#datepicker").datepicker({
 		<!-- Contenido dinámico a mostrar -->
 		
 		<div>
-				<br>
 				<p>Bienvenido {{usuario}}. Aqui encontrará las opciones disponibles.</p>
 				<hr>
 			
@@ -68,9 +67,8 @@ $("#datepicker").datepicker({
 				{% block contenido %}
 				{% endblock %}
 			</div>
-			
+		{% if (inicio == 1) %}
 			<div>
-
 				<h2>
 					Pedidos pendientes para el día de hoy:
 				</h2>
@@ -86,17 +84,23 @@ $("#datepicker").datepicker({
 							<th></th>
 						</tr>
 					{% for pedido in params %}
-						<tr>
+						{% if date(pedido.hora) < date() %}
+							<tr bgcolor="#FF4400">
+						{% else %}
+							<tr>
+						{% endif %}
 								<td>{{ pedido.numero }}</td>
 								<td>{{ pedido.razon_social }}</td>
 								<td>{{ pedido.descripcion }}</td>
-								<td>{{ pedido.fecha }} {{ pedido.hora}}</td>
+								<td>{{ pedido.fecha|date('d-m-Y') }} {{ pedido.hora|date('H:i') }}</td>
 								<td>{% if pedido.con_envio %} Si {% else %} No {% endif %}</td>
-						</tr>
+							</tr>
 					{% endfor %}
 					</tbody>
 				</table>
 			</div>
+		{% endif %}
+			
 		</div>
 
 	</div>

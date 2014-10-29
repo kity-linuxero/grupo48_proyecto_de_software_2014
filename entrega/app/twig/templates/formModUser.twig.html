@@ -7,15 +7,14 @@
 
     if(document.getElementById("p1").value!=document.getElementById("p2").value)
 	{   alert("Las contraseñas no coinciden");}
-	else {alert("Se debería modificar.");}
-		
-
     }
  </script>
 
-
-<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarUsuario&amp;id={{params.id}}">
+<!-- &amp;id={{params.id}} -->
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarUsuario&amp;id={{users.0.id}}">
     <h2>Modificación de usuario</h2>
+	
+
     <div>
         <label>*Nombre de usuario</label>
         <input type="text" name="nombre" value="{{users.0.nombre}}" required/>
@@ -40,14 +39,14 @@
     
     <div>
         <label>*Repetir Contraseña:</label>
-        <input type="password" id="p2" name="p2" value="{{users.0.pass}}" required/>
+        <input type="password" id="p2" name="p2" value="{{users.0.pass}}" onblur="validarPass()" required/>
     </div>
 
 	
 
 	<br>
 	
-    <button onclick=validarPass() name="botones">Modificar</button>
+    <button type="submit" name="botones">Modificar</button>
     
 	<button onclick="window.location.href='./backend.php?accion=users'">Cancelar</button>
 

@@ -38,10 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			case "consulta":
 				//Sentencias para usuario consulta
 				header('Location: ../web/backend.php');
-			
 			break;
-			
-		
+			case "gestion":
+				//Sentencias para usuario consulta
+				header('Location: ../web/backend.php');
+			break;
+
 		}
 	
 	}
