@@ -1,14 +1,17 @@
 {% extends "layoutBackAdmin.twig.html" %}
 
-{% block funciones %}
-
-	// aca irian las funciones a declarar
-
-{% endblock %}
-
-
-
 {% block contenido %}
+
+<script>
+	function deshabilitar(){
+		alert("hola mundo");
+	    if ( document.getElementById(input#e) {
+			document.getElementById(input#e).disabled = false;
+		} else {
+			document.getElementById(input#e).disabled = true;
+		}
+	}
+</script>
 
 <form action="./backend.php?accion=generarPedido" method="post">
  <p>
@@ -28,31 +31,29 @@
 			<input type="text" id="datepicker" name="fecha" required/>
 		</div>
 
-
-
  </fieldset>
  <fieldset>
   <legend>Alimentos disponibles</legend>
-  <input name="detalle[]" 
-         type="checkbox" 
-         value="Smallpox" tabindex="20"> Smallpox
-  </input>
-
-
-
-
-
-
+	<dl>
+	  {% for detalle in detalles %}
+		<dt>
+			<input type="checkbox" onclick=deshabilitar() value="{{ detalle.id }}" />{{detalle.descripcion}} | {{detalle.contenido}}
+		</dt>
+		<dd>
+			<input type="number" min="0" max="{{detalle.stock}}" name="cantidad['{{detalle.id}}']" id="{{detalle.id}}" value="0" disabled /> 
+		</dd>
+	  {% endfor %}
+	</dl>
   </fieldset>
  <fieldset>
   <legend>Opción de Envío</legend>
   Seleccione si quiere el pedido con envío: 
   <input name="con_envio" 
          type="radio" 
-         value="1" tabindex="35">Si
+         value="1" tabindex="35" />Si
   <input name="con_envio" 
          type="radio" 
-         value="0" tabindex="35" checked="selected">No
+         value="0" tabindex="35" checked />No
 
  </fieldset>
 	
