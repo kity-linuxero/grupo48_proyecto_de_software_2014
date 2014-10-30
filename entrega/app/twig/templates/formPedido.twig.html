@@ -3,21 +3,29 @@
 {% block contenido %}
 
 <script>
-	function deshabilitar(){
-		alert("hola mundo");
-	    if ( document.getElementById(input#e) {
-			document.getElementById(input#e).disabled = false;
-		} else {
-			document.getElementById(input#e).disabled = true;
-		}
+	function deshabilitar(e){
+		if (document.getElementById(e).disabled)
+			document.getElementById(e).disabled = false;
+		else
+			document.getElementById(e).disabled = true;
 	}
 </script>
+
+<style>
+table { text-align:left;
+		border:0px;
+		width: 100%;
+		font-size: 10px;
+		}
+td { border-top: 1px solid silver}
+input.number {width: 50px}
+</style>
 
 <form action="./backend.php?accion=generarPedido" method="post">
  <p>
  <fieldset>
   <legend>Información del Pedido</legend>
-		<div class="formRow">
+		<div>
 			<label>Entidad Receptora</label>
 			<select id="entidadSelect" name="entidad">
 				{% for entidad in entidades %}
@@ -30,30 +38,40 @@
 			<label>Fecha de Entrega</label>
 			<input type="text" id="datepicker" name="fecha" required/>
 		</div>
+		<div>
+			<label>Hora</label>
+			<input type="text" name="hora" class="number" pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}" id="24h"placeholder="HH:MM"required/>
+		</div>
+
 
  </fieldset>
  <fieldset>
   <legend>Alimentos disponibles</legend>
-	<dl>
+    <table>
 	  {% for detalle in detalles %}
-		<dt>
-			<input type="checkbox" onclick=deshabilitar() value="{{ detalle.id }}" />{{detalle.descripcion}} | {{detalle.contenido}}
-		</dt>
-		<dd>
-			<input type="number" min="0" max="{{detalle.stock}}" name="cantidad['{{detalle.id}}']" id="{{detalle.id}}" value="0" disabled /> 
-		</dd>
+		<tr>
+		  <td>
+			<input type="checkbox" onchange=deshabilitar({{detalle.id}}) value="{{ detalle.id }}" />{{detalle.descripcion}}
+		  </td>
+		  <td>	
+			{{detalle.contenido}}
+		  </td>	
+		  <td>	
+			<input class="number" type="number" min="1" max="{{detalle.stock}}" name="cantidad['{{detalle.id}}']" id="{{detalle.id}}" value="1" disabled /> 
+		  </td>
+		</tr>
 	  {% endfor %}
-	</dl>
-  </fieldset>
+    </table>
+</fieldset>
  <fieldset>
   <legend>Opción de Envío</legend>
   Seleccione si quiere el pedido con envío: 
   <input name="con_envio" 
          type="radio" 
-         value="1" tabindex="35" />Si
+         value="1" />Si
   <input name="con_envio" 
          type="radio" 
-         value="0" tabindex="35" checked />No
+         value="0" checked />No
 
  </fieldset>
 	

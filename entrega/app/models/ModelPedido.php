@@ -76,6 +76,14 @@ numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 
 			$update->execute();
 		}
 	}
+	
+	public function validarDatos($pedido, $turno, $alimentos){
+			// se validaran los datos antes de agregar/modificar
+			print_r($pedido); echo "<br>";
+			print_r($turno); echo "<br>";
+			print_r($alimentos); echo "<br>";
+			die;
+	}
 	 
 }
 ?>

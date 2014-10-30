@@ -383,16 +383,29 @@ require_once __DIR__ . '/ControllerLogin.php';
 	
 	public function generarPedido()
     {
-		$pedido = array();
 		$entidades = $this->mE->listarReducido(); // devuelve arreglo de arreglos con (id, razon_social)
 		$detalles = $this->mA->listarSoloStock();
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-			print_r($_POST); print_r($_POST['history_illness']); die;
-		
+//[entidad] => 1 [fecha] => 2014-10-01 [hora] => 12:12 [cantidad] => Array ( ['7'] => 1) [con_envio] => 0) 
+			$pedido = array('entidad_receptora_id'=>$_POST['entidad'],
+							'con_envio'=>$_POST['con_envio'],
+							);
+			$turno = array('fecha'=>$_POST['fecha'], 'hora'=>$_POST['hora']);
+			
+			if ($this->mP->validarDatos($pedido, $turno, $_POST['cantidad'])){
+				$this->mP->agregar($pedido, $turno, $_POST['cantidad']);
+                 header('Location: backend.php?accion=inicio');
+			} else {
+				// todavia nada
+			}
 		} else {
-		
+			// revisar los campos porque estos son los que van a rellenar el modificar porque usan el mismo formPedido
+			$pedido = array('entidad_receptora_id'=>"",
+							'fecha_ingreso'=>"",
+							'estado_pedido_id'=>"",
+							'con_envio'=>"",
+							);
 			echo $this->twig->render('formPedido.twig.html', array('pedido' => $pedido,
 																   'entidades' => $entidades,
 																   'detalles' => $detalles,
