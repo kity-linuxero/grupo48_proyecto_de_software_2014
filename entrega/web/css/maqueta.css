@@ -1,3 +1,17 @@
+#message_box{
+position: absolute;
+top: 0;
+left: 0;
+z-index: 1000;
+background: #ffc;
+padding: 5px;
+border: 1px solid #CCCCCC;
+text-align: center;
+width: 99%;
+font-weight: bold;
+
+}
+
 body {
  background-color: #EBEBEB;
 
@@ -39,20 +53,6 @@ footer{
  margin: 0 auto 0 auto;
  background-color: #FFFFFF;
  
-}
-
-#message_box {
-    font: 12px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    background: #ffc;
-    padding: 5px;
-    border: 1px solid #CCCCCC;
-    text-align: center;
-    font-weight: bold;
-    width: 99%;
 }
 
 
