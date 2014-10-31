@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
  class ControllerFront extends Controller
  {
@@ -11,17 +11,26 @@
 	public function inicio()
      {
 		echo $this->twig->render('index.twig.html', array());
+		
+		/*echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'mensaje' => 'El usuario se ha agregado correctamente.'));*/
+		/*echo $this->twig->render('index.twig.html', array('mensaje' => 'El usuario se ha agregado correctamente.'));*/
      }
+	 
+	 public function inicioErr()
+     {
+		echo $this->twig->render('index.twig.html', array('mensaje' => 'Usuario o contraseña incorrectos.'));
+     }
+	 
 	 
 	public function contacto()
     {
 		echo $this->twig->render('contacto.twig.html', array());
     }
     	 
-	public function mensaje()
+	/*public function mensaje()
     {
 		echo $this->twig->render('mensajeFront.twig.html', array('mensaje' => $_GET));
-    }
+    }*/
 	 
 	public function listarDonantes()
     {	 

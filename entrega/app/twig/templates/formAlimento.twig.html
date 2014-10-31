@@ -3,8 +3,9 @@
 {% block contenido %}
 
 {% if accion=="alta" %}
+
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaAlimento">
-     <h2>Alta de Donación de Alimento</h2>
+     <h3>Alta de Donación de Alimento</h3>
 {% elseif accion=="modificar" %}
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarAlimento&amp;id={{params.id}}">
     <h2>Modificación de Donación de Alimento</h2>
@@ -29,10 +30,11 @@
          
          
          <input type="text" id="datepicker" name="fecha" required/>
-         <label>*Fecha de vencimiento</label>
+         <label>*Fecha vencimiento</label>
     </div>
     <div>
-        <textarea name="contenido" cols="40" rows="6">{{ params.contenido }}</textarea>
+        <!-- <textarea name="contenido" cols="40" rows="6">{{ params.contenido }}</textarea> -->
+		<input type="text" name="contenido" value="{{ params.contenido }}" required/>
 		<label>Contenido:</label>
     </div>
     <div>

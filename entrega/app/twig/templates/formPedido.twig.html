@@ -21,7 +21,7 @@ td { border-top: 1px solid silver}
 input.number {width: 50px}
 </style>
 
-<form action="./backend.php?accion=generarPedido" method="post">
+<form action="./backend.php?accion=generarPedido" method="post" id="formulario">
  <p>
  <fieldset>
   <legend>Información del Pedido</legend>
@@ -45,7 +45,9 @@ input.number {width: 50px}
 
 
  </fieldset>
+ <br>
  <fieldset>
+ 
   <legend>Alimentos disponibles</legend>
     <table>
 	  {% for detalle in detalles %}
@@ -63,23 +65,24 @@ input.number {width: 50px}
 	  {% endfor %}
     </table>
 </fieldset>
+<br>
  <fieldset>
   <legend>Opción de Envío</legend>
   Seleccione si quiere el pedido con envío: 
   <input name="con_envio" 
          type="radio" 
-         value="1" />Si
+         value=true />Si
   <input name="con_envio" 
          type="radio" 
-         value="0" checked />No
+         value=false checked />No
 
  </fieldset>
-	
+	<br>
     <button type="submit" name= "boton">{% if accion=="alta" %}Generar Pedido{% elseif accion=="modificar" %}Modificar{% endif %}</button>
 	<button onclick="window.location.href='./backend.php'">Cancelar</button>
 
 
-<div class="obligatorios">*Campos obligatorios</div>
+
 
 
 </form>

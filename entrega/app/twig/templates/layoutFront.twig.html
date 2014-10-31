@@ -9,10 +9,43 @@
  <link rel="stylesheet" href="./css/login.css" type="text/css"/>
  <link rel="stylesheet" href="./css/listado.css" type="text/css"/> 
  <link rel="stylesheet" href="./css/responsive.css" type="text/css"/>
+ <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+ 
+ <script src="./js/mensaje.js"></script>
+  <script src="./js/jquery-1.9.1.js"></script>
+ 
+ 
+ 
+ 
+ <style type="text/css">
+#message_box{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	background: #ffc;
+	padding: 5px;
+	border: 1px solid #CCCCCC;
+	text-align: center;
+	width: 100%;
+	font-weight: bold;
+	font: 12px "Arial";
+}
+</style>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
 </head>
-<body>
-    
+<body onload="setupMessageBox()">
+    <!-- si tiene mensajes -->
+	{% if (mensaje) %} <div id="message_box">{{ mensaje }}</div>{% endif %}
+	
+	
 	<div id="global">
 
 		<div id="cabecera">
@@ -50,7 +83,7 @@
 	<div id="login" class="modalDialog">
 		<div>
 			<a href="#close" title="Close" class="close">X</a>
-			<h2>Login</h2>
+			
 			<p>Inicie sesión para continuar.</p>
 			
 			<form class="log"  method="post" name="formulario"  action='./../app/login.php'>
@@ -67,17 +100,7 @@
 		</div>
 	</div>
 	
-	<div id="err1" class="modalDialog">
-		<div>
-			<a href="#close" title="Close" class="close">X</a>
-			<h2>Error</h2>
-			<p>Usuario o contraseña incorrectos.</p>
-		</div>
-	</div>
 
-
-
-	
 	<footer>
 	Banco Alimentario La Plata | Seguinos en: <a href="https://www.facebook.com/pages/Banco-Alimentario-La-Plata/87991129502">Facebook</a> y <a href="https://twitter.com/bancoalimlp">Twitter.</a>
 	</footer>

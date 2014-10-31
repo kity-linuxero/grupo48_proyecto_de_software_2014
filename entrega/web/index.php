@@ -20,7 +20,7 @@
      'listarEntidades' => array('controller' =>'ControllerFront', 'accion' =>'listarEntidades'),
      'quienesSomos' => array('controller' =>'ControllerFront', 'accion' =>'quienesSomos'),
      'contacto' => array('controller' =>'ControllerFront', 'accion' =>'contacto'),
-	 'mensaje' => array('controller' =>'ControllerFront', 'accion' =>'mensaje'),
+	 'inicioErr' => array('controller' =>'ControllerFront', 'accion' =>'inicioErr'),
 	// 'login' => array('controller' =>'ControllerFront', 'accion' =>'login')
  );
 

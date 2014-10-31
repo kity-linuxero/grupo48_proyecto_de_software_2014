@@ -363,7 +363,9 @@ require_once __DIR__ . '/ControllerLogin.php';
 				 /* 'usuario' => dameUsuario())*/
 			}
             else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-                 header('Location: backend.php?accion=users#err2');
+                 $params = array('users' => $this->us->listar());
+				 echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'mensaje' => 'El usuario ya existe.'));
+				 
              }
 		}
 	}
@@ -376,7 +378,9 @@ require_once __DIR__ . '/ControllerLogin.php';
 				 header('Location: backend.php?accion=users');
 			}
             else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
-                 header('Location: backend.php?accion=users#err1');
+                 /*header('Location: backend.php?accion=users#err1');*/
+				 $params = array('users' => $this->us->listar());
+				 echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'mensaje' => 'No puede eliminarse usted mismo.'));
              }
 	}
 
@@ -395,12 +399,12 @@ require_once __DIR__ . '/ControllerLogin.php';
 							'con_envio'=>$_POST['con_envio'],
 							);
 			$turno = array('fecha'=>$_POST['fecha'], 'hora'=>$_POST['hora']);
-			
 			if ($this->mP->validarDatos($pedido, $turno, $_POST['cantidad'])){
 				$this->mP->agregar($pedido, $turno, $_POST['cantidad']);
                  header('Location: backend.php?accion=inicio');
 			} else {
-				// todavia nada
+				// se llama al Home y se le envia un error
+				echo "error al ingresar los datos"; die;
 			}
 		} else {
 			// revisar los campos porque estos son los que van a rellenar el modificar porque usan el mismo formPedido

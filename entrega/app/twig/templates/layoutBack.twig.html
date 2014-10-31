@@ -2,7 +2,7 @@
 <html lang="es"> 
 <head>
     <title>{% block title %}Banco Alimentario La Plata{% endblock %}</title>
-	<meta charset="utf8" />
+	<meta charset="UTF-8" />
 	
  <link rel="stylesheet" media="(min-width: 481px)" href="./css/maqueta.css" type="text/css">
  <link rel="stylesheet" media="(max-width: 480px)" href="./css/maquetaMobile.css" />
@@ -10,7 +10,7 @@
  <link rel="stylesheet" href="./css/form.css" type="text/css"/>
  <link rel="stylesheet" href="./css/login.css" type="text/css"/>
  <link rel="stylesheet" href="./css/listado.css" type="text/css"/>
- 
+ <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css"/>
  
  <link rel="stylesheet" href="./css/jquery-ui.css"/>
  <script src="./js/jquery-1.9.1.js"></script>
@@ -38,7 +38,7 @@ $("#datepicker").datepicker({
 	padding: 5px;
 	border: 1px solid #CCCCCC;
 	text-align: center;
-	width: 99%;
+	width: 100%;
 	font-weight: bold;
 	font: 12px "Arial";
 }
@@ -88,25 +88,26 @@ $("#datepicker").datepicker({
 			</div>
 		{% if (inicio == 1) %}
 			<div>
-				<h2>
-					Pedidos pendientes para el día de hoy:
-				</h2>
+				<h5>
+					Pedidos pendientes:
+				</h5>
 <!-- numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 	con_envio 	id 	fecha 	hora 	razon_social descripcion -->
-				<table class="reference" style="width:100%">
+				<div class="table-responsive">
+				<table class="table table-condensed" style="width:100%">
 					<tbody>
-						<tr>
+						<tr class="active">
 							<th>Nº</th>
 							<th>Razón Social</th>
 							<th>Estado del Pedido</th>
 							<th>Fecha de Entrega</th>
 							<th>Envío</th>
-							<th></th>
+							
 						</tr>
 					{% for pedido in params %}
 						{% if date(pedido.hora) < date() %}
-							<tr bgcolor="#FF4400">
+							<tr class="danger">
 						{% else %}
-							<tr>
+							<tr class="warning">
 						{% endif %}
 								<td>{{ pedido.numero }}</td>
 								<td>{{ pedido.razon_social }}</td>
@@ -117,6 +118,7 @@ $("#datepicker").datepicker({
 					{% endfor %}
 					</tbody>
 				</table>
+				</div>
 			</div>
 		{% endif %}
 			

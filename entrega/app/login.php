@@ -15,7 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	
 	if ($intentoLogin == 0)	{
 		//echo falló en la autenticación de usuario
-		header('Location: ../web/index.php#err1');
+		
+		
+		header('Location: ../web/index.php?accion=inicioErr');
     }
 	else{
 		//login correcto. Hay que verificar el rol
