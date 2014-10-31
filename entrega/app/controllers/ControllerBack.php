@@ -357,7 +357,10 @@ require_once __DIR__ . '/ControllerLogin.php';
 			// comprueba que el usuario no exista ya
 			if (!$this->us->existeUsuario($_POST['nombre'])){
 				 $this->us->agregar($_POST['nombre'], $_POST['rol'], $_POST['p1']);
-				 header('Location: backend.php?accion=users');
+				 /*header('Location: backend.php?accion=users');*/
+				 $params = array('users' => $this->us->listar());
+				 echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'mensaje' => 'Se ha agregado bien'));
+				 /* 'usuario' => dameUsuario())*/
 			}
             else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
                  header('Location: backend.php?accion=users#err2');

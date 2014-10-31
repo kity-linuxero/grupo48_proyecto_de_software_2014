@@ -27,19 +27,12 @@ $("#datepicker").datepicker({
 });
 </script>
  
- 
- 
 </head>
   
 <body onload="setupMessageBox()">
   
 	<!-- si tiene mensajes -->
-	
-	{% if (mensaje == 1) %}
-		<div id="message_box">{{ mensaje }}</div>
-	{% endif %}
-	
-  
+	<div id="message_box">{{ mensaje }}</div>
   
  	<div id="global">
 
