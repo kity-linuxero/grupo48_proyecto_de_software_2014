@@ -42,6 +42,7 @@ footer{
 }
 
 #message_box {
+    font: 12px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
     position: absolute;
     top: 0;
     left: 0;
@@ -52,7 +53,6 @@ footer{
     text-align: center;
     font-weight: bold;
     width: 99%;
-    font: 12px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
 }
 
 
