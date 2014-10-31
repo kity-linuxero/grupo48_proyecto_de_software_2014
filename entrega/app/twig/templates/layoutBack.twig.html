@@ -32,7 +32,7 @@ $("#datepicker").datepicker({
 <body onload="setupMessageBox()">
   
 	<!-- si tiene mensajes -->
-	<div id="message_box">{{ mensaje }}</div>
+	{% if (mensaje) %} <div id="message_box">{{ mensaje }}</div>{% endif %}
   
  	<div id="global">
 

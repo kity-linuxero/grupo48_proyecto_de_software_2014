@@ -41,6 +41,7 @@ footer{
  
 }
 
+/* Muestra un mensaje */
 #message_box {
     position: absolute;
     top: 0;
