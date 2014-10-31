@@ -19,7 +19,7 @@ class Permisos {
 								 'altaAlimento'=>'0', 'modificarAlimento'=>'0',
 								 'inicio'=>'0', 'users'=>'0', 'modificarUsuario'=>'0', 'altaUsuario'=>'0',
 								 'insertarUsuario'=>'0', 'borrarUsuario' => '0',
-								 'generarPedido'=>'0', 'generarEntrega'=>'0',
+								 'generarPedido'=>'0', 'generarEntrega'=>'0', 'mostrarConfiguracion'=>'0'
 								 ),
 		'gestion' => array('generarPedido'=>'0', 'generarEntrega'=>'0', 'inicio'=>'0'),
 		'consulta' => array('listarAlimentosSoloStock'=>'0', 'inicio'=>'0')

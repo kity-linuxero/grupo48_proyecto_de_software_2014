@@ -44,6 +44,7 @@ $map = array(
      'altaUsuario' => array('controller' =>'ControllerBack', 'accion' =>'altaUsuario'),
      'insertarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'insertarUsuario'),
      'borrarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'borrarUsuario'),
+     'mostrarConfiguracion' => array('controller' => 'ControllerBack', 'accion' => 'mostrarConfiguracion'),
 	 
 	 'generarPedido' => array('controller' => 'ControllerBack', 'accion' => 'generarPedido'),
 	 'generarEntrega' => array('controller' => 'ControllerBack', 'accion' => 'generarEntrega'),

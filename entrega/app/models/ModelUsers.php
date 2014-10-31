@@ -156,4 +156,17 @@
      
 	}
 	
+	 public function verConfiguracion()
+     {
+         
+		$sql = $this->conexion->prepare("SELECT * FROM configuracion");
+
+		 $sql->execute();
+		 
+         $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
+			
+        return $listado; 
+     
+	}
+	
  }

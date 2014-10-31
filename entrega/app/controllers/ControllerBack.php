@@ -371,18 +371,33 @@ require_once __DIR__ . '/ControllerLogin.php';
 	}
 	
 	public function borrarUsuario($id){
-		
+		$params = array('users' => $this->us->listar());
 		//comprueba que el usuario no intente borrarse a sí mismo
 		if ($_SESSION['USUARIO']['id']!=$id){
 				 $this->us->borrar($id);
-				 header('Location: backend.php?accion=users');
+				 echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'mensaje' => 'Se ha borrado con éxito.'));
 			}
             else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
                  /*header('Location: backend.php?accion=users#err1');*/
-				 $params = array('users' => $this->us->listar());
+				 
 				 echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'mensaje' => 'No puede eliminarse usted mismo.'));
              }
 	}
+	
+	public function mostrarConfiguracion(){
+		
+			$configuracion= $this->us->verConfiguracion();
+		
+			echo $this->twig->render('formConfig.twig.html', array('config' => $configuracion));
+			
+				
+				
+		}
+				
+				
+		
+		
+	
 
 // ------------------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------- DECLARACION DE FUNCIONES PARA LOS PEDIDOS/ENTREGAS -----------------------------------------
@@ -394,7 +409,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 		$detalles = $this->mA->listarSoloStock();
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//[entidad] => 1 [fecha] => 2014-10-01 [hora] => 12:12 [cantidad] => Array ( ['7'] => 1) [con_envio] => 0) 
+// Array ( [entidad] => 1 [fecha] => 2014-10-29 [hora] => 12:59 [cantidad] => Array ( [8] => 5 [12] => 5 ) [con_envio] => 0 [boton] => )  
 			$pedido = array('entidad_receptora_id'=>$_POST['entidad'],
 							'con_envio'=>$_POST['con_envio'],
 							);

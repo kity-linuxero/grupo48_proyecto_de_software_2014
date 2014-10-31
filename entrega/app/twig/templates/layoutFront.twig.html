@@ -12,7 +12,7 @@
  <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
  
  <script src="./js/mensaje.js"></script>
-  <script src="./js/jquery-1.9.1.js"></script>
+ <script src="./js/jquery-1.9.1.js"></script>
  
  
  
@@ -33,7 +33,15 @@
 }
 </style>
  
- 
+<script type='text/javascript'>
+    // Para cerrar el modal del login cuando se presione la tecla escape
+    $(document).keyup(function(event){
+        if(event.which==27)
+        {
+            location.href = "#close";
+        }
+    });
+</script> 
  
  
  
@@ -84,11 +92,13 @@
 		<div>
 			<a href="#close" title="Close" class="close">X</a>
 			
+			
+			<h3>Login</h3>
 			<p>Inicie sesión para continuar.</p>
 			
-			<form class="log"  method="post" name="formulario"  action='./../app/login.php'>
+			<form class="log"  method="post" name="formulario" id="formulario" action='./../app/login.php'>
 				<div>
-					<input type="text" name="usuario" placeholder="Usuario" required/>
+					<input type="text" name="usuario" id="usuario" placeholder="Usuario" autofocus required/>
 				</div>
 				<div>
 					<input type="password" name="pass" placeholder="Contraseña" required/>
@@ -96,6 +106,7 @@
 				<div>
 					<button type="submit" name= "boton" class="button">Iniciar sesión</button>
 				</div>
+				
 			</form>
 		</div>
 	</div>

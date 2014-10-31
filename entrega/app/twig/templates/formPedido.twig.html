@@ -17,19 +17,22 @@ table { text-align:left;
 		width: 100%;
 		font-size: 10px;
 		}
-td { border-top: 1px solid silver}
 input.number {width: 50px}
 </style>
 
-<form action="./backend.php?accion=generarPedido" method="post" id="formulario">
- <p>
+    {% if accion=="alta" %}
+<form action="./backend.php?accion=generarPedido" method="post" id="formulario" name="formulario">
+ 	{% elseif accion=="modificar" %}
+<form action="./backend.php?accion=actualizarPedido&amp;id={{pedido.numero}}" method="post" id="formulario" name="formulario">
+	{% endif %}
+<p>
  <fieldset>
   <legend>Información del Pedido</legend>
 		<div>
 			<label>Entidad Receptora</label>
 			<select id="entidadSelect" name="entidad">
 				{% for entidad in entidades %}
-						<option value="{{ entidad.id }}"> 
+						<option value="{{ entidad.id }}" {% if pedido.entidad_receptora_id == entidad.id %} selected="selected" {% endif %}> 
 							{{ entidad.razon_social }}</option>
 				{% endfor %}
 			</select>
@@ -49,7 +52,7 @@ input.number {width: 50px}
  <fieldset>
  
   <legend>Alimentos disponibles</legend>
-    <table>
+    <table class="tablaLoca">
 	  {% for detalle in detalles %}
 		<tr>
 		  <td>
@@ -59,7 +62,7 @@ input.number {width: 50px}
 			{{detalle.contenido}}
 		  </td>	
 		  <td>	
-			<input class="number" type="number" min="1" max="{{detalle.stock}}" name="cantidad['{{detalle.id}}']" id="{{detalle.id}}" value="1" disabled /> 
+			<input class="number" type="number" min="1" max="{{detalle.stock}}" name="cantidad[{{detalle.id}}]" id="{{detalle.id}}" value="1" disabled /> 
 		  </td>
 		</tr>
 	  {% endfor %}
@@ -71,10 +74,10 @@ input.number {width: 50px}
   Seleccione si quiere el pedido con envío: 
   <input name="con_envio" 
          type="radio" 
-         value=true />Si
+         value="1" />Si
   <input name="con_envio" 
          type="radio" 
-         value=false checked />No
+         value="0" checked />No
 
  </fieldset>
 	<br>

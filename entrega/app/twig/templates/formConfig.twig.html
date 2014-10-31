@@ -1,0 +1,38 @@
+{% extends "layoutBackAdmin.twig.html" %}
+
+{% block contenido %}
+
+<!-- &amp;id={{params.id}} -->
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarConfig">
+    <h3>Configuración</h3>
+	
+
+    <div>
+		
+		<label>Días límite</label>
+        <input type="text" name="cantDias" value=" {{ config.0.valor }}" required/>
+        
+    </div>
+    
+    <div>
+        <label>*Contraseña:</label>
+        <input type="text" name="lat" value="{{ config.1.valor }}" required/>
+    </div>
+    
+    <div>
+        <label>*Repetir Contraseña:</label>
+        <input type="text" name="lon" value="{{ config.2.valor }}" required/>
+    </div>
+
+	
+
+	<br>
+	
+    <button type="submit" name="botones">Modificar</button>
+    
+	<button onclick="window.location.href='./backend.php'">Cancelar</button>
+
+
+</form>
+
+{% endblock %}

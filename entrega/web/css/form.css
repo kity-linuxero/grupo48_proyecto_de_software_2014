@@ -29,7 +29,7 @@
 
 .formulario input{
     border:1px solid #aaa;
-
+	line-height: normal;
     
     height:25px;
     width:220px;
