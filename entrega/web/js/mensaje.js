@@ -1,7 +1,9 @@
+/* Funcion para mostrar un mensaje de notificaci{on */
+
 var updateTimer = 0;
   
   function setupMessageBox(){
-    showMessage(); //displays message on page load
+    showMessage(); //Mostrar cuando la página se cargue
     jQuery(window).scroll(function() {
        showMessage();
     });    
@@ -10,13 +12,9 @@ var updateTimer = 0;
   };
  
   function activateTimer() {
-    //updateTimer = setTimeout('jQuery("#message_box").remove()', 3000);
-    updateTimer = setTimeout('jQuery("#message_box").animate({ top:"-=15px",opacity:0 }, "slow")', 3000);
-    
-    
+    updateTimer = setTimeout('jQuery("#message_box").animate({ top:"-=15px",opacity:0 }, "slow")', 3000); 
   }
  
   function showMessage(){
       jQuery('#message_box').animate({top:jQuery(window).scrollTop() + "px" }, {queue: false,duration:350});
-      
   }

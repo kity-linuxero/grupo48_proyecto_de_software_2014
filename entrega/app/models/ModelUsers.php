@@ -10,7 +10,7 @@
      public function listar()
      {
          
-         $sql = $this->conexion->prepare("SELECT shadow.id, shadow.nombre, rol.nombreRol FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id )");
+         $sql = $this->conexion->prepare("SELECT shadow.id, shadow.nombre, rol.nombreRol FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id ) ORDER BY shadow.nombre");
          
 		 $sql->execute();
 		 
@@ -145,15 +145,12 @@
 	
 	 public function modificar($id, $n, $r, $p)
      {
-         
-		 
 		 $sql = $this->conexion->prepare("UPDATE shadow
 										SET nombre='$n',
 											id_rol='$r',
 											pass='$p'
 										WHERE id = '$id'");
-         $sql->execute();
-     
+         $sql->execute(); 
 	}
 	
 	 public function verConfiguracion()
@@ -167,6 +164,34 @@
 			
         return $listado; 
      
+	}
+	
+	public function modificarConfig($dias, $lat, $lon){
+		
+		try {
+
+		//actualizar dias
+		$sql = $this->conexion->prepare("UPDATE configuracion
+										SET valor='$dias'
+										WHERE id = 1");
+		$sql->execute();
+		
+		//actualizar latitud
+				$sql = $this->conexion->prepare("UPDATE configuracion
+										SET valor='$lat'
+										WHERE id = 2");
+		$sql->execute();
+		//actualizar longitud
+		$sql = $this->conexion->prepare("UPDATE configuracion
+										SET valor='$lon'
+										WHERE id = 3");
+		$sql->execute();
+		}
+		catch (Exception $e) {
+			echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+			die;
+		}
+		
 	}
 	
  }

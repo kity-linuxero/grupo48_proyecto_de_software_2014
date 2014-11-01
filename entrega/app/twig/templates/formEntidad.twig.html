@@ -23,6 +23,16 @@
         <input type="text" id="domicilio" name="domicilio" value="{{params.domicilio}}" required/>
     </div>
     
+
+    <div>
+        
+		<label>*Coordenadas</label>
+			<input style="width:110px" type="text" id="lat" name="lat" value="{{params.latitud}}" placeholder="Latitud" required/>
+
+			<input style="width:110px" type="text" id="lon" name="lon" value="{{params.longitud}}" placeholder="Longitud" required/>
+      
+    </div>
+    
 		<div class="formRow">
 					<label>Estado de Entidad</label>
 					<select id="estadoSelect" name="estado">
@@ -71,7 +81,7 @@
 	<br>
 	
     <button type="submit" name= "boton">{% if accion=="alta" %}Generar Alta{% elseif accion=="modificar" %}Modificar{% endif %}</button>
-	<button onclick="window.location.href='./backend.php?accion=listarEntidades'">Cancelar</button>
+	<button type="button" onclick="window.location.href='./backend.php?accion=listarEntidades'">Cancelar</button>
 
 
 <div class="obligatorios">*Campos obligatorios</div>

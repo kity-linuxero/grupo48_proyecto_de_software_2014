@@ -13,7 +13,7 @@
 				<th>Necesidad</th>
 				<th>Servicio Prestado</th>
 				<th></th>
-				<th><a href="./backend.php?accion=altaEntidad">
+				<th style="width:32px"><a href="./backend.php?accion=altaEntidad">
 							<img src="./img/mas.png" alt="Agregar entidad" title="Agregar entidad"></a>
 </th>
 			</tr>
@@ -25,9 +25,9 @@
 		        	<td>{{ entidad.estado }}</td>
 		        	<td>{{ entidad.necesidad }}</td>
 		        	<td>{{ entidad.servicio }}</td>
-		        	<td> <a href="./backend.php?accion=modificarEntidad&amp;id={{entidad.id}}">
+		        	<td style="width:32px"> <a href="./backend.php?accion=modificarEntidad&amp;id={{entidad.id}}">
 							<img src="./img/lapiz.jpg" alt="modificar entidad" title="Modificar entidad"></a></td>
-		        	<td><a href="javascript: if (confirm('Confirmar la eliminación?'))
+		        	<td style="width:32px"><a href="javascript: if (confirm('Confirmar la eliminación?'))
 							{ window.location.href='./backend.php?accion=bajaEntidad&amp;id={{entidad.id}}' } else { void('') };"> 
 						<img src="./img/cruz.png" alt="Borrar entidad" title="Borrar entidad"></a></td>
 			</tr>

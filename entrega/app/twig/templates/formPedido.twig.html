@@ -1,5 +1,7 @@
 {% extends "layoutBackAdmin.twig.html" %}
 
+
+			
 {% block contenido %}
 
 <script>
@@ -10,15 +12,6 @@
 			document.getElementById(e).disabled = true;
 	}
 </script>
-
-<style>
-table { text-align:left;
-		border:0px;
-		width: 100%;
-		font-size: 10px;
-		}
-input.number {width: 50px}
-</style>
 
     {% if accion=="alta" %}
 <form action="./backend.php?accion=generarPedido" method="post" id="formulario" name="formulario">
@@ -39,13 +32,25 @@ input.number {width: 50px}
 		</div>
 		<div>
 			<label>Fecha de Entrega</label>
-			<input type="text" id="datepicker" name="fecha" required/>
+			<input type="text" id="datepicker" name="fecha" value="{{pedido.fecha}}" required/>
 		</div>
 		<div>
 			<label>Hora</label>
-			<input type="text" name="hora" class="number" pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}" id="24h"placeholder="HH:MM" title="Ingrese una hora valida" required/>
+			<input type="text" name="hora" class="number" pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
+				   id="24h" placeholder="HH:MM" title="Ingrese una hora valida" value="{{pedido.hora|date('H:i')}}" required/>
 		</div>
 
+	{% if accion=="modificar" %}	
+		<div>
+			<label>Estado del Pedido</label>
+			<select id="estadoSelect" name="estado">
+				{% for estado in estados %}
+						<option value="{{ pedido.estado_pedido_id }}" {% if pedido.estado_pedido_id == estado.id %} selected="selected" {% endif %}> 
+							{{ estado.descripcion }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	{% endif %}
 
  </fieldset>
  <br>
@@ -74,15 +79,15 @@ input.number {width: 50px}
   Seleccione si quiere el pedido con envío: 
   <input name="con_envio" 
          type="radio" 
-         value="1" />Si
+         value="1" {%if pedido.con_envio=="1" %} checked {% endif %} />Si
   <input name="con_envio" 
          type="radio" 
-         value="0" checked />No
+         value="0" {%if pedido.con_envio=="0" %} checked {% endif %} />No
 
  </fieldset>
 	<br>
     <button type="submit" name= "boton">{% if accion=="alta" %}Generar Pedido{% elseif accion=="modificar" %}Modificar{% endif %}</button>
-	<button onclick="window.location.href='./backend.php'">Cancelar</button>
+	<button type="button" onclick="window.location.href='./backend.php'">Cancelar</button>
 
 
 

@@ -3,36 +3,39 @@
 {% block contenido %}
 
 <!-- &amp;id={{params.id}} -->
-<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarConfig">
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarConfiguracion">
     <h3>Configuración</h3>
 	
 
     <div>
 		
 		<label>Días límite</label>
-        <input type="text" name="cantDias" value=" {{ config.0.valor }}" required/>
-        
+        <input type="text" name="dias" value="{{ config.0.valor }}" title="Cantidad de días límite de vencimiento del stock" required/>
     </div>
     
     <div>
-        <label>*Contraseña:</label>
-        <input type="text" name="lat" value="{{ config.1.valor }}" required/>
+    <h5>Localización del Banco Alimentario</h5>
+    <hr>
+ 
+        <label>Latitud:</label>
+        <input type="text" name="lat" id="latitud" value="{{ config.1.valor }}" required/>
     </div>
     
     <div>
-        <label>*Repetir Contraseña:</label>
-        <input type="text" name="lon" value="{{ config.2.valor }}" required/>
-    </div>
+        <label>Longitud:</label>
+        <input type="text" name="lon" id="longitud" value="{{ config.2.valor }}" required/>
 
-	
+		
+	<div id="mapa" style="height:400px"></div>
+	<script>mostrarMapa();</script>
+		
+    </div>
 
 	<br>
-	
-    <button type="submit" name="botones">Modificar</button>
-    
-	<button onclick="window.location.href='./backend.php'">Cancelar</button>
-
-
+	<div>
+		<button type="submit" name="botones">Modificar</button>
+		<button type="button" onclick="window.location.href='./backend.php'">Cancelar</button>
+	</div>
 </form>
 
 {% endblock %}

@@ -40,7 +40,7 @@
          return $entidades;
      }
 
-     public function agregar($r, $t, $d, $e, $n, $s) //razon social, telefono, domicilio, necesidad, estado, servicio prestado
+     public function agregar($r, $t, $d, $e, $n, $s, $lat, $lon) //razon social, telefono, domicilio, necesidad, estado, servicio prestado
      {
 		 $r = htmlspecialchars($r);
          $t = htmlspecialchars($t);
@@ -51,29 +51,12 @@
 
 		 $sql = $this->conexion->prepare(
 			"insert into entidad_receptora (razon_social, telefono, domicilio, estado_entidad_id,
-											necesidad_entidad_id, servicio_prestado_id)
-			 values ('$r', '$t', '$d', '$e', '$n', '$s')");
+											necesidad_entidad_id, servicio_prestado_id, latitud, longitud)
+			 values ('$r', '$t', '$d', '$e', '$n', '$s', '$lat', '$lon')");
 		 $sql->execute();
 		}
 		
-	public function agregarContacto($id, $a, $n, $t, $e) //le agrega un contacto a esta entidad
-	{
-		 $a = htmlspecialchars($a);
-         $n = htmlspecialchars($n);
-         $t = htmlspecialchars($t);
-         $e = htmlspecialchars($e);
-		 
-         $sql_contacto = $this->conexion->prepare("insert into contacto (apellido, nombre, telefono, mail)
-													values ('$a','$n', '$t','$m')");
-
-		 $c = $this->conexion->lastInsertId(); // contacto_id recien creado
-
-         $sql = $this->conexion->prepare("update entidad_receptora set contacto_id='$c' where id='$id'");
-		 
-         $sql->execute();
-	 }
-
-     public function modificar($id, $r, $t, $d, $e_id, $n_id, $s_id)
+     public function modificar($id, $r, $t, $d, $e_id, $n_id, $s_id, $lat, $lon)
      {
 		$sql = $this->conexion->prepare("UPDATE entidad_receptora
 										 SET razon_social='$r',
@@ -81,7 +64,9 @@
 											 domicilio='$d',
 											 estado_entidad_id='$e_id',
 											 necesidad_entidad_id='$n_id',
-											 servicio_prestado_id='$s_id'											 
+											 servicio_prestado_id='$s_id',
+											 latitud='$lat',
+											 longitud='$lon'											 
 										 WHERE id='$id'");
 		$sql->execute();
 	 }

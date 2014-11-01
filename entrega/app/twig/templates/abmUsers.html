@@ -7,22 +7,22 @@
 
 		<tbody>
 			<tr class="active">
-				<th>Id</th>
+			<!--	<th>Id</th> -->
 				<th>Nombre de usuario</th>
 				<th>Rol</th>
 				<th></th>
-				<th><a href="./backend.php?accion=altaUsuario">
+				<th style="width:32px"><a href="./backend.php?accion=altaUsuario">
 							<img src="./img/mas.png" alt="Agregar Usuario" title="Agregar Usuario"></a>
 </th>
 			</tr>
 		{% for user in users %}
 			<tr>
-			       	<td>{{ user.id }}</td>
+			    <!--   	<td>{{ user.id }}</td> -->
 		        	<td>{{ user.nombre }}</td>
 		        	<td>{{ user.nombreRol }}</td>
-		        	<td> <a href="./backend.php?accion=modificarUsuario&amp;id={{user.id}}">
+		        	<td style="width:32px"> <a href="./backend.php?accion=modificarUsuario&amp;id={{user.id}}">
 							<img src="./img/lapiz.jpg" alt="modificar usuario" title="Modificar usuario"></a></td>
-		        	<td><a href="javascript: if (confirm('Confirmar la eliminación?'))
+		        	<td style="width:32px"><a href="javascript: if (confirm('Confirmar la eliminación?'))
 							{ window.location.href='./backend.php?accion=borrarUsuario&amp;id={{user.id}}' } else { void('') };"> 
 						<img src="./img/cruz.png" alt="Borrar usuario" title="Borrar usuario"></a></td>
 			</tr>

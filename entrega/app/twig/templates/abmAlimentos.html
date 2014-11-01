@@ -14,7 +14,7 @@
 				<th>Reservado</th>
 				<th>Donante</th>
 				<th></th>
-				<th><a href="./backend.php?accion=altaAlimento">
+				<th style="width:32px"><a href="./backend.php?accion=altaAlimento">
 							<img src="./img/mas.png" alt="Agregar alimento" title="Agregar alimento"></a></th>
 			</tr>
 
@@ -27,9 +27,9 @@
 		        	<td>{{ alimento.stock }}</td>
 		        	<td>{{ alimento.reservado }}</td>
 					<td>{{ alimento.razon_social }}</td>
-		        	<td> <a href="./backend.php?accion=modificarAlimento&amp;id={{alimento.id}}">
+		        	<td style="width:32px"> <a href="./backend.php?accion=modificarAlimento&amp;id={{alimento.id}}">
 							<img src="./img/lapiz.jpg" alt="Modificar alimento" title="Modificar alimento"></a></td>
-					<td> <a href="javascript: if (confirm('Confirmar la eliminación?'))
+					<td style="width:32px"> <a href="javascript: if (confirm('Confirmar la eliminación?'))
 							{ window.location.href='./backend.php?accion=bajaAlimento&amp;id={{alimento.id}}' } else { void('') };"> 
 							<img src="./img/cruz.png" alt="Borrar alimento" title="Borrar alimento" ></a> </td>
 			</tr>

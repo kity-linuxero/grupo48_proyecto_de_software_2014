@@ -117,6 +117,31 @@ Array ( ['8'] => 15 ['12'] => 5 )
 				 is_string($turno['hora']) &
                  (count($alimentos)>0));
 	}
+	
+	public function obtenerPorNro($n)
+	{
+		$sql = $this->conexion->prepare("
+			SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora
+			FROM pedido_modelo INNER JOIN turno_entrega
+			WHERE (pedido_modelo.numero='$n')
+					AND (pedido_modelo.turno_entrega_id=turno_entrega.id)
+		");
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $res["0"];
+	}
+	
+	public function listarEstadosPosibles()
+	{
+		$sql = $this->conexion->prepare("
+			SELECT *
+			FROM estado_pedido
+		");
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $res;
+	}
 	 
 }
 ?>

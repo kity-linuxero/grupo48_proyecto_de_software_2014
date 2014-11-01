@@ -165,7 +165,10 @@ require_once __DIR__ . '/ControllerLogin.php';
 						'domicilio' => "", 
 						'estado' => "", 
 						'necesidad' => "",
-						'servicio' => "");
+						'servicio' => "",
+						'latitud' => "",
+						'longitud' => "");
+						
 		$servicios = $this->mE->obtenerServiciosDisponibles();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -176,7 +179,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 			 {
 				 $this->mE->modificar($_GET['id'], $_POST['razon_social'],
                       $_POST['telefono'], $_POST['domicilio'],
-                      $_POST['estado'], $_POST['necesidad'], $_POST['servicio']);
+                      $_POST['estado'], $_POST['necesidad'], $_POST['servicio'],
+                      $_POST['lat'], $_POST['lon']);
                  header('Location: backend.php?accion=listarEntidades');
 			 } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
                  $params['mensaje'] = 'No se ha podido modificar la entidad receptora. Revisa el formulario';
@@ -371,28 +375,34 @@ require_once __DIR__ . '/ControllerLogin.php';
 	}
 	
 	public function borrarUsuario($id){
-		$params = array('users' => $this->us->listar());
+		
 		//comprueba que el usuario no intente borrarse a sí mismo
 		if ($_SESSION['USUARIO']['id']!=$id){
 				 $this->us->borrar($id);
+				 $params = array('users' => $this->us->listar());
 				 echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'mensaje' => 'Se ha borrado con éxito.'));
 			}
             else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
                  /*header('Location: backend.php?accion=users#err1');*/
-				 
+				/*header('Location: backend.php');*/
+				 $params = array('users' => $this->us->listar());
 				 echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'mensaje' => 'No puede eliminarse usted mismo.'));
              }
 	}
 	
-	public function mostrarConfiguracion(){
-		
+	public function modificarConfiguracion()
+	{
+			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+				$this->us->modificarConfig($_POST['dias'],$_POST['lat'], $_POST['lon']);
+				$pedidosHoy = $this->mP->pedidosHoy();
+				echo $this->twig->render('layoutBackAdmin.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario(), 'inicio' => '1', 'mensaje' => 'Se ha modificado la configuración'));
+			} 
+
 			$configuracion= $this->us->verConfiguracion();
-		
+
 			echo $this->twig->render('formConfig.twig.html', array('config' => $configuracion));
-			
-				
-				
-		}
+
+	}	
 				
 				
 		
@@ -422,7 +432,6 @@ require_once __DIR__ . '/ControllerLogin.php';
 				echo "error al ingresar los datos"; die;
 			}
 		} else {
-			// revisar los campos porque estos son los que van a rellenar el modificar porque usan el mismo formPedido
 			$pedido = array('entidad_receptora_id'=>"",
 							'fecha_ingreso'=>"",
 							'estado_pedido_id'=>"",
@@ -433,6 +442,40 @@ require_once __DIR__ . '/ControllerLogin.php';
 																   'detalles' => $detalles,
 																   'usuario' => $_SESSION['USUARIO']['userName'],
 																   'accion' => "alta"));
+		}
+	}
+	
+	public function modificarPedido() // debe recibir $_GET['nro']
+    {
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// $_POST == Array ( [entidad] => 1 [fecha] => 2014-10-29 [hora] => 12:59 [estado] => 1 [cantidad] => Array ( [8] => 5 [12] => 5 ) [con_envio] => 0 [boton] => )  
+			$pedido = array('entidad_receptora_id'=>$_POST['entidad'],
+							'con_envio'=>$_POST['con_envio'],
+							);
+			$turno = array('fecha'=>$_POST['fecha'], 'hora'=>$_POST['hora']);
+			if ($this->mP->validarDatos($pedido, $turno, $_POST['cantidad'])){
+				$this->mP->agregar($pedido, $turno, $_POST['cantidad']);
+                 header('Location: backend.php?accion=inicio');
+			} else {
+				// se llama al Home y se le envia un error
+				echo "error al ingresar los datos"; die;
+			}
+		} else {
+			if (isset($_GET['nro'])) {
+				$pedido = $this->mP->obtenerPorNro($_GET['nro']);
+				// Array (numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 	con_envio 	fecha 	hora)
+			} else {
+				header('Location: backend.php?accion=listarEntidades');
+			}
+			$entidades = $this->mE->listarReducido(); // devuelve arreglo de arreglos con (id, razon_social)
+			$detalles = $this->mA->listarSoloStock();
+			$estados = $this->mP->listarEstadosPosibles();
+			echo $this->twig->render('formPedido.twig.html', array('pedido' => $pedido,
+																	'entidades' => $entidades,
+																	'detalles' => $detalles,
+																	'estados' => $estados,
+																	'usuario' => $_SESSION['USUARIO']['userName'],
+																	'accion' => "modificar"));					
 		}
 	}
 	

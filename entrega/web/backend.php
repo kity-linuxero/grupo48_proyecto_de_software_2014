@@ -45,8 +45,10 @@ $map = array(
      'insertarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'insertarUsuario'),
      'borrarUsuario' => array('controller' =>'ControllerBack', 'accion' =>'borrarUsuario'),
      'mostrarConfiguracion' => array('controller' => 'ControllerBack', 'accion' => 'mostrarConfiguracion'),
+     'modificarConfiguracion' => array('controller' => 'ControllerBack', 'accion' => 'modificarConfiguracion'),
 	 
 	 'generarPedido' => array('controller' => 'ControllerBack', 'accion' => 'generarPedido'),
+	 'modificarPedido' => array('controller' => 'ControllerBack', 'accion' => 'modificarPedido'),
 	 'generarEntrega' => array('controller' => 'ControllerBack', 'accion' => 'generarEntrega'),
 );
 session_start();
