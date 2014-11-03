@@ -1,6 +1,9 @@
 {% extends "layoutBackAdmin.twig.html" %}
 
 {% block contenido %}
+<script>
+	OpenLayers.ImgPath = "http://openlayers.org/api/img/";
+</script>
 
 <!-- &amp;id={{params.id}} -->
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarConfiguracion">
@@ -25,6 +28,7 @@
         <label>Longitud:</label>
         <input type="text" name="lon" id="longitud" value="{{ config.2.valor }}" required/>
 
+		<br>
 		
 	<div id="mapa" style="height:400px"></div>
 	<script>mostrarMapa();</script>
