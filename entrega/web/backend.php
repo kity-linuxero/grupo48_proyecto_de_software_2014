@@ -50,6 +50,7 @@ $map = array(
 	 'generarPedido' => array('controller' => 'ControllerBack', 'accion' => 'generarPedido'),
 	 'modificarPedido' => array('controller' => 'ControllerBack', 'accion' => 'modificarPedido'),
 	 'generarEntrega' => array('controller' => 'ControllerBack', 'accion' => 'generarEntrega'),
+	 'verEntregasPasadas' => array('controller' => 'ControllerBack', 'accion' => 'verEntregasPasadas'),
 	 'mostrarAgenda' => array('controller' => 'ControllerBack', 'accion' => 'mostrarAgenda'),
 	 'entregaDirecta' => array('controller' => 'ControllerBack', 'accion' => 'entregaDirecta'),
 );

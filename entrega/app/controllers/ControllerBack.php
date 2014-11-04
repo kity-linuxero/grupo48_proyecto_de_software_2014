@@ -432,32 +432,38 @@ require_once __DIR__ . '/ControllerLogin.php';
     {
 		$entidades = $this->mE->listarReducido(); // devuelve arreglo de arreglos con (id, razon_social)
 		$detalles = $this->mA->listarSoloStock();
+		$pedido = array('entidad_receptora_id'=>"",
+						'fecha_ingreso'=>"",
+						'estado_pedido_id'=>"",
+						'con_envio'=>"0",
+						);
+		$msj = "";
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // Array ( [entidad] => 1 [fecha] => 2014-10-29 [hora] => 12:59 [cantidad] => Array ( [8] => 5 [12] => 5 ) [con_envio] => 0 [boton] => )  
-			$pedido = array('entidad_receptora_id'=>$_POST['entidad'],
-							'con_envio'=>$_POST['con_envio'],
-							);
-			$turno = array('fecha'=>$_POST['fecha'], 'hora'=>$_POST['hora']);
-			if ($this->mP->validarDatos($pedido, $turno, $_POST['cantidad'])){
-				$this->mP->agregar($pedido, $turno, $_POST['cantidad']);
-                 header('Location: backend.php?accion=inicio');
+			if (isset($_POST['cantidad'])) 
+			{
+				$pedido = array('entidad_receptora_id'=>$_POST['entidad'],
+								'con_envio'=>$_POST['con_envio'],
+								);
+				$turno = array('fecha'=>$_POST['fecha'], 'hora'=>$_POST['hora']);
+				if ($this->mP->validarDatos($pedido, $turno, $_POST['cantidad'])){
+					$this->mP->agregar($pedido, $turno, $_POST['cantidad']);
+					 header('Location: backend.php?accion=inicio');
+				} else {
+					// se llama al Home y se le envia un error
+					$msj = "Revisar los datos ingresados";
+				}
 			} else {
-				// se llama al Home y se le envia un error
-				echo "error al ingresar los datos"; die;
+					$msj = "No se seleccionó ningún alimento para agregar al pedido";
 			}
-		} else {
-			$pedido = array('entidad_receptora_id'=>"",
-							'fecha_ingreso'=>"",
-							'estado_pedido_id'=>"",
-							'con_envio'=>"",
-							);
-			echo $this->twig->render('formPedido.twig.html', array('pedido' => $pedido,
-																   'entidades' => $entidades,
-																   'detalles' => $detalles,
-																   'usuario' => $_SESSION['USUARIO']['userName'],
-																   'accion' => "alta"));
 		}
+		echo $this->twig->render('formPedido.twig.html', array('pedido' => $pedido,
+															   'entidades' => $entidades,
+															   'detalles' => $detalles,
+															   'usuario' => $_SESSION['USUARIO']['userName'],
+															   'accion' => "alta",
+															   'mensaje' => $msj));
 	}
 	
 	public function modificarPedido() // debe recibir $_GET['nro']
@@ -496,7 +502,28 @@ require_once __DIR__ . '/ControllerLogin.php';
 	
 	public function generarEntrega()
     {
-		echo "sitio en proceso de construccion"; die;
+		$entidades = $this->mE->listarReducido(); // devuelve arreglo de arreglos con (id, razon_social)
+		$detalles = $this->mP->alimentosEntregaDirecta();
+		$entidad = "";
+		$msj = "";
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			if (isset($_POST['cantidad'])) 
+			{
+				$entidad = $_POST['entidad'];
+				$this->mP->agregar($entidad, $_POST['cantidad']);
+				$msj = "La entrega fue agregada con éxito";
+				echo $this->twig->render('layoutBackAdmin.twig.html', array('usuario' => $_SESSION['USUARIO']['userName'], 'mensaje'=>$msj));
+			} else {
+				$msj = "No se seleccionó ningún alimento para agregar a la entrega";
+			}
+		}
+		echo $this->twig->render('formEntrega.twig.html', array('entrega' => $entidad,
+																'entidades' => $entidades,
+																'detalles' => $detalles,
+																'usuario' => $_SESSION['USUARIO']['userName'],
+																'accion' => "alta",
+																'mensaje' => $msj));
 	}
 
 	

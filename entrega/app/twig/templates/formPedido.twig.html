@@ -14,9 +14,9 @@
 </script>
 
     {% if accion=="alta" %}
-<form action="./backend.php?accion=generarPedido" method="post" id="formulario" name="formulario">
+<form method="post" id="formulario" name="formulario" action="./backend.php?accion=generarPedido">
  	{% elseif accion=="modificar" %}
-<form action="./backend.php?accion=actualizarPedido&amp;id={{pedido.numero}}" method="post" id="formulario" name="formulario">
+<form method="post" id="formulario" name="formulario" action="./backend.php?accion=actualizarPedido&amp;id={{pedido.numero}}">
 	{% endif %}
 <p>
  <fieldset>

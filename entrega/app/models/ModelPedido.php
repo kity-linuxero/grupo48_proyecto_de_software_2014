@@ -23,8 +23,8 @@ class ModelPedido extends Model
 	
 	public function obtenerHasta()
 	{
-		$conf = $this->us->verConfiguracion();
-		$dias = $conf['1']['valor'];
+		$conf = ModelUsers::verConfiguracion();
+		$dias = $conf['0']['valor'];
 		return $dias;
 	}
 
@@ -71,9 +71,9 @@ numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 
 		$n = $this->obtenerHasta();		// recuperamos la cantidad de dias configurable para mostrar
 		$hasta = $this->getTomorrow($n);	// obtenemos la fecha hasta donde se hara la consulta
 		
-		$detalles = $this->mA->alimentosEntregaDirecta($hoy, $hasta);
+		$detalles = ModelAlimento::alimentosEntregaDirecta($hoy, $hasta);
 
-		return $alimentos;
+		return $detalles;
 	}
 
 	

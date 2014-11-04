@@ -16,15 +16,14 @@ require_once __DIR__ . '/ControllerLogin.php';
 	
 	public function __construct($accion)
 	{
+		$this->twig = $this->configTwig();
 		if ($accion == 'publico') {
-			$this->twig = $this->configTwig();
 			$this->mE = new ModelEntidad(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 						 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
 			$this->mD = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 						 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
 		}	
 		elseif (postaTengoPermiso($accion)) {
-			$this->twig = $this->configTwig();
 			$this->mE = new ModelEntidad(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 						 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
 			$this->mD = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
@@ -39,8 +38,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 						 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 						 
 		} else {
-			echo ("<script>window.alert('No tiene permisos para realizar esta operación.');
-						   window.location = './index.php';</script>");
+			$msj = "Usted no posee permisos para realizar dicha operación";
+			echo $this->twig->render('index.twig.html', array('mensaje' => $msj));
 		}
 	}
 	
