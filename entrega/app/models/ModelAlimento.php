@@ -156,5 +156,22 @@
 			return false;
 		}
 	}
+	
+	public function alimentosEntregaDirecta($f1, $f2)
+	{
+        $sql = $this->conexion->prepare("
+					SELECT *
+					FROM alimento INNER JOIN detalle_alimento
+					WHERE (alimento.codigo=detalle_alimento.alimento_codigo)
+						AND (detalle_alimento.stock > 0)
+						AND (fecha_vencimiento BETWEEN '$f1' AND '$f2')
+					ORDER BY descripcion
+				");
+
+		$sql->execute();
+		 
+        $alimentos = $sql->fetchAll(PDO::FETCH_ASSOC);
+		
+	}
 
  }

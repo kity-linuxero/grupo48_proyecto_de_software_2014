@@ -19,17 +19,17 @@ require_once __DIR__ . '/ControllerLogin.php';
 		switch (dameRol()) {
 			case "administrador":
 				//sentencias para usuario administrador
-				$pedidosHoy = $this->mP->pedidosHoy();
+				$pedidosHoy = $this->mP->pedidosAlerta();
 				echo $this->twig->render('layoutBackAdmin.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario(), 'inicio' => '1'));
 			break;
 			case "consulta":
 				//Sentencias para usuario consulta
-				$pedidosHoy = $this->mP->pedidosHoy();
+				$pedidosHoy = $this->mP->pedidosAlerta();
 				echo $this->twig->render('layoutBackConsulta.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario(), 'inicio' => '1'));
 			break;
 			case "gestion":
 				//Sentencias para usuario consulta
-				$pedidosHoy = $this->mP->pedidosHoy();
+				$pedidosHoy = $this->mP->pedidosAlerta();
 				echo $this->twig->render('layoutBackGestion.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuario(), 'inicio' => '1'));
 			break;		
 		}
@@ -39,6 +39,21 @@ require_once __DIR__ . '/ControllerLogin.php';
     {
 		echo $this->twig->render('contacto.twig.html', array('usuario' => $_SESSION['USUARIO']));
     }
+
+	public function check_date($str){ // verifica si una fecha del tipo yyyy-mm-dd es correcta
+                trim($str);
+                $trozos = explode ("-", $str);
+                $año=$trozos[0];
+                $mes=$trozos[1];
+                $dia=$trozos[2];     
+
+                if(checkdate ($mes,$dia,$año)){
+					return true;
+                } else {
+					return false;
+                }
+	} 
+
     
 // ------------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------- DECLARACION DE FUNCIONES PARA LOS DONANTES --------------------------------------------
@@ -484,5 +499,24 @@ require_once __DIR__ . '/ControllerLogin.php';
 		echo "sitio en proceso de construccion"; die;
 	}
 
+	
+	public function mostrarAgenda()
+    {
+		if (isset($_GET['d']))
+		{
+			$dia = $_GET['d'];
+			if ($this->check_date($dia)) {
+				$pedidos = $this->mP->mostrarDia($dia);
+				echo $this->twig->render('agenda.twig.html', array('usuario' => $_SESSION['USUARIO']['userName'], 'seleccion' => '1', 'pedidos' => $pedidos));
+			} else {
+				$msj="Error al ingresar la fecha";
+				echo $this->twig->render('agenda.twig.html', array('usuario' => $_SESSION['USUARIO']['userName'], 'mensaje' => $msj));
+			}
+		} else {
+			echo $this->twig->render('agenda.twig.html', array('usuario' => $_SESSION['USUARIO']['userName']));
+		}
+		
 	}
+
+}
 ?>

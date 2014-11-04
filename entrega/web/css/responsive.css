@@ -1,22 +1,23 @@
 ﻿ul.egmenu {  
 	background: #2175bc;
-	
- /*   height: 30px;
+    height: 30px;
 	position: relative; 
-    width: 90%; */
+    width: 90%;
 }
 
 ul.egmenu > li { 
     float: left;
     position: relative;
-    
+    display: block;
+
 }
 
 ul.egmenu ul {
     background: #2175bc; 
     display: none; 
     position: absolute;
-    left: 0; top: 100%;
+    top: 100%;
+	
 }
 
 ul.egmenu a {
@@ -24,7 +25,7 @@ ul.egmenu a {
     font-family: Arial;
 	font-size:12px;
 	cursor: pointer; 
-    display: block; 
+    display: block;
     color: white; 
     line-height: 30px;
     padding: 0 10px; 
@@ -33,7 +34,8 @@ ul.egmenu a {
 ul.egmenu li { list-style: none; }
 
 ul.egmenu li:hover { background: #2586d7;  }
-ul.egmenu li:hover ul { display: block;  }
+ul.egmenu li:hover ul { display:  block;}
+
 
 
 

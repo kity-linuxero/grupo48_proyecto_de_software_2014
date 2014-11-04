@@ -7,14 +7,16 @@ class ModelPedido extends Model
 		parent::__construct($dbname,$dbuser,$dbpass,$dbhost);
 	}
 	
-	public function getToday($n)
+	public function getTomorrow($n)
 	{
-		if (isset($n))
-		{
-			$proximaFecha = time() + ($n * 24 * 60 * 60);
-			$fecha = date('Y-m-d', $proximaFecha);
-			return $fecha;
-		}
+		$proximaFecha = time() + ($n * 24 * 60 * 60);
+		$fecha = date('Y-m-d', $proximaFecha);
+		return $fecha;
+
+	}
+	
+	public function getToday()
+	{
 		$fecha = date('Y-m-d');
 		return $fecha;
 	}
@@ -46,16 +48,30 @@ numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 
 		return $pedidos;
 	}
 	
+	public function mostrarDia($d) // se utiliza para mostrar los pedidos de UN dia segun la agenda de turnos
+	{		
+		$sql = $this->conexion->prepare("
+			SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora , entidad_receptora.razon_social, estado_pedido.descripcion
+			FROM pedido_modelo INNER JOIN turno_entrega INNER JOIN entidad_receptora INNER JOIN estado_pedido
+			WHERE (pedido_modelo.turno_entrega_id=turno_entrega.id)
+					AND (entidad_receptora.id=pedido_modelo.entidad_receptora_id)
+					AND (pedido_modelo.estado_pedido_id=estado_pedido.id)
+					AND (turno_entrega.fecha='$d')
+			ORDER BY pedido_modelo.numero
+		");
+		$sql->execute();
+		$pedidos = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+		return $pedidos;
+	}
+	
 	public function alimentosEntregaDirecta()
 	{
 		$hoy = $this->getToday();		// obtenemos la fecha de hoy
-		$n = this->obtenerHasta();		// recuperamos la cantidad de dias configurable para mostrar
-		$hasta = $this->getToday($n);	// obtenemos la fecha hasta donde se hara la consulta
-		$sql = $this->conexion->prepare("
+		$n = $this->obtenerHasta();		// recuperamos la cantidad de dias configurable para mostrar
+		$hasta = $this->getTomorrow($n);	// obtenemos la fecha hasta donde se hara la consulta
 		
-										");
-		$sql->execute();
-		$alimentos = $sql->fetchAll(PDO::FETCH_ASSOC);
+		$detalles = $this->mA->alimentosEntregaDirecta($hoy, $hasta);
 
 		return $alimentos;
 	}

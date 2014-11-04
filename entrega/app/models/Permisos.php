@@ -20,9 +20,12 @@ class Permisos {
 								 'inicio'=>'0', 'users'=>'0', 'modificarUsuario'=>'0', 'altaUsuario'=>'0',
 								 'insertarUsuario'=>'0', 'borrarUsuario' => '0',
 								 'generarPedido'=>'0', 'generarEntrega'=>'0', 'mostrarConfiguracion'=>'0',
-								 'modificarPedido'=>'0', 'modificarConfiguracion'=>'0'
+								 'modificarPedido'=>'0', 'modificarConfiguracion'=>'0',
+								 'mostrarPedido'=>'0', 'mostrarAgenda'=>'0',
+								 'entregaDirecta'=>'0',
 								 ),
-		'gestion' => array('generarPedido'=>'0', 'generarEntrega'=>'0', 'inicio'=>'0'),
+		'gestion' => array('generarPedido'=>'0', 'generarEntrega'=>'0', 'mostrarAgenda'=>'0',
+							'inicio'=>'0'),
 		'consulta' => array('listarAlimentosSoloStock'=>'0', 'inicio'=>'0')
 	 );
 	 
