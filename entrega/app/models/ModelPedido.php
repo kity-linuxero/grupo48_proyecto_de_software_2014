@@ -7,24 +7,35 @@ class ModelPedido extends Model
 		parent::__construct($dbname,$dbuser,$dbpass,$dbhost);
 	}
 	
-	public function getToday()
+	public function getToday($n)
 	{
-		$hoy = getdate();
-		$d = $hoy['mday']; 		$m = $hoy['mon']; 		$y = $hoy['year'];
-		$fecha = "$y-$m-$d"; //el formato en la base de datos
+		if (isset($n))
+		{
+			$proximaFecha = time() + ($n * 24 * 60 * 60);
+			$fecha = date('Y-m-d', $proximaFecha);
+			return $fecha;
+		}
+		$fecha = date('Y-m-d');
 		return $fecha;
 	}
 	
-	public function pedidosHoy() // pedidosAlerta()
+	public function obtenerHasta()
 	{
-		$hoy = $this->getToday();
-//		$hasta = $this->mP->obtenerHasta();     esto nos devuelve la fecha de n dias en adelante, n se busca en la tabla Config
+		$conf = $this->us->verConfiguracion();
+		$dias = $conf['1']['valor'];
+		return $dias;
+	}
+
+	public function pedidosAlerta()
+	{
+		$hoy = $this->getToday();		// obtenemos la fecha de hoy
 		$sql = $this->conexion->prepare("
 			SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora , entidad_receptora.razon_social, estado_pedido.descripcion
 			FROM pedido_modelo INNER JOIN turno_entrega INNER JOIN entidad_receptora INNER JOIN estado_pedido
 			WHERE (pedido_modelo.turno_entrega_id=turno_entrega.id)
 					AND (entidad_receptora.id=pedido_modelo.entidad_receptora_id)
 					AND (pedido_modelo.estado_pedido_id=estado_pedido.id)
+					AND (turno_entrega.fecha='$hoy')
 			ORDER BY pedido_modelo.numero
 										");
 		$sql->execute();
@@ -34,7 +45,22 @@ numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 
 		*/
 		return $pedidos;
 	}
-	 
+	
+	public function alimentosEntregaDirecta()
+	{
+		$hoy = $this->getToday();		// obtenemos la fecha de hoy
+		$n = this->obtenerHasta();		// recuperamos la cantidad de dias configurable para mostrar
+		$hasta = $this->getToday($n);	// obtenemos la fecha hasta donde se hara la consulta
+		$sql = $this->conexion->prepare("
+		
+										");
+		$sql->execute();
+		$alimentos = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+		return $alimentos;
+	}
+
+	
 	public function agregar($pedido, $turno, $alimentos)
 	{
 /*		
