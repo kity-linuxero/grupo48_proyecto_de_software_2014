@@ -2,10 +2,10 @@
 
 {% block contenido %}
 
-<div class="table-responsive">
-<table class="table table-condensed">
+
+<table>
 		<tbody>
-			<tr class="active">
+			<tr class="encabezado">
 				<th>Razón Social</th>
 				<th>Teléfono</th>
 				<th>Domicilio</th>
@@ -15,7 +15,7 @@
 				<th></th>
 				<th style="width:32px"><a href="./backend.php?accion=altaEntidad">
 							<img src="./img/mas.png" alt="Agregar entidad" title="Agregar entidad"></a>
-</th>
+				</th>
 			</tr>
 		{% for entidad in entidades %}
 			<tr>
@@ -34,6 +34,5 @@
 		{% endfor %}
 		</tbody>
 </table>
-</div>
  
 {% endblock %}

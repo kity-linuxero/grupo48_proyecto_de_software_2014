@@ -11,7 +11,21 @@
 			$this->conexion->exec("set names utf8");    //  lo desactive porque dejo de funcionar
 		}
 		catch(PDOException $e){
-			echo "ERROR". $e->getMessage();
+			
+			
+			Twig_Autoloader::register();
+		
+			$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
+			$twig = new Twig_Environment($loader, array('debug' => 'true'));
+			
+			
+			
+			
+	
+			echo $twig->render('errorBlue.twig.html', array('mensaje' => 'Hubo un error al intentar conectarse a la base de datos.'));
+			die;
+			
+			
 		}
      }
 

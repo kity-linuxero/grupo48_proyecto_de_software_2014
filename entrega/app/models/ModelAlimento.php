@@ -172,6 +172,8 @@
 		 
         $alimentos = $sql->fetchAll(PDO::FETCH_ASSOC);
 		
+		return $alimentos;
+		
 	}
 
  }

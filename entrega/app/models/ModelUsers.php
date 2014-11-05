@@ -3,19 +3,21 @@
  class ModelUsers extends Model
  {
      public function __construct($dbname,$dbuser,$dbpass,$dbhost)
-     {
-		parent::__construct($dbname,$dbuser,$dbpass,$dbhost);
+     { 
+		
+			parent::__construct($dbname,$dbuser,$dbpass,$dbhost);
+	
+		
      }
 
      public function listar()
      {
-         
+       
          $sql = $this->conexion->prepare("SELECT shadow.id, shadow.nombre, rol.nombreRol FROM shadow INNER JOIN rol on (shadow.id_rol = rol.id ) ORDER BY shadow.nombre");
          
 		 $sql->execute();
 		 
          $listado = $sql->fetchAll(PDO::FETCH_ASSOC);
-		
 			
         return $listado;
      }

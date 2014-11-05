@@ -1,6 +1,6 @@
 <?php
  // web/backend.php
-
+require_once  '../app/twig/lib/Twig/Autoloader.php';
  // carga del modelo y los controladores
  require_once '../app/Config.php';
  require_once '../app/models/Model.php';
@@ -50,7 +50,7 @@ $map = array(
 	 'generarPedido' => array('controller' => 'ControllerBack', 'accion' => 'generarPedido'),
 	 'modificarPedido' => array('controller' => 'ControllerBack', 'accion' => 'modificarPedido'),
 	 'generarEntrega' => array('controller' => 'ControllerBack', 'accion' => 'generarEntrega'),
-	 'verEntregasPasadas' => array('controller' => 'ControllerBack', 'accion' => 'verEntregasPasadas'),
+	 'verEntregasRealizadas' => array('controller' => 'ControllerBack', 'accion' => 'verEntregasRealizadas'),
 	 'mostrarAgenda' => array('controller' => 'ControllerBack', 'accion' => 'mostrarAgenda'),
 	 'entregaDirecta' => array('controller' => 'ControllerBack', 'accion' => 'entregaDirecta'),
 );
@@ -61,11 +61,21 @@ session_start();
      if (isset($map[$_GET['accion']])) {
          $ruta = $_GET['accion'];
      } else {
-         header('Status: 404 Not Found');
+		
+		Twig_Autoloader::register();
+		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
+		$twig = new Twig_Environment($loader, array('debug' => 'true'));
+		
+		echo $twig->render('errorBlue.twig.html', array('mensaje' => 'ERROR 404: No existe la ruta ', 'error' => $_GET['accion']));
+		exit;
+		
+		/*header('Status: 404 Not Found');
          echo '<html><body><h1>Error 404: No existe la ruta <i>' .
                  $_GET['accion'] .
                  '</p></body></html>';
-         exit;
+         exit;*/
+		 
+		 
      }
  } else {
      $ruta = 'inicio';
@@ -87,10 +97,18 @@ session_start();
     call_user_func(array(new $controlador['controller'], $controlador['accion']), $id);
  } else {
 
-     header('Status: 404 Not Found');
+     /*header('Status: 404 Not Found');
      echo '<html><body><h1>Error 404: El controlador <i>' .
              $controlador['controller'] .
              '->' .
              $controlador['accion'] .
-             '</i> no existe</h1></body></html>';
+             '</i> no existe</h1></body></html>';*/
+			 
+		Twig_Autoloader::register();
+		
+		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
+		$twig = new Twig_Environment($loader, array('debug' => 'true'));
+		
+		echo $twig->render('errorBlue.twig.html', array('mensaje' => 'ERROR 404: No existe el controlador ', 'error' => $controlador['accion']));
+			 
  }

@@ -312,7 +312,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 	public function users()
 	{
 		$params = array('users' => $this->us->listar());
-		echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'usuario' => dameUsuario()));
+		echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'usuario' => dameUsuarioYRol()));
 	}
 	
 	public function bajaUsuario()
@@ -334,23 +334,23 @@ require_once __DIR__ . '/ControllerLogin.php';
 		}
 	}
 	
-	public function altaUsuario($id){
-		
+	public function altaUsuario($id)
+	{
 		$params = array('users' => 'hola');
 		echo $this->twig->render('formInsUser.twig.html', array('users' => $params['users'], 'usuario' => dameUsuarioYRol()));
 	}
 	
-	public function insertarUsuario(){
-		
-	
-		 
+	public function insertarUsuario()
+	{
 		if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['p1']==$_POST['p2'])) {
 			// comprueba que el usuario no exista ya
 			if (!$this->us->existeUsuario($_POST['nombre'])){
 				 $this->us->agregar($_POST['nombre'], $_POST['rol'], $_POST['p1']);
 				 /*header('Location: backend.php?accion=users');*/
 				 $params = array('users' => $this->us->listar());
-				 echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'mensaje' => 'El usuario se ha agregado correctamente.', 'usuario' => dameUsuarioYRol()));
+				 echo $this->twig->render('abmUsers.html', array('users' => $params['users'],
+																 'mensaje' => 'El usuario se ha agregado correctamente.',
+																 'usuario' => dameUsuarioYRol()));
 				 /* 'usuario' => dameUsuario())*/
 			}
             else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
@@ -381,23 +381,18 @@ require_once __DIR__ . '/ControllerLogin.php';
 	{
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$this->us->modificarConfig($_POST['dias'],$_POST['lat'], $_POST['lon']);
-				$pedidosHoy = $this->mP->pedidosHoy();
+				$pedidosHoy = $this->mP->pedidosAlerta();
 				echo $this->twig->render('layoutBackUser.twig.html', array('params' => $pedidosHoy,
-																		   'usuario' => dameUsuario(),
+																		   'usuario' => dameUsuarioYRol(),
 																		   'inicio' => '1',
 																		   'mensaje' => 'Se ha modificado la configuración'));
-			} 
-
-			$configuracion= $this->us->verConfiguracion();
-
-			echo $this->twig->render('formConfig.twig.html', array('config' => $configuracion, 'usuario' => dameUsuarioYRol()));
+			} else {
+				$configuracion= $this->us->verConfiguracion();
+				echo $this->twig->render('formConfig.twig.html', array('config' => $configuracion, 'usuario' => dameUsuarioYRol()));
+			}
 
 	}	
-				
-				
-		
-		
-	
+					
 
 // ------------------------------------------------------------------------------------------------------------------------------------
 // --------------------------------------- DECLARACION DE FUNCIONES PARA LOS PEDIDOS/ENTREGAS -----------------------------------------
@@ -486,14 +481,15 @@ require_once __DIR__ . '/ControllerLogin.php';
 			if (isset($_POST['cantidad'])) 
 			{
 				$entidad = $_POST['entidad'];
-				$this->mP->agregar($entidad, $_POST['cantidad']);
+				$this->mP->agregarEntrega($entidad, $_POST['cantidad']);
 				$msj = "La entrega fue agregada con éxito";
 				echo $this->twig->render('layoutBackUser.twig.html', array('usuario' => dameUsuarioYRol(), 'mensaje' => $msj));
+				return;
 			} else {
 				$msj = "No se seleccionó ningún alimento para agregar a la entrega";
 			}
-		}
-		echo $this->twig->render('formEntrega.twig.html', array('entrega' => $entidad,
+		} 
+		echo $this->twig->render('formEntrega.twig.html', array('entrega' => array('entidad' => $entidad),
 																'entidades' => $entidades,
 																'detalles' => $detalles,
 																'usuario' => dameUsuarioYRol(),
@@ -501,23 +497,27 @@ require_once __DIR__ . '/ControllerLogin.php';
 																'mensaje' => $msj));
 	}
 
+	public function verEntregasRealizadas()
+	{
+		$entregas = $this->mP->entregasRealizadas();
+		echo $this->twig->render('listado.entregas.twig.html', array('params' => $entregas, 'usuario' => dameUsuarioYRol(),));
+	}
 	
 	public function mostrarAgenda()
     {
+		$msj = "";
 		if (isset($_GET['d']))
 		{
 			$dia = $_GET['d'];
 			if ($this->check_date($dia)) {
 				$pedidos = $this->mP->mostrarDia($dia);
 				echo $this->twig->render('agenda.twig.html', array('usuario' => dameUsuarioYRol(), 'seleccion' => '1', 'pedidos' => $pedidos));
+				return;
 			} else {
 				$msj="Error al ingresar la fecha";
-				echo $this->twig->render('agenda.twig.html', array('usuario' => dameUsuarioYRol(), 'mensaje' => $msj));
 			}
-		} else {
-			echo $this->twig->render('agenda.twig.html', array('usuario' => dameUsuarioYRol()));
-		}
-		
+		} 
+		echo $this->twig->render('agenda.twig.html', array('usuario' => dameUsuarioYRol(), 'mensaje' => $msj));
 	}
 
 }

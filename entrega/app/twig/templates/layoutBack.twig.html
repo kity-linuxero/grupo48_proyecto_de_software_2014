@@ -92,37 +92,45 @@ $("#datepicker").datepicker({
 			</div>
 		{% if (inicio == 1) %}
 			<div>
-				<h5>
-					Pedidos pendientes:
-				</h5>
-<!-- numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 	con_envio 	id 	fecha 	hora 	razon_social descripcion -->
-				<div class="table-responsive">
-				<table class="table table-condensed" style="width:100%">
-					<tbody>
-						<tr class="active">
-							<th>Nº</th>
-							<th>Razón Social</th>
-							<th>Estado del Pedido</th>
-							<th>Fecha de Entrega</th>
-							<th>Envío</th>
-							
-						</tr>
-					{% for pedido in params %}
-						{% if date(pedido.hora) < date() %}
-							<tr class="danger">
-						{% else %}
-							<tr class="warning">
-						{% endif %}
-								<td>{{ pedido.numero }}</td>
-								<td>{{ pedido.razon_social }}</td>
-								<td>{{ pedido.descripcion }}</td>
-								<td>{{ pedido.fecha|date('d-m-Y') }} {{ pedido.hora|date('H:i') }}</td>
-								<td>{% if pedido.con_envio %} Si {% else %} No {% endif %}</td>
-							</tr>
-					{% endfor %}
-					</tbody>
-				</table>
-				</div>
+			{% if params|length>0 %}
+						<h3>
+							Pedidos pendientes:
+						</h3>
+		<!-- numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 	con_envio 	id 	fecha 	hora 	razon_social descripcion -->
+						
+						<table>
+							<tbody>
+								<tr class="encabezado">
+									<th>Nº</th>
+									<th>Razón Social</th>
+									<th>Estado del Pedido</th>
+									<th>Fecha de Entrega</th>
+									<th>Envío</th>
+									
+								</tr>
+							{% for pedido in params %}
+								{% if date(pedido.hora) < date() %}
+									<tr class="danger">
+								{% else %}
+									<tr class="warning">
+								{% endif %}
+										<td>{{ pedido.numero }}</td>
+										<td>{{ pedido.razon_social }}</td>
+										<td>{{ pedido.descripcion }}</td>
+										<td>{{ pedido.fecha|date('d-m-Y') }} {{ pedido.hora|date('H:i') }}</td>
+										<td>{% if pedido.con_envio %} Si {% else %} No {% endif %}</td>
+									</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+						
+			{% else %}
+						<h3>
+							No hay pedidos pendientes para hoy.
+						</h3>
+
+			{% endif %}
+
 			</div>
 		{% endif %}
 			
@@ -131,7 +139,7 @@ $("#datepicker").datepicker({
 	</div>
 	
 		<footer>
-		Banco Alimentario La Plata | Seguinos en: <a href="https://www.facebook.com/pages/Banco-Alimentario-La-Plata/87991129502">Facebook</a> y <a href="https://twitter.com/bancoalimlp">Twitter.</a>
+			Banco Alimentario La Plata | Seguinos en: <a href="https://www.facebook.com/pages/Banco-Alimentario-La-Plata/87991129502">Facebook</a> y <a href="https://twitter.com/bancoalimlp">Twitter.</a>
 		</footer>
 
 	</body>

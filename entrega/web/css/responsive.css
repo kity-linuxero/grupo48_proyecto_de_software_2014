@@ -33,7 +33,7 @@ ul.egmenu a {
 
 ul.egmenu li { list-style: none; }
 
-ul.egmenu li:hover { background: #2586d7;  }
+ul.egmenu li:hover { background: #2586d7; display:  block;  }
 ul.egmenu li:hover ul { display:  block;}
 
 
@@ -61,4 +61,8 @@ ul.egmenu li:hover ul { display:  block;}
 
     ul.egmenu li.tap { background: #2175bc;  }
     ul.egmenu li.tap ul { display: block;  }
+	
+	
+	
+	
 }

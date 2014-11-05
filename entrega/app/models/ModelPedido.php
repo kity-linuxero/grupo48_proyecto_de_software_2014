@@ -72,7 +72,6 @@ numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 
 		$hasta = $this->getTomorrow($n);	// obtenemos la fecha hasta donde se hara la consulta
 		
 		$detalles = ModelAlimento::alimentosEntregaDirecta($hoy, $hasta);
-
 		return $detalles;
 	}
 
@@ -143,10 +142,59 @@ Array ( ['8'] => 15 ['12'] => 5 )
 		}
 	}
 	
+	public function agregarEntrega($entidad, $alimentos)
+	{
+/*		
+Array ( [entidad_receptora_id] => 1 [con_envio] => true )
+Array ( [fecha] => 2014-11-01 [hora] => 23:59 )
+Array ( ['8'] => 15 ['12'] => 5 ) 
+*/	
+		$fecha_hoy = $this->getToday();
+	
+		try {
+			$entrega = $this->conexion->prepare("
+				INSERT INTO entrega_directa (entidad_receptora_id, fecha)
+				VALUES ('$entidad', '$fecha_hoy')
+					");
+			$entrega->execute();
+			$entrega_id = $this->conexion->lastInsertId();
+			$id_values = array_keys($alimentos); // los indices son los detalle_alimento_id
+			
+			foreach ($id_values as $id_value) {
+				$detalle = $id_value;
+				$cant = $alimentos[$id_value];
+				
+				try {
+					$sql = $this->conexion->prepare("
+						INSERT INTO alimento_entrega_directa (entrega_directa_id, detalle_alimento_id, cantidad)
+						VALUES ('$entrega_id', '$detalle', '$cant');
+					");
+					$sql->execute();
+					// actualizar cada detalle de alimento agregado
+					try {
+						$update = $this->conexion->prepare("
+							UPDATE detalle_alimento
+							SET reservado=reservado+'$cant', stock=stock-'$cant'
+							WHERE id='$detalle'
+						");
+						$update->execute();
+					} catch (PDOException $e){
+						echo "ERROR". $e->getMessage();
+					}
+				} catch (PDOException $e){
+					echo "ERROR". $e->getMessage();
+				}
+			}
+		} catch (PDOException $e){
+			echo "ERROR". $e->getMessage();
+		}
+	}
+	
 	public function fechaMayorQueHoy($fecha){
 		$h = strtotime("now");
 		$f = strtotime($fecha);
-		return ($h<$f);
+		$res = (($h<$f) or ($h=$f));
+		return $res;
 	}
 	
 	public function validarDatos($pedido, $turno, $alimentos){
@@ -184,6 +232,20 @@ Array ( ['8'] => 15 ['12'] => 5 )
 		
 		return $res;
 	}
-	 
+	
+	public function entregasRealizadas()
+	{
+		$sql = $this->conexion->prepare("
+				SELECT entrega_directa.*, entidad_receptora.razon_social
+				FROM entrega_directa INNER JOIN entidad_receptora
+				WHERE entrega_directa.entidad_receptora_id=entidad_receptora.id
+				ORDER BY entrega_directa.id
+			");
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $res;
+	}
+	
 }
 ?>
