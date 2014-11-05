@@ -12,8 +12,6 @@
      {
 		echo $this->twig->render('index.twig.html', array());
 		
-		/*echo $this->twig->render('abmUsers.html', array('users' => $params['users'], 'mensaje' => 'El usuario se ha agregado correctamente.'));*/
-		/*echo $this->twig->render('index.twig.html', array('mensaje' => 'El usuario se ha agregado correctamente.'));*/
      }
 	 
 	 public function inicioErr()

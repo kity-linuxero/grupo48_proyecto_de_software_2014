@@ -36,11 +36,18 @@ if (estoyLogueado()){
 
 function dameRol(){
 	
-if (estoyLogueado()){
+	if (estoyLogueado()){
 
 	return($_SESSION['USUARIO']['rol']);
+	}
+
 }
 
+function dameUsuarioYRol(){
+	if (estoyLogueado()){
+	$usr = array('user' => $_SESSION['USUARIO']['userName'], 'rol' => $_SESSION['USUARIO']['rol']);
+	return $usr;
+	}
 }
 
 function soyAdmin(){
@@ -57,5 +64,6 @@ function postaTengoPermiso($unaAccion){
 	
 	return (Permisos::tengoPermiso($unaAccion));
 	
-	}
+}
 
+?>
