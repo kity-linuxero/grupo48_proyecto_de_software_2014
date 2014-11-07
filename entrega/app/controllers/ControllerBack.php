@@ -1,6 +1,7 @@
 ﻿<?php
 
 require_once __DIR__ . '/ControllerLogin.php';
+require_once __DIR__ . '/Controller.php';
 
  class ControllerBack extends Controller
  {
@@ -13,6 +14,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 			parent::__construct('inicio');
 		}
 	}
+	
+
  
 	public function inicio()
      {

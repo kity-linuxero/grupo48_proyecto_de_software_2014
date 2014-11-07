@@ -55,32 +55,19 @@ $map = array(
 	 'entregaDirecta' => array('controller' => 'ControllerBack', 'accion' => 'entregaDirecta'),
 );
 session_start();
-
+$errors=false;
  // Parseo de la ruta
  if (isset($_GET['accion'])) {
      if (isset($map[$_GET['accion']])) {
          $ruta = $_GET['accion'];
      } else {
-		
-		Twig_Autoloader::register();
-		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
-		$twig = new Twig_Environment($loader, array('debug' => 'true'));
-		
-		echo $twig->render('errorBlue.twig.html', array('mensaje' => 'ERROR 404: No existe la ruta ', 'error' => $_GET['accion']));
-		exit;
-		
-		/*header('Status: 404 Not Found');
-         echo '<html><body><h1>Error 404: No existe la ruta <i>' .
-                 $_GET['accion'] .
-                 '</p></body></html>';
-         exit;*/
-		 
-		 
+		Controller::exepciones('','ERROR 404: No existe la ruta ', $_GET['accion']);
+		$errors=true;
      }
  } else {
      $ruta = 'inicio';
  }
-
+if(!$errors){
  if (isset($_GET['id'])) {
 	$id = $_GET['id'];
  } else {
@@ -90,25 +77,10 @@ session_start();
  $controlador = $map[$ruta];
  // Ejecución del controlador asociado a la ruta
 
-
-
-
  if (method_exists($controlador['controller'],$controlador['accion'])) {
     call_user_func(array(new $controlador['controller'], $controlador['accion']), $id);
  } else {
-
-     /*header('Status: 404 Not Found');
-     echo '<html><body><h1>Error 404: El controlador <i>' .
-             $controlador['controller'] .
-             '->' .
-             $controlador['accion'] .
-             '</i> no existe</h1></body></html>';*/
-			 
-		Twig_Autoloader::register();
-		
-		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
-		$twig = new Twig_Environment($loader, array('debug' => 'true'));
-		
-		echo $twig->render('errorBlue.twig.html', array('mensaje' => 'ERROR 404: No existe el controlador ', 'error' => $controlador['accion']));
+		Controller::exepciones('','ERROR 404: No existe el controlador ', $controlador['accion']);
 			 
  }
+}

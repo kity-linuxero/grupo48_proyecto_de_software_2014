@@ -25,41 +25,28 @@
 	 'inicioErr' => array('controller' =>'ControllerFront', 'accion' =>'inicioErr'),
 	// 'login' => array('controller' =>'ControllerFront', 'accion' =>'login')
  );
-
+$errors=false;
  // Parseo de la ruta
  if (isset($_GET['accion'])) {
      if (isset($map[$_GET['accion']])) {
          $ruta = $_GET['accion'];
      } else {
-
-			Twig_Autoloader::register();
-		
-			$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
-			$twig = new Twig_Environment($loader, array('debug' => 'true'));
-
-			
-			
-			echo $twig->render('errorBlue.twig.html', array('mensaje' => 'ERROR 404: No existe la ruta ', 'error' => $_GET['accion']));
-			exit;
-		 
+	 
+			Controller::exepciones('','ERROR 404: No existe la ruta ', $_GET['accion']);
+				$errors=true;
      }
 	} else {
      $ruta = 'inicio';
  }
-
+if(!$errors){
  $controlador = $map[$ruta];
  // Ejecución del controlador asociado a la ruta
  if (method_exists($controlador['controller'],$controlador['accion'])) {
      call_user_func(array(new $controlador['controller'], $controlador['accion']));
  } else {
 
-		
-		Twig_Autoloader::register();
-		
-		$loader = new Twig_Loader_Filesystem('./../app/twig/templates');
-		$twig = new Twig_Environment($loader, array('debug' => 'true'));
-		
-		echo $twig->render('errorBlue.twig.html', array('mensaje' => 'ERROR 404: No existe el controlador ', 'error' => $controlador['accion']));
+		Controller::exepciones('','ERROR 404: No existe el controlador ', $controlador['accion']);
 			 
+ }
  }
 ?>
