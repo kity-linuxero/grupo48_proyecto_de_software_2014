@@ -21,8 +21,12 @@ class Permisos {
 								 'insertarUsuario'=>'0', 'borrarUsuario' => '0',
 								 'generarPedido'=>'0', 'generarEntrega'=>'0', 'mostrarConfiguracion'=>'0',
 								 'modificarPedido'=>'0', 'modificarConfiguracion'=>'0',
-								 'mostrarPedido'=>'0', 'mostrarAgenda'=>'0',
-								 'verEntregasRealizadas'=>'0', 'entreFechasPorER'=>'0'
+								 'actualizarPedido'=>'0', 'mostrarAgenda'=>'0',
+								 'mostrarPedidos' =>'0',
+								 'verEntregasRealizadas'=>'0', 'entreFechasPorER'=>'0', 'informePorER'=>'0',
+								 
+								 'informePorERJSON' => '0'
+
 								 ),
 		'gestion' => array('generarPedido'=>'0', 'generarEntrega'=>'0', 'mostrarAgenda'=>'0',
 							'verEntregasRealizadas'=>'0', 'mostrarPedido'=>'0',

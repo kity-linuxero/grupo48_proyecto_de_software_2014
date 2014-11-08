@@ -13,12 +13,7 @@
 	}
 </script>
 
-    {% if accion=="alta" %}
 <form method="post" id="formulario" name="formulario" action="./backend.php?accion=generarPedido">
- 	{% elseif accion=="modificar" %}
-<form method="post" id="formulario" name="formulario" action="./backend.php?accion=actualizarPedido&amp;id={{pedido.numero}}">
-	{% endif %}
-<p>
  <fieldset>
   <legend>Información del Pedido</legend>
 		<div>
@@ -30,27 +25,17 @@
 				{% endfor %}
 			</select>
 		</div>
+		<hr>
 		<div>
 			<label>Fecha de Entrega</label>
-			<input type="text" id="datepicker" name="fecha" value="{{pedido.fecha}}" required/>
+			<input type="text" id="from" name="fecha" value="{{pedido.fecha}}" readonly="readonly" required/>
 		</div>
+		<hr>
 		<div>
 			<label>Hora</label>
 			<input type="text" name="hora" class="number" pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
 				   id="24h" placeholder="HH:MM" title="Ingrese una hora valida" value="{{pedido.hora|date('H:i')}}" required/>
 		</div>
-
-	{% if accion=="modificar" %}	
-		<div>
-			<label>Estado del Pedido</label>
-			<select id="estadoSelect" name="estado">
-				{% for estado in estados %}
-						<option value="{{ pedido.estado_pedido_id }}" {% if pedido.estado_pedido_id == estado.id %} selected="selected" {% endif %}> 
-							{{ estado.descripcion }}</option>
-				{% endfor %}
-			</select>
-		</div>
-	{% endif %}
 
  </fieldset>
  <br>
@@ -91,12 +76,8 @@
 
  </fieldset>
 	<br>
-    <button type="submit" name= "boton">{% if accion=="alta" %}Generar Pedido{% elseif accion=="modificar" %}Modificar{% endif %}</button>
+    <button type="submit" name= "boton">Generar Pedido</button>
 	<button type="button" onclick="window.location.href='./backend.php'">Cancelar</button>
-
-
-
-
 
 </form>
 

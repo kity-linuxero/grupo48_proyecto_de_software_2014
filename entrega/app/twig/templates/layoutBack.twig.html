@@ -15,20 +15,26 @@
  <link rel="stylesheet" href="./css/jquery-ui.css"/>
  <script src="./js/jquery-1.9.1.js"></script>
  <script src="./js/jquery-ui.js"></script>
- <script src="./js/jquery.ui.datepicker-es.js"></script>
- 
+ <script src="./js/datapickers.js"></script>
  <script src="./js/mensaje.js"></script>
  <script src="./js/OpenLayers.js"></script>
  <script src="./js/mapa.js"></script>
+ <!-- Informes -->
+ <script src="./js/highcharts.js"></script>
+ <script src="./js/exporting.js"></script>
+ 
+ 
  <!-- <script src="http://www.openlayers.org/api/OpenLayers.js"></script> -->
- <script>
+
+<!--
+<script>
 $(function () {
 $.datepicker.setDefaults($.datepicker.regional["es"]);
 $("#datepicker").datepicker({
 //firstDay: 1
 });
 });
-</script>
+</script> -->
 
 
 
@@ -56,7 +62,7 @@ $("#datepicker").datepicker({
 <body onload="setupMessageBox()">
   
 	<!-- si tiene mensajes -->
-	{% if (mensaje) %} <div id="message_box">{{ mensaje }}</div>{% endif %}
+		{% if (mensaje) %} <div id="message_box">{{ mensaje }}</div>{% endif %}
   
  	<div id="global">
 

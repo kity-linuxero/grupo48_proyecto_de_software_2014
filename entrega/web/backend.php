@@ -47,14 +47,16 @@ $map = array(
      'modificarConfiguracion' => array('controller' => 'ControllerBack', 'accion' => 'modificarConfiguracion'),
 	 
 	 'generarPedido' => array('controller' => 'ControllerBack', 'accion' => 'generarPedido'),
-	 'modificarPedido' => array('controller' => 'ControllerBack', 'accion' => 'modificarPedido'),
+	 'actualizarPedido' => array('controller' => 'ControllerBack', 'accion' => 'actualizarPedido'),
+	 'mostrarPedidos' => array('controller' => 'ControllerBack', 'accion' => 'mostrarPedidos'),
 	 'generarEntrega' => array('controller' => 'ControllerBack', 'accion' => 'generarEntrega'),
 	 'verEntregasRealizadas' => array('controller' => 'ControllerBack', 'accion' => 'verEntregasRealizadas'),
 	 'mostrarAgenda' => array('controller' => 'ControllerBack', 'accion' => 'mostrarAgenda'),
 	 'entregaDirecta' => array('controller' => 'ControllerBack', 'accion' => 'entregaDirecta'),
 	 
 	 'entreFechasPorER' => array('controller' => 'ControllerBack', 'accion' => 'entreFechasPorER'),
-	 
+	 'informePorER' => array('controller' => 'ControllerBack', 'accion' => 'informePorER'),
+	 'informePorERJSON' => array('controller' => 'ControllerBack', 'accion' => 'informePorERJSON'),
 	 
 );
 session_start();

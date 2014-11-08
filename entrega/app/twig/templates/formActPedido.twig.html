@@ -1,0 +1,69 @@
+{% extends "layoutBackUser.twig.html" %}
+
+
+			
+{% block contenido %}
+
+<script>
+	function deshabilitar(e){
+		if (document.getElementById(e).disabled)
+			document.getElementById(e).disabled = false;
+		else
+			document.getElementById(e).disabled = true;
+	}
+</script>
+
+<form method="post" id="formulario" name="formulario" action="./backend.php?accion=actualizarPedido&amp;nro={{pedido.numero}}">
+ <fieldset>
+  <legend>Información del Pedido</legend>
+		<div>
+			<label>Entidad Receptora</label>
+			<select id="entidadSelect" name="entidad">
+				{% for entidad in entidades %}
+						<option value="{{ entidad.id }}" {% if pedido.entidad_receptora_id == entidad.id %} selected="selected" {% endif %}> 
+							{{ entidad.razon_social }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<hr>
+		<div>
+			<label>Fecha de Entrega</label>
+			<input type="text" id="from" name="fecha" value="{{pedido.fecha}}" readonly="readonly" required/>
+		</div>
+		<hr>
+		<div>
+			<label>Hora</label>
+			<input type="text" name="hora" class="number" pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
+				   id="24h" placeholder="HH:MM" title="Ingrese una hora valida" value="{{pedido.hora|date('H:i')}}" required/>
+		</div>
+		<hr>
+		<div>
+			<label>Estado del Pedido</label>
+			<select id="estadoSelect" name="estado">
+				{% for estado in estados %}
+						<option value="{{ pedido.estado_pedido_id }}" {% if pedido.estado_pedido_id == estado.id %} selected="selected" {% endif %}> 
+							{{ estado.descripcion }}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+ </fieldset>
+<br>
+ <fieldset>
+  <legend>Opción de Envío</legend>
+  Seleccione si quiere el pedido con envío:
+  <input name="con_envio" 
+         type="radio" 
+         value="1" {%if pedido.con_envio=="1" %} checked {% endif %}/>Si
+  <input name="con_envio" 
+         type="radio" 
+         value="0" {%if pedido.con_envio=="0" %} checked {% endif %}/>No
+
+ </fieldset>
+	<br>
+    <button type="submit" name= "boton">Actualizar</button>
+	<button type="button" onclick="window.location.href='./backend.php'">Cancelar</button>
+
+</form>
+
+{% endblock %}

@@ -5,7 +5,7 @@ require_once __DIR__ . '/Controller.php';
 
  class ControllerBack extends Controller
  {
-	
+	var $info;
 	public function __construct()
 	{		
 		if (isset($_GET['accion'])) {
@@ -232,10 +232,10 @@ require_once __DIR__ . '/Controller.php';
 	{
 		$params = array('descripcion' => "",
 						'contenido' => "",
-						'peso' => "",
-						'stock' => "",
-						'reservado' => "",
-						'cantidad' => "",
+						'peso' => "0",
+						'stock' => "0",
+						'reservado' => "0",
+						'cantidad' => "1",
 						'donante' => "" );
 		
 		$donantes = $this->mD->obtenerDonantesActivos();
@@ -435,42 +435,56 @@ require_once __DIR__ . '/Controller.php';
 															   'entidades' => $entidades,
 															   'detalles' => $detalles,
 															   'usuario' => dameUsuarioYRol(),
-															   'accion' => "alta",
 															   'mensaje' => $msj));
 	}
 	
-	public function modificarPedido() // debe recibir $_GET['nro']
+	public function actualizarPedido() // debe recibir $_GET['nro']
     {
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-// $_POST == Array ( [entidad] => 1 [fecha] => 2014-10-29 [hora] => 12:59 [estado] => 1 [cantidad] => Array ( [8] => 5 [12] => 5 ) [con_envio] => 0 [boton] => )  
-			$pedido = array('entidad_receptora_id'=>$_POST['entidad'],
-							'con_envio'=>$_POST['con_envio'],
-							);
-			$turno = array('fecha'=>$_POST['fecha'], 'hora'=>$_POST['hora']);
-			if ($this->mP->validarDatos($pedido, $turno, $_POST['cantidad'])){
-				$this->mP->agregar($pedido, $turno, $_POST['cantidad']);
-                 header('Location: backend.php?accion=inicio');
-			} else {
-				// se llama al Home y se le envia un error
-				echo "error al ingresar los datos"; die;
+		$entidades = $this->mE->listarReducido(); // devuelve arreglo de arreglos con (id, razon_social)
+		$estados = $this->mP->listarEstadosPosibles();
+		$msj = "";
+		if (isset($_GET['nro']))
+		{
+			$id_pedido = $_GET['nro'];
+			$pedido = $this->mP->obtenerPorNro($id_pedido);
+			if ($_SERVER['REQUEST_METHOD'] == 'POST')
+			{
+				$pedido['entidad_receptora_id'] = $_POST['entidad'];
+				$pedido['con_envio'] = $_POST['con_envio'];
+				$pedido['estado_pedido_id'] = $_POST['estado'];
+				$turno = array('fecha'=>$_POST['fecha'], 'hora'=>$_POST['hora']);
+				if ($this->mP->validarDatosSinCantidad($pedido, $turno))
+				{
+					$this->mP->actualizar($pedido, $turno);
+					$msj = "El pedido se actualizó correctamente";
+					$pedidos = $this->mP->todosLosPedidos();
+					echo $this->twig->render('listadoPedidos.twig.html', array('pedidos' => $pedidos, 'usuario' => dameUsuarioYRol()));
+					return;
+				} else {
+					// se llama al Home y se le envia un error
+					$msj = "Revisar los datos ingresados";
+				}
 			}
-		} else {
-			if (isset($_GET['nro'])) {
-				$pedido = $this->mP->obtenerPorNro($_GET['nro']);
-				// Array (numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 	con_envio 	fecha 	hora)
-			} else {
-				header('Location: backend.php?accion=listarEntidades');
-			}
-			$entidades = $this->mE->listarReducido(); // devuelve arreglo de arreglos con (id, razon_social)
-			$detalles = $this->mA->listarSoloStock();
-			$estados = $this->mP->listarEstadosPosibles();
-			echo $this->twig->render('formPedido.twig.html', array('pedido' => $pedido,
-																	'entidades' => $entidades,
-																	'detalles' => $detalles,
-																	'estados' => $estados,
-																	'usuario' => dameUsuarioYRol(),
-																	'accion' => "modificar"));					
 		}
+		if ($id_pedido<0)
+		{
+			$msj = "Numero incorrecto de pedido";
+			$pedidos = $this->mP->todosLosPedidos();
+			echo $this->twig->render('listadoPedidos.twig.html', array('pedidos' => $pedidos, 'usuario' => dameUsuarioYRol()));
+		} else {
+			echo $this->twig->render('formActPedido.twig.html', array('pedido' => $pedido,
+															   'entidades' => $entidades,
+															   'estados' => $estados,
+															   'usuario' => dameUsuarioYRol(),
+															   'accion' => "actualizar",
+															   'mensaje' => $msj));
+		}
+	}
+	
+	public function mostrarPedidos()
+	{
+		$pedidos = $this->mP->todosLosPedidos();
+		echo $this->twig->render('listadoPedidos.twig.html', array('pedidos' => $pedidos, 'usuario' => dameUsuarioYRol()));
 	}
 	
 	public function generarEntrega()
@@ -529,11 +543,23 @@ require_once __DIR__ . '/Controller.php';
 
 	public function entreFechasPorER(){
 		
-		
 		echo $this->twig->render('formInformes.twig.html', array('usuario' => dameUsuarioYRol()));
 		
 		
 	}
+	
+	public function informePorER(){
+
+		$GLOBALS['info']= json_encode($this->mE->informePesoPorEntidad($_POST['fecha1'], $_POST['fecha2']), JSON_NUMERIC_CHECK);
+		echo $this->twig->render('formInformes.twig.html', array('usuario' => dameUsuarioYRol()));
+		
+	}
+	
+	public function informePorERJSON(){
+			echo $GLOBALS['info'];
+		}
+	
+	
 
 
 

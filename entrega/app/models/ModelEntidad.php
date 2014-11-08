@@ -109,7 +109,6 @@
 	 public function obtenerServiciosDisponibles()
 	 {
 		$sql = $this->conexion->prepare('SELECT * FROM servicio_prestado');
-		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 		return $res;
@@ -127,8 +126,8 @@
      
      public function informePesoPorEntidad($f1, $f2)
      {
-		$sql_entidades = $this->conexion->prepare("
-			SELECT E.razon_social as 'Razon Social', sum(A.cantidad*D.peso_paquete) as Kilos
+		$result = $this->conexion->prepare("
+			SELECT E.razon_social , sum(A.cantidad*D.peso_paquete) as Kilos
 			FROM pedido_modelo as P INNER JOIN turno_entrega as T ON (P.turno_entrega_id=T.id)
 					INNER JOIN alimento_pedido as A ON (P.numero=A.pedido_numero)
 					INNER JOIN detalle_alimento as D ON (A.detalle_alimento_id=D.id)
@@ -137,6 +136,24 @@
 			GROUP BY E.razon_social
 			
 		");
+		$result->execute();
+		
+		
+		$rows = array();
+
+		foreach ($result as $valor) {
+					$row[0] = $valor[0];  
+					$row[1] = $valor[1];
+					array_push($rows,$row);
+				}
+
+		
+		
+		return $rows;
+		
+		
+		
+		
 	 }
 
  }

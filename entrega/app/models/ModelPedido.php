@@ -89,54 +89,85 @@ Array ( ['8'] => 15 ['12'] => 5 )
 				VALUES ('$f', '$h')
 								");
 			$turno_entrega->execute();
+			
+			$turno_id = $this->conexion->lastInsertId();
+			$fecha_hoy = $this->getToday();
+			$er = $pedido['entidad_receptora_id'];
+			$estado = 1; // significa estado NUEVO
+			$envio = $pedido['con_envio'];
+		
+			try {
+				$pedido = $this->conexion->prepare("
+					INSERT INTO pedido_modelo (entidad_receptora_id, fecha_ingreso, estado_pedido_id, turno_entrega_id, con_envio)
+					VALUES ('$er', '$fecha_hoy', '$estado', '$turno_id', '$envio')
+													");
+				$pedido->execute();
+				
+				$pedido_id = $this->conexion->lastInsertId();
+				$id_values = array_keys($alimentos); // los indices son los detalle_alimento_id
+				
+				foreach ($id_values as $id_value) {
+					$detalle = $id_value;
+					$cant = $alimentos[$id_value];
+					
+					try {
+						$sql = $this->conexion->prepare("
+							INSERT INTO alimento_pedido (pedido_numero, detalle_alimento_id, cantidad)
+							VALUES ('$pedido_id', '$detalle', '$cant');
+						");
+						$sql->execute();
+						// actualizar cada detalle de alimento agregado
+						try {
+							$update = $this->conexion->prepare("
+								UPDATE detalle_alimento
+								SET reservado=reservado+'$cant', stock=stock-'$cant'
+								WHERE id='$detalle'
+							");
+							$update->execute();
+						} catch (PDOException $e){
+							echo "ERROR". $e->getMessage();
+						}
+					} catch (PDOException $e){
+						echo "ERROR". $e->getMessage();
+					}
+				}
+			} catch (PDOException $e){
+				echo "ERROR". $e->getMessage();
+			}
 		} catch (PDOException $e){
 			echo "ERROR". $e->getMessage();
 		}
+	}
 
-		$turno_id = $this->conexion->lastInsertId();
-		$fecha_hoy = $this->getToday();
-		$er = $pedido['entidad_receptora_id'];
-		$estado = 1; // significa estado NUEVO
-		$envio = $pedido['con_envio'];
-	
+	public function actualizar($pedido, $turno)
+	{
 		try {
-			$pedido = $this->conexion->prepare("
-				INSERT INTO pedido_modelo (entidad_receptora_id, fecha_ingreso, estado_pedido_id, turno_entrega_id, con_envio)
-				VALUES ('$er', '$fecha_hoy', '$estado', '$turno_id', '$envio')
-												");
-			$pedido->execute();
+			$f = $turno['fecha'];
+			$h = $turno['hora'];
+			$t = $pedido['turno_entrega_id'];
+			$turno_entrega = $this->conexion->prepare("
+				UPDATE turno_entrega SET fecha='$f', hora='$h'
+				WHERE id='$t'
+								");
+			$turno_entrega->execute();
+//			print_r($pedido); die;
+			$nro = $pedido['numero'];
+			$er = $pedido['entidad_receptora_id'];
+			$estado = $pedido['estado_pedido_id'];
+			$envio = $pedido['con_envio'];
+		
+			try {
+				$pedido = $this->conexion->prepare("
+					UPDATE pedido_modelo SET entidad_receptora_id='$er', estado_pedido_id='$estado', con_envio='$envio'
+					WHERE numero='$nro'
+				");
+				$pedido->execute();
+
+			} catch (PDOException $e){
+				echo "ERROR". $e->getMessage();
+			}
 		} catch (PDOException $e){
 			echo "ERROR". $e->getMessage();
-		}
-		
-		$pedido_id = $this->conexion->lastInsertId();
-		$id_values = array_keys($alimentos); // los indices son los detalle_alimento_id
-		
-		foreach ($id_values as $id_value) {
-			$detalle = $id_value;
-			$cant = $alimentos[$id_value];
-			
-			try {
-				$sql = $this->conexion->prepare("
-					INSERT INTO alimento_pedido (pedido_numero, detalle_alimento_id, cantidad)
-					VALUES ('$pedido_id', '$detalle', '$cant');
-				");
-				$sql->execute();
-			} catch (PDOException $e){
-				echo "ERROR". $e->getMessage();
-			}
-			
-			// actualizar cada detalle de alimento agregado
-			try {
-				$update = $this->conexion->prepare("
-					UPDATE detalle_alimento
-					SET reservado=reservado+'$cant', stock=stock-'$cant'
-					WHERE id='$detalle'
-				");
-				$update->execute();
-			} catch (PDOException $e){
-				echo "ERROR". $e->getMessage();
-			}
 		}
 	}
 	
@@ -195,6 +226,64 @@ Array ( ['8'] => 15 ['12'] => 5 )
 		return $res;
 	}
 	
+	public function obtenerPorNro($n)
+	{
+		try {
+			$sql = $this->conexion->prepare("
+				SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora
+				FROM pedido_modelo INNER JOIN turno_entrega ON (pedido_modelo.turno_entrega_id=turno_entrega.id)
+				WHERE (pedido_modelo.numero='$n')
+			");
+			$sql->execute();
+			$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+			if (count($res)>0){
+				return $res['0'];
+			}
+			else return -1;
+		} catch (PDOException $e){
+			return -1;
+		}
+	}
+
+	public function listarEstadosPosibles()
+	{
+		$sql = $this->conexion->prepare("
+			SELECT *
+			FROM estado_pedido
+		");
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $res;
+	}
+	
+	public function todosLosPedidos()
+	{
+		$sql = $this->conexion->prepare("
+			SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora , entidad_receptora.razon_social, estado_pedido.descripcion
+			FROM pedido_modelo INNER JOIN turno_entrega ON (pedido_modelo.turno_entrega_id=turno_entrega.id)
+							   INNER JOIN entidad_receptora ON (entidad_receptora.id=pedido_modelo.entidad_receptora_id)
+							   INNER JOIN estado_pedido ON (pedido_modelo.estado_pedido_id=estado_pedido.id)
+			ORDER BY pedido_modelo.numero
+		");
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		return $res;
+	}
+	
+public function entregasRealizadas()
+	{
+		$sql = $this->conexion->prepare("
+				SELECT entrega_directa.*, entidad_receptora.razon_social
+				FROM entrega_directa INNER JOIN entidad_receptora ON entrega_directa.entidad_receptora_id=entidad_receptora.id
+				ORDER BY entrega_directa.id
+			");
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $res;
+	}
+	
 	public function validarDatos($pedido, $turno, $alimentos){
 		// se validaran los datos antes de agregar/modificar
 		$res = (is_numeric($pedido['entidad_receptora_id']) &
@@ -220,42 +309,14 @@ Array ( ['8'] => 15 ['12'] => 5 )
 		return $res;
 	}
 	
-	public function obtenerPorNro($n)
-	{
-		$sql = $this->conexion->prepare("
-			SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora
-			FROM pedido_modelo INNER JOIN turno_entrega ON (pedido_modelo.turno_entrega_id=turno_entrega.id)
-			WHERE (pedido_modelo.numero='$n')
-		");
-		$sql->execute();
-		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
-		return $res["0"];
+		public function validarDatosSinCantidad($pedido, $turno){
+			$res = (is_numeric($pedido['entidad_receptora_id']) &
+					 (($pedido['con_envio']==1) or ($pedido['con_envio']==0)) &
+					 $this->fechaMayorQueHoy($turno['fecha']) &
+					 is_string($turno['hora']));
+			return $res;
 	}
 	
-	public function listarEstadosPosibles()
-	{
-		$sql = $this->conexion->prepare("
-			SELECT *
-			FROM estado_pedido
-		");
-		$sql->execute();
-		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
-		
-		return $res;
-	}
-	
-	public function entregasRealizadas()
-	{
-		$sql = $this->conexion->prepare("
-				SELECT entrega_directa.*, entidad_receptora.razon_social
-				FROM entrega_directa INNER JOIN entidad_receptora ON entrega_directa.entidad_receptora_id=entidad_receptora.id
-				ORDER BY entrega_directa.id
-			");
-		$sql->execute();
-		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
-		
-		return $res;
-	}
-	
+
 }
 ?>

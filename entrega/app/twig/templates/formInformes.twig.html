@@ -2,120 +2,69 @@
 
 {% block contenido %}
 
+
+
 <h4>Seleccione el rango de fechas para obtener el informe</h4>
-	<!--<div>
-         <label>Seleccionar fecha (Desde):</label>
-         
-         <input type="text" id="fecha_1" name="fecha1" required/></div>
-	<div>
-         <label>Seleccionar fecha (Hasta):</label>
-         <input type="text" id="fecha_2" name="fecha2" required/>
-	</div> -->
+<form method="POST" action="./backend.php?accion=informePorER">
+	<label for="from">Fecha desde:</label>
+	<input type="text" id="from" name="fecha1"/>
 	
+	<label for="to">Fecha hasta</label>
+	<input type="text" id="to" name="fecha2"/>
+	
+	<input type="submit" />
+</form>
+
+
 <script type="text/javascript">
-    $(function() {
-        var dates = $( "#from, #to" ).datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            changeYear: true,
-            numberOfMonths: 1,
-            currentText: 'Hoy',
-            monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
-						 'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-            monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
-							'Jul','Ago','Sep','Oct','Nov','Dic'],
-            dayNames: ['Domingo','Lunes','Martes','Mi&eacute;rcoles','Jueves','Viernes','S&aacute;bado'],
-            dayNamesShort: ['Dom','Lun','Mar','Mi&eacute;','Juv','Vie','S&aacute;b'],
-            dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','S&aacute;'],
-            weekHeader: 'Sm',
-            dateFormat: 'yy-mm-dd',
-            
-            onSelect: function( selectedDate ) {
-                var option = this.id == "from" ? "minDate" : "maxDate",
-                    instance = $( this ).data( "datepicker" ),
-                    date = $.datepicker.parseDate(
-                        instance.settings.dateFormat ||
-                        $.datepicker._defaults.dateFormat,
-                        selectedDate, instance.settings );
-                dates.not( this ).datepicker( "option", option, date );
-            }
-        });
-    });
-</script>
-
-
-<div class="date">
-
-<label for="from">From</label>
-<input type="text" id="from" name="from"/>
-<label for="to">to</label>
-<input type="text" id="to" name="to"/>
-
-</div><!-- End demo -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-	<script src="http://code.highcharts.com/highcharts.js"></script>
-	<script src="http://code.highcharts.com/modules/exporting.js"></script>
-
-	<script>
-	
-	$(function () {
-    $('#container').highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: 1,//null,
-            plotShadow: false
-        },
-        title: {
-            text: 'Browser market shares at a specific website, 2014'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Browser share',
-            data: [
-                ['Firefox',   45.0],
-                ['IE',       26.8],
-                ['Safari',    8.5],
-                ['Opera',     6.2],
-                ['Others',   0.7]
-				]
-        }]
-    });
-});
-
-
-	
-	
-	</script>
+		$(document).ready(function() {
+			var options = {
+				chart: {
+	                renderTo: 'container',
+	                plotBackgroundColor: null,
+	                plotBorderWidth: null,
+	                plotShadow: false
+	            },
+	            title: {
+	                text: 'Informes por entidades'
+	            },
+	            tooltip: {
+	                formatter: function() {
+	                    return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+	                }
+	            },
+	            plotOptions: {
+	                pie: {
+	                    allowPointSelect: true,
+	                    cursor: 'pointer',
+	                    dataLabels: {
+	                        enabled: true,
+	                        color: '#000000',
+	                        connectorColor: '#000000',
+	                        formatter: function() {
+	                            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+	                        }
+	                    }
+	                }
+	            },
+	            series: [{
+	                type: 'pie',
+	                name: 'Browser share',
+	                data: []
+	            }]
+	        }
+	        
+	        $.getJSON("./backend.php?accion=informePorERJSON", function(json) {
+			
+					
+				options.series[0].data = json;
+	        	chart = new Highcharts.Chart(options);
+	        });
+	        
+	        
+	        
+      	});   
+		</script>
 
 
 
