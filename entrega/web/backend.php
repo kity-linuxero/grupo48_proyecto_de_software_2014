@@ -7,7 +7,6 @@ require_once  '../app/twig/lib/Twig/Autoloader.php';
  require_once '../app/models/ModelAlimento.php';
  require_once '../app/models/ModelDonante.php';
  require_once '../app/models/ModelEntidad.php';
- require_once '../app/models/ModelRecepcion.php';
  require_once '../app/models/ModelLogin.php';
  require_once '../app/models/ModelUsers.php';
  require_once '../app/models/ModelPedido.php';
@@ -53,6 +52,10 @@ $map = array(
 	 'verEntregasRealizadas' => array('controller' => 'ControllerBack', 'accion' => 'verEntregasRealizadas'),
 	 'mostrarAgenda' => array('controller' => 'ControllerBack', 'accion' => 'mostrarAgenda'),
 	 'entregaDirecta' => array('controller' => 'ControllerBack', 'accion' => 'entregaDirecta'),
+	 
+	 'entreFechasPorER' => array('controller' => 'ControllerBack', 'accion' => 'entreFechasPorER'),
+	 
+	 
 );
 session_start();
 $errors=false;

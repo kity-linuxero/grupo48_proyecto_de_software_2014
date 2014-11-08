@@ -8,7 +8,6 @@ require_once __DIR__ . '/ControllerLogin.php';
 	protected $mE; 	 // variable para la conexión del modelo entidades
 	protected $mA; 	 // variable para la conexión del modelo alimentos
 	protected $mD; 	 // variable para la conexión del modelo donantes
-	protected $mR; 	 // variable para la conexión del modelo recepciones
 	protected $us;   // variable para la conexión del modelo usuarios
 	protected $mP;   // variable para la conexion del modelo de pedidos
 	
@@ -32,8 +31,6 @@ require_once __DIR__ . '/ControllerLogin.php';
 				$this->mE = new ModelEntidad(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
 				$this->mD = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
-				$this->mR = new ModelRecepcion(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
 				$this->mA = new ModelAlimento(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);

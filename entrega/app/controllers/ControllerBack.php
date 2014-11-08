@@ -523,5 +523,20 @@ require_once __DIR__ . '/Controller.php';
 		echo $this->twig->render('agenda.twig.html', array('usuario' => dameUsuarioYRol(), 'mensaje' => $msj));
 	}
 
+// ------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------- DECLARACION DE FUNCIONES PARA INFORMES -----------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------
+
+	public function entreFechasPorER(){
+		
+		
+		echo $this->twig->render('formInformes.twig.html', array('usuario' => dameUsuarioYRol()));
+		
+		
+	}
+
+
+
+
 }
 ?>

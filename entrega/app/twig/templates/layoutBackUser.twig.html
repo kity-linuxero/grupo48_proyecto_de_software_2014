@@ -9,16 +9,25 @@
 				<li><a href="./backend.php?accion=listarAlimentos">Alimentos</a></li>
 				<li><a class="has-sub">Pedidos</a>
 					<ul>
-						<li><a href="./backend.php?accion=generarPedido">Generar Pedido</a></li>
-						<li><a href="./backend.php?accion=mostrarAgenda">Agenda de Turnos</a></li>
+						<li><a href="./backend.php?accion=generarPedido">Generar_Pedido</a></li>
+						<li><a href="./backend.php?accion=mostrarAgenda">Agenda_de_Turnos</a></li>
 					</ul>
 				</li>
 				<li><a class="has-sub">Entregas Directas</a>
 					<ul>
-						<li><a href="./backend.php?accion=generarEntrega">Generar Entrega</a></li>
-						<li><a href="./backend.php?accion=verEntregasRealizadas">Ver Entregas Realizadas</a></li>
+						<li><a href="./backend.php?accion=generarEntrega">Generar_Entrega</a></li>
+						<li><a href="./backend.php?accion=verEntregasRealizadas">Ver_Entregas_Realizadas</a></li>
 					</ul>
 				</li>
+				<li><a class="has-sub">Informes</a>
+					<ul>
+						<li><a href="#">Entre_fechas</a></li>
+						<li><a href="./backend.php?accion=entreFechasPorER">Entre_fechas_por_ER</a></li>
+						<li><a href="#">Alimentos_por_vencer</a></li>
+					</ul>
+				</li>
+				
+				
 				<li><a class="has-sub">Mas</a>
 					<ul>
 					<li><a href="./backend.php?accion=modificarConfiguracion">Configuración</a></li>
@@ -29,13 +38,13 @@
 
 		{% elseif (usuario.rol=="consulta") %}
 				<li><a href="./backend.php">Home</a></li>
-				<li><a href="./backend.php?accion=listarAlimentosSoloStock">Listar alimentos en stock</a></li>
+				<li><a href="./backend.php?accion=listarAlimentosSoloStock">Listar_alimentos_en_stock</a></li>
 				<li><a href="../app/logout.php">Logout</a></li>
 	
 		{% elseif (usuario.rol=="gestion") %}
 				<li><a href="./backend.php">Home</a></li>
-				<li><a href="./backend.php?accion=generarPedido">Generar Pedido</a></li>
-				<li><a href="./backend.php?accion=generarEntrega">Generar Entrega Directa</a></li>
+				<li><a href="./backend.php?accion=generarPedido">Generar_Pedido</a></li>
+				<li><a href="./backend.php?accion=generarEntrega">Generar_Entrega_Directa</a></li>
 				<li><a href="#" class="has-sub">Mas</a>
 					<ul>
 					<li><a href="../app/logout.php">Logout</a></li>

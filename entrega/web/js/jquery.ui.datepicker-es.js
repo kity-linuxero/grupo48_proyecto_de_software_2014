@@ -2,6 +2,7 @@
 /* Traducido por Vester (xvester@gmail.com). */
 jQuery(function($){
         $.datepicker.regional['es'] = {
+                changeMonth: true,
                 closeText: 'Cerrar',
                 prevText: '&#x3c;Ant',
                 nextText: 'Sig&#x3e;',
