@@ -12,10 +12,9 @@
          $sql = $this->conexion->prepare(
 			 "SELECT entidad_receptora.*, estado_entidad.descripcion as 'estado', necesidad_entidad.descripcion as 'necesidad',
 				     servicio_prestado.descripcion as 'servicio'
-			  FROM entidad_receptora INNER JOIN estado_entidad INNER JOIN necesidad_entidad INNER JOIN servicio_prestado
-			  WHERE (entidad_receptora.estado_entidad_id=estado_entidad.id) AND
-				 (entidad_receptora.necesidad_entidad_id=necesidad_entidad.id) AND
-				 (entidad_receptora.servicio_prestado_id=servicio_prestado.id)
+			  FROM entidad_receptora INNER JOIN estado_entidad ON (entidad_receptora.estado_entidad_id=estado_entidad.id)
+					INNER JOIN necesidad_entidad ON (entidad_receptora.necesidad_entidad_id=necesidad_entidad.id)
+					INNER JOIN servicio_prestado ON (entidad_receptora.servicio_prestado_id=servicio_prestado.id)
 			  ORDER BY entidad_receptora.razon_social");
 		
 		 $sql->execute();
@@ -95,10 +94,10 @@
          $sql = $this->conexion->prepare(
 			 "SELECT entidad_receptora.*, estado_entidad.descripcion as 'estado', necesidad_entidad.descripcion as 'necesidad',
 				     servicio_prestado.descripcion as 'servicio'
-			  FROM entidad_receptora INNER JOIN estado_entidad INNER JOIN necesidad_entidad INNER JOIN servicio_prestado
-			  WHERE (entidad_receptora.estado_entidad_id=estado_entidad.id) AND
-					(entidad_receptora.necesidad_entidad_id=necesidad_entidad.id) AND
-					(entidad_receptora.servicio_prestado_id=servicio_prestado.id) AND (entidad_receptora.id=$id)"
+			  FROM entidad_receptora INNER JOIN estado_entidad ON (entidad_receptora.estado_entidad_id=estado_entidad.id)
+					INNER JOIN necesidad_entidad ON (entidad_receptora.necesidad_entidad_id=necesidad_entidad.id)
+					INNER JOIN servicio_prestado ON (entidad_receptora.servicio_prestado_id=servicio_prestado.id)
+			  WHERE (entidad_receptora.id=$id)"
 			 );
 		
 		 $sql->execute();
@@ -125,5 +124,19 @@
                  is_numeric($n) &
                  is_numeric($s));
      }
+     
+     public function informePesoPorEntidad($f1, $f2)
+     {
+		$sql_entidades = $this->conexion->prepare("
+			SELECT E.razon_social as 'Razon Social', sum(A.cantidad*D.peso_paquete) as Kilos
+			FROM pedido_modelo as P INNER JOIN turno_entrega as T ON (P.turno_entrega_id=T.id)
+					INNER JOIN alimento_pedido as A ON (P.numero=A.pedido_numero)
+					INNER JOIN detalle_alimento as D ON (A.detalle_alimento_id=D.id)
+					INNER JOIN entidad_receptora as E ON (P.entidad_receptora_id=E.id)
+			WHERE (T.fecha>='$f1') AND (T.fecha<='$f2')
+			GROUP BY E.razon_social
+			
+		");
+	 }
 
  }

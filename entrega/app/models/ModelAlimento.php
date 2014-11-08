@@ -9,12 +9,13 @@
 
      public function listar()
      {
-         $sql = $this->conexion->prepare("SELECT detalle_alimento.*, alimento.descripcion, donante.razon_social
-										  FROM alimento INNER JOIN detalle_alimento INNER JOIN alimento_donante INNER JOIN donante
-										  WHERE alimento.codigo=detalle_alimento.alimento_codigo AND
-												detalle_alimento.id=alimento_donante.detalle_alimento_id AND
-												alimento_donante.donante_id=donante.id
-										  ORDER BY descripcion");
+          $sql = $this->conexion->prepare("
+          SELECT detalle_alimento.*, alimento.descripcion, donante.razon_social
+		  FROM alimento INNER JOIN detalle_alimento ON (alimento.codigo=detalle_alimento.alimento_codigo)
+						INNER JOIN alimento_donante ON (detalle_alimento.id=alimento_donante.detalle_alimento_id)
+						INNER JOIN donante ON (alimento_donante.donante_id=donante.id)
+		  ORDER BY descripcion
+		  ");
 
 		 $sql->execute();
 		 
@@ -25,10 +26,12 @@
      
      public function listarSoloStock()
      {
-         $sql = $this->conexion->prepare("SELECT *
-										  FROM alimento INNER JOIN detalle_alimento
-										  WHERE alimento.codigo=detalle_alimento.alimento_codigo and detalle_alimento.stock > 0
-										  ORDER BY descripcion");
+         $sql = $this->conexion->prepare("
+   			  SELECT *
+			  FROM alimento INNER JOIN detalle_alimento ON (alimento.codigo=detalle_alimento.alimento_codigo)
+			  WHERE (detalle_alimento.stock > 0)
+			  ORDER BY descripcion
+			 ");
 
 		 $sql->execute();
 		 
@@ -110,18 +113,20 @@
 	
     public function obtenerPorID($id)
     {
-		$sql = $this->conexion->prepare("SELECT detalle_alimento.id,
-												alimento.descripcion,
-												detalle_alimento.fecha_vencimiento as 'fecha',	
-												detalle_alimento.contenido,
-												detalle_alimento.peso_paquete as 'peso',
-												detalle_alimento.stock, 
-												detalle_alimento.reservado,
-												alimento_donante.donante_id as 'donante',
-												alimento_donante.cantidad
-										 FROM detalle_alimento INNER JOIN alimento_donante INNER JOIN alimento
-										 WHERE (detalle_alimento.id=alimento_donante.detalle_alimento_id) 
-											   AND (detalle_alimento.id='$id') AND (detalle_alimento.alimento_codigo=alimento.codigo)");
+		$sql = $this->conexion->prepare("
+			SELECT detalle_alimento.id,
+					alimento.descripcion,
+					detalle_alimento.fecha_vencimiento as 'fecha',	
+					detalle_alimento.contenido,
+					detalle_alimento.peso_paquete as 'peso',
+					detalle_alimento.stock, 
+					detalle_alimento.reservado,
+					alimento_donante.donante_id as 'donante',
+					alimento_donante.cantidad
+			 FROM detalle_alimento INNER JOIN alimento_donante ON (detalle_alimento.id=alimento_donante.detalle_alimento_id) 
+								   INNER JOIN alimento ON (detalle_alimento.alimento_codigo=alimento.codigo)
+			 WHERE (detalle_alimento.id='$id')
+			");
 		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
 		return $res["0"];
@@ -161,9 +166,8 @@
 	{
         $sql = $this->conexion->prepare("
 					SELECT *
-					FROM alimento INNER JOIN detalle_alimento
-					WHERE (alimento.codigo=detalle_alimento.alimento_codigo)
-						AND (detalle_alimento.stock > 0)
+					FROM alimento INNER JOIN detalle_alimento ON (alimento.codigo=detalle_alimento.alimento_codigo)
+					WHERE (detalle_alimento.stock > 0)
 						AND (fecha_vencimiento BETWEEN '$f1' AND '$f2')
 					ORDER BY descripcion
 				");

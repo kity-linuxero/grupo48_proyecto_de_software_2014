@@ -33,11 +33,10 @@ class ModelPedido extends Model
 		$hoy = $this->getToday();		// obtenemos la fecha de hoy
 		$sql = $this->conexion->prepare("
 			SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora , entidad_receptora.razon_social, estado_pedido.descripcion
-			FROM pedido_modelo INNER JOIN turno_entrega INNER JOIN entidad_receptora INNER JOIN estado_pedido
-			WHERE (pedido_modelo.turno_entrega_id=turno_entrega.id)
-					AND (entidad_receptora.id=pedido_modelo.entidad_receptora_id)
-					AND (pedido_modelo.estado_pedido_id=estado_pedido.id)
-					AND (turno_entrega.fecha='$hoy')
+			FROM pedido_modelo INNER JOIN turno_entrega ON (pedido_modelo.turno_entrega_id=turno_entrega.id)
+							   INNER JOIN entidad_receptora ON (entidad_receptora.id=pedido_modelo.entidad_receptora_id)
+							   INNER JOIN estado_pedido ON (pedido_modelo.estado_pedido_id=estado_pedido.id)
+			WHERE (turno_entrega.fecha='$hoy')
 			ORDER BY pedido_modelo.numero
 										");
 		$sql->execute();
@@ -52,11 +51,10 @@ numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 
 	{		
 		$sql = $this->conexion->prepare("
 			SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora , entidad_receptora.razon_social, estado_pedido.descripcion
-			FROM pedido_modelo INNER JOIN turno_entrega INNER JOIN entidad_receptora INNER JOIN estado_pedido
-			WHERE (pedido_modelo.turno_entrega_id=turno_entrega.id)
-					AND (entidad_receptora.id=pedido_modelo.entidad_receptora_id)
-					AND (pedido_modelo.estado_pedido_id=estado_pedido.id)
-					AND (turno_entrega.fecha='$d')
+			FROM pedido_modelo INNER JOIN turno_entrega ON (pedido_modelo.turno_entrega_id=turno_entrega.id)
+							   INNER JOIN entidad_receptora ON (entidad_receptora.id=pedido_modelo.entidad_receptora_id)
+							   INNER JOIN estado_pedido ON (pedido_modelo.estado_pedido_id=estado_pedido.id)
+			WHERE (turno_entrega.fecha='$d')
 			ORDER BY pedido_modelo.numero
 		");
 		$sql->execute();
@@ -174,7 +172,7 @@ Array ( ['8'] => 15 ['12'] => 5 )
 					try {
 						$update = $this->conexion->prepare("
 							UPDATE detalle_alimento
-							SET reservado=reservado+'$cant', stock=stock-'$cant'
+							SET stock=stock-'$cant'
 							WHERE id='$detalle'
 						");
 						$update->execute();
@@ -198,23 +196,36 @@ Array ( ['8'] => 15 ['12'] => 5 )
 	}
 	
 	public function validarDatos($pedido, $turno, $alimentos){
-			// se validaran los datos antes de agregar/modificar
-						
-			return 
-			    (is_numeric($pedido['entidad_receptora_id']) &
+		// se validaran los datos antes de agregar/modificar
+		$res = (is_numeric($pedido['entidad_receptora_id']) &
                  (($pedido['con_envio']==1) or ($pedido['con_envio']==0)) &
                  $this->fechaMayorQueHoy($turno['fecha']) &
 				 is_string($turno['hora']) &
                  (count($alimentos)>0));
+        if ($res) {
+			foreach ($alimentos as $alimento){
+				$res = $res & (is_numeric($alimento));
+			}
+			$id_values = array_keys($alimentos); // los indices son los detalle_alimento_id
+			
+			foreach ($id_values as $id_value) {
+				$detalle = $id_value;
+				$sql = $this->conexion->prepare("
+						SELECT stock FROM detalle_alimento WHERE id='$id_value'
+				");
+				$sql->execute();
+				$res = $res & ($alimentos[$id_value]<$sql['0']['stock']);
+			}
+		}
+		return $res;
 	}
 	
 	public function obtenerPorNro($n)
 	{
 		$sql = $this->conexion->prepare("
 			SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora
-			FROM pedido_modelo INNER JOIN turno_entrega
+			FROM pedido_modelo INNER JOIN turno_entrega ON (pedido_modelo.turno_entrega_id=turno_entrega.id)
 			WHERE (pedido_modelo.numero='$n')
-					AND (pedido_modelo.turno_entrega_id=turno_entrega.id)
 		");
 		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -237,8 +248,7 @@ Array ( ['8'] => 15 ['12'] => 5 )
 	{
 		$sql = $this->conexion->prepare("
 				SELECT entrega_directa.*, entidad_receptora.razon_social
-				FROM entrega_directa INNER JOIN entidad_receptora
-				WHERE entrega_directa.entidad_receptora_id=entidad_receptora.id
+				FROM entrega_directa INNER JOIN entidad_receptora ON entrega_directa.entidad_receptora_id=entidad_receptora.id
 				ORDER BY entrega_directa.id
 			");
 		$sql->execute();
