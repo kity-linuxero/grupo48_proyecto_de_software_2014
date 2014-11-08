@@ -7,7 +7,6 @@
  require_once '../app/models/ModelAlimento.php';
  require_once '../app/models/ModelDonante.php';
  require_once '../app/models/ModelEntidad.php';
- require_once '../app/models/ModelRecepcion.php';
  require_once '../app/models/ModelLogin.php';
  require_once '../app/controllers/Controller.php';
  require_once '../app/controllers/ControllerFront.php';
