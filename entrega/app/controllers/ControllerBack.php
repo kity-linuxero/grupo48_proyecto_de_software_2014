@@ -591,12 +591,29 @@ require_once __DIR__ . '/Controller.php';
 	}
 	
 	public function informePorERJSON(){
-			//echo $_COOKIE['informe'];
 			
-			$contenido= $_COOKIE['informe'];
-			$fp=fopen("data.dat","x");
-			fwrite($fp,$contenido);
-			fclose($fp) ;
+			header("content-type: application/json"); 
+			
+			$f1= $_GET['f1'];
+			$f2= $_GET['f2'];
+			
+			$consulta= $this->mE->informePesoPorEntidad($f1, $f2);
+			
+			$rows = array();
+
+			foreach ($consulta as $valor) {
+					$row[0] = $valor[0];  
+					$row[1] = $valor[1];
+					array_push($rows,$row);
+			}
+
+			
+			
+			echo json_encode($rows, JSON_NUMERIC_CHECK); //lo pasa a formato JSON
+			
+			//echo $_GET['callback']. '('. json_encode($array) . ')';    
+			//die;
+		
 			
 			
 		}
