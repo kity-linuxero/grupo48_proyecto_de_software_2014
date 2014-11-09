@@ -568,21 +568,32 @@ require_once __DIR__ . '/Controller.php';
 
 	public function entreFechasPorER(){
 		
-		echo $this->twig->render('formInformes.twig.html', array('usuario' => dameUsuarioYRol()));
+		echo $this->twig->render('formInformes.twig.html', array('usuario' => dameUsuarioYRol(), 'informe' => '0'));
 		
 		
 	}
+	
+	public function entreFechas(){
+		
+		echo $this->twig->render('formInformes.twig.html', array('usuario' => dameUsuarioYRol(), 'informe' => '1'));
+		
+		
+	}
+	
+	
 	
 	public function informePorER(){
 
 		
-	
+	/*
 		$informe= json_encode($this->mE->informePesoPorEntidad($_POST['fecha1'], $_POST['fecha2']), JSON_NUMERIC_CHECK);
 		
-		setcookie("informe", $informe);
-		echo $this->twig->render('formInformes.twig.html', array('usuario' => dameUsuarioYRol()));
+		setcookie("informe", $informe);*/
+		echo $this->twig->render('formInformes.twig.html', array('usuario' => dameUsuarioYRol(), 'informe' => '0'));
 		
 	}
+	
+	
 	
 	public function informePorERJSON(){
 			

@@ -25,8 +25,7 @@ class Permisos {
 								 'actualizarPedido'=>'0', 'mostrarAgenda'=>'0',
 								 'mostrarPedidos' =>'0',
 								 'verEntregasRealizadas'=>'0', 'entreFechasPorER'=>'0', 'informePorER'=>'0',
-								 
-								 'informePorERJSON' => '0'
+								 'entreFechas' => '0'
 
 								 ),
 		'gestion' => array('generarPedido'=>'0', 'generarEntrega'=>'0', 'mostrarAgenda'=>'0',
