@@ -9,17 +9,17 @@
 
      public function listar()
      {
-          $sql = $this->conexion->prepare("
-          SELECT detalle_alimento.*, alimento.descripcion, donante.razon_social
-		  FROM alimento INNER JOIN detalle_alimento ON (alimento.codigo=detalle_alimento.alimento_codigo)
-						INNER JOIN alimento_donante ON (detalle_alimento.id=alimento_donante.detalle_alimento_id)
-						INNER JOIN donante ON (alimento_donante.donante_id=donante.id)
-		  ORDER BY descripcion
-		  ");
+        $sql = $this->conexion->prepare("
+			SELECT detalle_alimento.*, alimento.descripcion, donante.razon_social
+			FROM alimento INNER JOIN detalle_alimento ON (alimento.codigo=detalle_alimento.alimento_codigo)
+						LEFT JOIN alimento_donante ON (detalle_alimento.id=alimento_donante.detalle_alimento_id)
+						LEFT JOIN donante ON (alimento_donante.donante_id=donante.id)
+			ORDER BY descripcion
+		");
 
-		 $sql->execute();
-		 
-         $alimentos = $sql->fetchAll(PDO::FETCH_ASSOC);
+		$sql->execute();
+		
+        $alimentos = $sql->fetchAll(PDO::FETCH_ASSOC);
 			
         return $alimentos;
      }
@@ -55,44 +55,45 @@
 		}
 	 }
 	 
-     public function agregar($desc, $fec, $cont, $peso, $stock, $reser, $cant, $don)
+     public function agregar($desc, $fec, $cont, $peso, $stock, $reser)
      {
-		$alimento_codigo = $this->agregarAlimento($desc);
+		try {
+			$alimento_codigo = $this->agregarAlimento($desc);
 
-		$sql_detalle = $this->conexion->prepare("insert into detalle_alimento (alimento_codigo, fecha_vencimiento, contenido, peso_paquete, stock, reservado)
-										 values ('$alimento_codigo', '$fec', '$cont', '$peso', '$stock', '$reser')");
-		$sql_detalle->execute();
-		
-		$id_detalle = $this->conexion->lastInsertId(); // detalle_alimento recien creado
-		
-		$sql_alimento_donante = $this->conexion->prepare("insert into alimento_donante (detalle_alimento_id, donante_id, cantidad)
-														  values ('$id_detalle', '$don', '$cant')");
-		$sql_alimento_donante->execute();
-
-         return $sql;
-     
+			$sql_detalle = $this->conexion->prepare("insert into detalle_alimento (alimento_codigo, fecha_vencimiento, contenido, peso_paquete, stock, reservado)
+											 values ('$alimento_codigo', '$fec', '$cont', '$peso', '$stock', '$reser')");
+			$sql_detalle->execute();
+			
+			return $sql;
+		} catch (PDOException $e) {
+			return $e;
+		}
 	}
 
-     public function agregarDonacion($desc, $fec, $cont, $peso, $reser, $cant, $don)
+     public function agregarDonacion($desc, $fec, $cont, $peso, $cant, $don)
      {
-		$alimento_codigo = $this->agregarAlimento($desc);
+		try {
+			$alimento_codigo = $this->agregarAlimento($desc);
 
-		$sql_detalle = $this->conexion->prepare("insert into detalle_alimento (alimento_codigo, fecha_vencimiento, contenido, peso_paquete, stock, reservado)
-										 values ('$alimento_codigo', '$fec', '$cont', '0', '$peso')");
-		$sql_detalle->execute();
-		
-		$id_detalle = $this->conexion->lastInsertId(); // detalle_alimento recien creado
-		
-		$sql_alimento_donante = $this->conexion->prepare("insert into alimento_donante (detalle_alimento_id, donante_id, cantidad)
-														  values ('$id_detalle', '$don', '$cant')");
-		$sql_alimento_donante->execute();
-
-         return $sql;
+			$sql_detalle = $this->conexion->prepare("insert into detalle_alimento (alimento_codigo, fecha_vencimiento, contenido, peso_paquete, stock, reservado)
+											 values ('$alimento_codigo', '$fec', '$cont', '$peso', '$cant', '0')");
+			$sql_detalle->execute();
+			
+			$id_detalle = $this->conexion->lastInsertId(); // detalle_alimento recien creado
+			
+			$sql_alimento_donante = $this->conexion->prepare("insert into alimento_donante (detalle_alimento_id, donante_id, cantidad)
+															  values ('$id_detalle', '$don', '$cant')");
+			$sql_alimento_donante->execute();
+			
+			return $sql;
      
+		} catch (PDOException $e){
+			return $e;
+		}
 	}
 	
 	
-	public function modificar($id, $desc, $fec, $cont, $peso, $stock, $reser, $cant, $donAnt, $donNue)
+	public function modificar($id, $desc, $fec, $cont, $peso, $stock, $reser)
      {
 		$alimento_codigo = $this->agregarAlimento($desc); // si fue modificado lo agrega como nuevo, sino no
 
@@ -105,10 +106,6 @@
 													 reservado='$reser'
 												 WHERE id='$id'");
 		$sql_detalle->execute();
-		
-		$sql_alimento_donante = $this->conexion->prepare("UPDATE alimento_donante SET cantidad='$cant', donante_id='$donNue'
-														  WHERE (detalle_alimento_id='$id') AND (donante_id='$donAnt')");
-		$sql_alimento_donante->execute();
 
 	}
 	
@@ -157,20 +154,31 @@
 			");
 		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
-		return $res["0"];
+		if (count($res)>0)
+			return $res["0"];
+		else return -1;
 	}
     
-    public function validarDatos($desc, $fec, $cont, $peso, $stock, $reser, $cant, $don)
+    public function validarDatos($desc, $fec, $cont, $peso, $stock, $reser)
     {
         return (is_string($desc) &
                 is_string($fec) &
                 is_string($cont) &
                 is_numeric($peso) &
                 is_numeric($stock) &
-                is_numeric($reser) &
+                is_numeric($reser));
+    }
+	
+    public function validarDatosDonacion($desc, $fec, $cont, $peso, $cant, $don)
+    {
+        return (is_string($desc) &
+                is_string($fec) &
+                is_string($cont) &
+                is_numeric($peso) &
                 is_numeric($cant) &
                 is_numeric($don));
     }
+
 
 	public function alcanzaStock($id, $cant)
 	{

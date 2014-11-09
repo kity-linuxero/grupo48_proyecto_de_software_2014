@@ -2,28 +2,17 @@
 
 {% block contenido %}
 
-{% if accion=="alta" %}
-
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaAlimento">
-     <h3>Alta de Donación de Alimento</h3>
-{% elseif accion=="modificar" %}
-<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarAlimento&amp;id={{params.id}}">
-    <h2>Modificación de Donación de Alimento</h2>
-{% endif %}
+		<h3>Alta de Donación de Alimento</h3>
 
     <div>
-        <label>*Descripción:</label>
-        
-        
+        <label>Descripción:</label>
         <input list="descripcionAlimentos" name="descripcion" placeholder="Buscar" value="{{ params.descripcion }}" required/>
-		
 		<datalist id="descripcionAlimentos">
-			
 			{% for alimento in alimentos %}
 							<option value="{{ alimento.descripcion }}"> 
 			{% endfor %}
 		</datalist>
-        
     </div>
     <div>
 		<label>Contenido:</label>
@@ -37,7 +26,7 @@
     </div>
     <div>
          <input type="text" id="from" name="fecha" readonly="readonly" required/>
-         <label>*Fecha vencimiento</label>
+         <label>Fecha vencimiento</label>
     </div>
     <div>
         <input type="number" min="0" name="peso" step="any" value="{{ params.peso }}" required/>
@@ -66,10 +55,9 @@
 
 	<br>
 	
-    <button type="submit" name= "boton">{% if accion=="alta" %}Generar Alta{% elseif accion=="modificar" %}Modificar{% endif %}</button>
+    <button type="submit" name= "boton">Alta Donación</button>
 	<button type="button" onclick="window.location.href='./backend.php?accion=listarAlimentos'">Cancelar</button>
 
-<div class="obligatorios">*Campos obligatorios</div>
 
 
 </form>

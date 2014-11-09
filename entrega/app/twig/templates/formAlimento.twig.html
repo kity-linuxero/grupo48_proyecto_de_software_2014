@@ -30,7 +30,7 @@
 		<label>Contenido:</label>
     </div>
     <div>
-         <input type="text" id="from" name="fecha" readonly="readonly" required/>
+         <input type="text" id="from" name="fecha" readonly="readonly" value="{{ params.fecha }}" required/>
          <label>*Fecha vencimiento</label>
     </div>
     <div>
@@ -47,26 +47,6 @@
         <input type="number" name="reservado" value="{{ params.reservado }}">
          <label>Reservado:</label>
     </div>
-	<div>
-        <input type="number" min="1" name="cantidad" placeholder="1" value="{{ params.cantidad }}"> 
-		<label>Cantidad</label>
-    </div>
-
-		<div class="formRow">
-					<label>Donante</label>
-					<select id="donanteSelect" name="donante">
-						{% for donante in donantes %}
-							{% if params.donante == donante.id %}
-								<option value="{{ donante.id }}" selected="selected" > 
-									{{ donante.razon_social }}</option>
-							{% else %}
-								<option value="{{ donante.id }}"> 
-									{{ donante.razon_social }}</option>
-							{% endif %}
-						{% endfor %}
-					</select>
-		</div>
-
 
 	<br>
 	
