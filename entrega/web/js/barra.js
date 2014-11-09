@@ -1,55 +1,51 @@
 function plotear(){       
- $(document).ready(function() {
-            var options = {
-                chart: {
-                    renderTo: 'container',
-                    type: 'column',
-                    marginRight: 130,
-                    marginBottom: 25
-                },
-                title: {
-                    text: 'Project Requests',
-                    x: -20 //center
-                },
-                subtitle: {
-                    text: '',
-                    x: -20
-                },
-                xAxis: {
-                    categories: []
-                },
-                yAxis: {
-                    title: {
-                        text: 'Requests'
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                },
-                tooltip: {
-                    formatter: function() {
-                            return '<b>'+ this.series.name +'</b><br/>'+
-                            this.x +': '+ this.y;
-                    }
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'top',
-                    x: -10,
-                    y: 100,
-                    borderWidth: 0
-                },
-                series: []
-            }
-           
-            $.getJSON("data.php", function(json) {
-                options.xAxis.categories = json[0]['data'];
-                options.series[0] = json[1];
-                options.series[1] = json[2];
-                options.series[2] = json[3];
-                chart = new Highcharts.Chart(options);
-            });
-        });}
+
+$(document).ready(function() {
+	
+	//fechas
+	var f1=document.getElementById("from").value;
+	var f2=document.getElementById("to").value;
+
+	if ( f1.length != 0 && f2.length != 0) {
+    //carga el subtitulo
+    var subtitulo="Entre las fechas ";
+		subtitulo+=f1;
+		subtitulo+=" y ";
+		subtitulo+=f2;
+		
+		
+
+    var options = {
+        chart: {
+            renderTo: 'container',
+            type: 'bar',
+            cursor: 'pointer'
+        },
+		title: { text: 'Informe kilo por fecha'},
+		subtitle: {	text: subtitulo	},
+        series: [{}]
+    };
+    
+
+    
+    
+    var url= "../app/models/informe.php?informe=barra&f1=";
+    url+=f1;
+    url+="&f2=";
+    url+=f2;
+    
+    
+
+    $.getJSON(url, function(data) {
+        options.series[0].data = data;
+        var chart = new Highcharts.Chart(options);
+    });
+
+}
+
+});
+
+
+
+
+}

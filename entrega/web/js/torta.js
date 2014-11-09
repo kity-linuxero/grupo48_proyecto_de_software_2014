@@ -1,7 +1,5 @@
 	function plotear(){	
-		
-		
-		
+
 		$(document).ready(function() {
 			
 			var f1=document.getElementById("from").value;
@@ -12,18 +10,6 @@
 				subtitulo+=f1;
 				subtitulo+=" y ";
 				subtitulo+=f2;
-				
-				
-				
-				
-					
-				
-				
-				
-				
-				
-							
-				
 				var options = {
 					chart: {
 						renderTo: 'container',
@@ -66,28 +52,16 @@
 						data: []
 					}]
 				}
-				
-				
-					
+
 					//prepara la url para mandar
-					
-					//var url="data.php?f1=";
+
 					var url= "../app/models/informe.php?informe=torta&f1=";
 					//url+="backend.php?accion=informePorERJSON&f1=";
 					url+=f1;
 					url+="&f2="
 					url+=f2;
-					
-					//window.location.assign(url);
-					//alert(url);
-					
 					$.getJSON(url, function(json) {
-				
-						
 					options.series[0].data = json;
 					chart = new Highcharts.Chart(options);
 				});
-				
-	        
-	        
       	}}) }

@@ -39,10 +39,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 				$this->mP = new ModelPedido(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 							 
-			} elseif ($accion== 'informePorERJSON'){ //sino, los scripts de informes no andan.
-					$this->mE = new ModelEntidad(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
-							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
-				}
+			} 
 			
 				else {
 				$msj = "Usted no posee permisos para realizar dicha operación";
