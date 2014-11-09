@@ -10,13 +10,13 @@ require_once __DIR__ . '/ControllerLogin.php';
 	protected $mD; 	 // variable para la conexión del modelo donantes
 	protected $us;   // variable para la conexión del modelo usuarios
 	protected $mP;   // variable para la conexion del modelo de pedidos
+	protected $msj;
 	
 	//configura los parámetros de Twig para el controllerBack
 	
 	public function __construct($accion)
 	{
 		$this->twig = $this->configTwig();
-		
 		
 		
 		if (Model::testConect()){ //si la conexión resulta exitosa

@@ -173,11 +173,7 @@ Array ( ['8'] => 15 ['12'] => 5 )
 	
 	public function agregarEntrega($entidad, $alimentos)
 	{
-/*		
-Array ( [entidad_receptora_id] => 1 [con_envio] => true )
-Array ( [fecha] => 2014-11-01 [hora] => 23:59 )
-Array ( ['8'] => 15 ['12'] => 5 ) 
-*/	
+
 		$fecha_hoy = $this->getToday();
 	
 		try {
@@ -271,7 +267,7 @@ Array ( ['8'] => 15 ['12'] => 5 )
 		return $res;
 	}
 	
-public function entregasRealizadas()
+	public function entregasRealizadas()
 	{
 		$sql = $this->conexion->prepare("
 				SELECT entrega_directa.*, entidad_receptora.razon_social
@@ -280,11 +276,10 @@ public function entregasRealizadas()
 			");
 		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
-		
 		return $res;
 	}
 	
-	public function validarDatos($pedido, $turno, $alimentos){
+	public function validarDatosPedido($pedido, $turno, $alimentos){
 		// se validaran los datos antes de agregar/modificar
 		$res = (is_numeric($pedido['entidad_receptora_id']) &
                  (($pedido['con_envio']==1) or ($pedido['con_envio']==0)) &
@@ -303,18 +298,43 @@ public function entregasRealizadas()
 						SELECT stock FROM detalle_alimento WHERE id='$id_value'
 				");
 				$sql->execute();
-				$res = $res & ($alimentos[$id_value]<$sql['0']['stock']);
+				$temp = $sql->fetchAll(PDO::FETCH_ASSOC);
+				$res = $res & ($alimentos[$id_value]<=$temp['0']['stock']);
 			}
 		}
 		return $res;
 	}
 	
-		public function validarDatosSinCantidad($pedido, $turno){
-			$res = (is_numeric($pedido['entidad_receptora_id']) &
-					 (($pedido['con_envio']==1) or ($pedido['con_envio']==0)) &
-					 $this->fechaMayorQueHoy($turno['fecha']) &
-					 is_string($turno['hora']));
-			return $res;
+	public function validarDatosEntrega($entidad_id, $alimentos){
+		// se validaran los datos antes de agregar/modificar
+		$res = (is_numeric($entidad_id) & (count($alimentos)>0));
+        if ($res) {
+			foreach ($alimentos as $alimento){
+				$res = $res & (is_numeric($alimento));
+			}
+			$id_values = array_keys($alimentos); // los indices son los detalle_alimento_id
+			
+			foreach ($id_values as $id_value) {
+				$detalle = $id_value;
+				$sql = $this->conexion->prepare("
+						SELECT stock FROM detalle_alimento WHERE id='$id_value'
+				");
+				$sql->execute();
+				$temp = $sql->fetchAll(PDO::FETCH_ASSOC);
+				$res = $res & ($alimentos[$id_value]<=$temp['0']['stock']);
+			}
+		}
+		return $res;
+	}
+	
+	
+	public function validarDatosSinCantidad($pedido, $turno)
+	{
+		$res = (is_numeric($pedido['entidad_receptora_id']) &
+				 (($pedido['con_envio']==1) or ($pedido['con_envio']==0)) &
+				 $this->fechaMayorQueHoy($turno['fecha']) &
+				 is_string($turno['hora']));
+		return $res;
 	}
 	
 
