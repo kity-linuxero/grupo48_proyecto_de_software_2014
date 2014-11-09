@@ -189,16 +189,6 @@
 		");
 		$result->execute();
 		
-	/*	
-		$rows = array();
-
-		foreach ($result as $valor) {
-					$row[0] = $valor[0];  
-					$row[1] = $valor[1];
-					array_push($rows,$row);
-				}
-
-		return $rows;*/
 		return $result;
 	 }
  }
