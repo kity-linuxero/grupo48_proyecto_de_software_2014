@@ -550,13 +550,24 @@ require_once __DIR__ . '/Controller.php';
 	
 	public function informePorER(){
 
-		$GLOBALS['info']= json_encode($this->mE->informePesoPorEntidad($_POST['fecha1'], $_POST['fecha2']), JSON_NUMERIC_CHECK);
+		
+	
+		$informe= json_encode($this->mE->informePesoPorEntidad($_POST['fecha1'], $_POST['fecha2']), JSON_NUMERIC_CHECK);
+		
+		setcookie("informe", $informe);
 		echo $this->twig->render('formInformes.twig.html', array('usuario' => dameUsuarioYRol()));
 		
 	}
 	
 	public function informePorERJSON(){
-			echo $GLOBALS['info'];
+			//echo $_COOKIE['informe'];
+			
+			$contenido= $_COOKIE['informe'];
+			$fp=fopen("data.dat","x");
+			fwrite($fp,$contenido);
+			fclose($fp) ;
+			
+			
 		}
 	
 	
