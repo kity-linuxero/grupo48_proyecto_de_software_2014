@@ -163,5 +163,42 @@
 		
 		
 	 }
+	 
+	 public function informePesoPorDia($f1, $f2)
+     {
+		$result = $this->conexion->prepare("
+			SELECT R.fecha, sum( R.cantidad * R.peso_paquete ) AS Kilos
+			FROM (
 
+					SELECT T.fecha, A.cantidad, D.peso_paquete
+					FROM pedido_modelo AS P
+					INNER JOIN turno_entrega AS T ON ( P.turno_entrega_id = T.id )
+					INNER JOIN alimento_pedido AS A ON ( P.numero = A.pedido_numero )
+					INNER JOIN detalle_alimento AS D ON ( A.detalle_alimento_id = D.id )
+					INNER JOIN entidad_receptora AS E ON ( P.entidad_receptora_id = E.id )
+					WHERE (T.fecha >= '2014-01-01')	AND (T.fecha <= '2015-01-01')
+			UNION
+					SELECT P.fecha, A.cantidad, D.peso_paquete
+					FROM entrega_directa AS P
+					INNER JOIN alimento_entrega_directa AS A ON ( P.id = A.entrega_directa_id )
+					INNER JOIN detalle_alimento AS D ON ( A.detalle_alimento_id = D.id )
+					INNER JOIN entidad_receptora AS E ON ( P.entidad_receptora_id = E.id )
+					WHERE (P.fecha >= '2014-01-01')	AND (P.fecha <= '2015-01-01')
+			) AS R
+			GROUP BY R.fecha
+		");
+		$result->execute();
+		
+	/*	
+		$rows = array();
+
+		foreach ($result as $valor) {
+					$row[0] = $valor[0];  
+					$row[1] = $valor[1];
+					array_push($rows,$row);
+				}
+
+		return $rows;*/
+		return $result;
+	 }
  }
