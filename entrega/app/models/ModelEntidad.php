@@ -146,7 +146,7 @@
 		");
 		$result->execute();
 		
-		
+	/*	
 		$rows = array();
 
 		foreach ($result as $valor) {
@@ -157,8 +157,8 @@
 
 		
 		
-		return $rows;
-		
+		return $rows;*/
+		return $result;
 		
 		
 		

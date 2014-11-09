@@ -2,108 +2,18 @@
 
 {% block contenido %}
 
-
+<script src="./js/torta.js"></script>
 
 <h4>Seleccione el rango de fechas para obtener el informe</h4>
-<form method="POST" action="./backend.php?accion=informePorER">
-	<label for="from">Fecha desde:</label>
-	<input type="text" id="from" name="fecha1" readonly="readonly" required/>
+
+<label for="from">Fecha desde:</label>
+<input type="text" id="from" name="fecha1" onblur="plotear()" readonly="readonly" required/>
 	
-	<label for="to">Fecha hasta</label>
-	<input type="text" id="to" name="fecha2" onblur="plotear()" readonly="readonly" required/>
-</form>
+<label for="to">Fecha hasta</label>
+<input type="text" id="to" name="fecha2" onblur="plotear()" readonly="readonly" required/>
 
-
-<script type="text/javascript">
-		
-	function plotear(){	
-		
-		
-		
-		$(document).ready(function() {
-			
-			var f1=document.getElementById("from").value;
-			var f2=document.getElementById("to").value;
-			var subtitulo="Entre las fechas ";
-			subtitulo+=f1;
-			subtitulo+=" y ";
-			subtitulo+=f2;
-			
-						
-			
-			var options = {
-				chart: {
-	                renderTo: 'container',
-	                plotBackgroundColor: null,
-	                plotBorderWidth: null,
-	                plotShadow: false
-	            },
-	            title: {
-	                text: 'Informes por entidades'
-	            },
-	            subtitle: {
-					text: subtitulo
-				},
-	            
-	            tooltip: {
-	                formatter: function() {
-	                    return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
-	                }
-	            },
-	            plotOptions: {
-	                pie: {
-	                    allowPointSelect: true,
-	                    cursor: 'pointer',
-	                    dataLabels: {
-	                        enabled: true,
-	                        color: '#000000',
-	                        connectorColor: '#000000',
-	                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-	                        
-	                        
-	                        formatter: function() {
-	                            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
-	                        }
-	                    }
-	                }
-	            },
-	            series: [{
-	                type: 'pie',
-	                name: 'Browser share',
-	                data: []
-	            }]
-	        }
-	        
-	        
-				
-				//prepara la url para mandar
-				
-				var url="data.php?f1=";
-				url+=f1;
-				url+="&f2="
-				url+=f2;
-				
-			
-				
-				$.getJSON(url, function(json) {
-			
-					
-				options.series[0].data = json;
-	        	chart = new Highcharts.Chart(options);
-	        });
-	        
-	        
-	        
-      	}); }
-      	
-
-		</script>
-
-
-
+<input type="button" value="Dibujar" onClick="plotear()"> 
+<hr>
 	<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 	
-	<input type="button" value="Dibujar" onClick="plotear()"> 
-	
-
 {% endblock %}
