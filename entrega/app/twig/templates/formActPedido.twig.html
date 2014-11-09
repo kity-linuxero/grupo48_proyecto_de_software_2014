@@ -41,7 +41,7 @@
 			<label>Estado del Pedido</label>
 			<select id="estadoSelect" name="estado">
 				{% for estado in estados %}
-						<option value="{{ pedido.estado_pedido_id }}" {% if pedido.estado_pedido_id == estado.id %} selected="selected" {% endif %}> 
+						<option value="{{ estado.id }}" {% if pedido.estado_pedido_id == estado.id %} selected="selected" {% endif %}> 
 							{{ estado.descripcion }}</option>
 				{% endfor %}
 			</select>
@@ -62,7 +62,7 @@
  </fieldset>
 	<br>
     <button type="submit" name= "boton">Actualizar</button>
-	<button type="button" onclick="window.location.href='./backend.php'">Cancelar</button>
+	<button type="button" onclick="window.location.href='./backend.php?accion=mostrarPedidos'">Cancelar</button>
 
 </form>
 
