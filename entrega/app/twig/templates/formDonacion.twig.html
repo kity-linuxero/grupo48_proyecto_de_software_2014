@@ -1,0 +1,77 @@
+{% extends "layoutBackUser.twig.html" %}
+
+{% block contenido %}
+
+{% if accion=="alta" %}
+
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=altaAlimento">
+     <h3>Alta de Donación de Alimento</h3>
+{% elseif accion=="modificar" %}
+<form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarAlimento&amp;id={{params.id}}">
+    <h2>Modificación de Donación de Alimento</h2>
+{% endif %}
+
+    <div>
+        <label>*Descripción:</label>
+        
+        
+        <input list="descripcionAlimentos" name="descripcion" placeholder="Buscar" value="{{ params.descripcion }}" required/>
+		
+		<datalist id="descripcionAlimentos">
+			
+			{% for alimento in alimentos %}
+							<option value="{{ alimento.descripcion }}"> 
+			{% endfor %}
+		</datalist>
+        
+    </div>
+    <div>
+		<label>Contenido:</label>
+        <input list="contenidoAlimentos" name="contenido" placeholder="Buscar" value="{{ params.contenido }}" required/>
+		<datalist id="contenidoAlimentos">
+			
+			{% for contenido in contenidos %}
+							<option value="{{ contenido.contenido }}"> 
+			{% endfor %}
+		</datalist>
+    </div>
+    <div>
+         <input type="text" id="from" name="fecha" readonly="readonly" required/>
+         <label>*Fecha vencimiento</label>
+    </div>
+    <div>
+        <input type="number" min="0" name="peso" step="any" value="{{ params.peso }}" required/>
+        <label>Peso:</label>
+    </div>
+	<div>
+        <input type="number" min="1" name="cantidad" placeholder="1" value="{{ params.cantidad }}" required/> 
+		<label>Cantidad</label>
+    </div>
+
+		<div class="formRow">
+					<label>Donante</label>
+					<select id="donanteSelect" name="donante">
+						{% for donante in donantes %}
+							{% if params.donante == donante.id %}
+								<option value="{{ donante.id }}" selected="selected" > 
+									{{ donante.razon_social }}</option>
+							{% else %}
+								<option value="{{ donante.id }}"> 
+									{{ donante.razon_social }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+		</div>
+
+
+	<br>
+	
+    <button type="submit" name= "boton">{% if accion=="alta" %}Generar Alta{% elseif accion=="modificar" %}Modificar{% endif %}</button>
+	<button type="button" onclick="window.location.href='./backend.php?accion=listarAlimentos'">Cancelar</button>
+
+<div class="obligatorios">*Campos obligatorios</div>
+
+
+</form>
+
+{% endblock %}

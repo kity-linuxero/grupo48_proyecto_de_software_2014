@@ -33,6 +33,7 @@ $map = array(
      'listarAlimentos' => array('controller' =>'ControllerBack', 'accion' =>'listarAlimentos'),
      'altaAlimento' => array('controller' =>'ControllerBack', 'accion' =>'altaAlimento'),
      'modificarAlimento' => array('controller' =>'ControllerBack', 'accion' =>'modificarAlimento'),
+     'altaDonacion' => array('controller' =>'ControllerBack', 'accion' =>'altaDonacion'),
      'bajaAlimento' => array('controller' =>'ControllerBack', 'accion' =>'bajaAlimento'),
 
      'quienesSomos' => array('controller' =>'ControllerBack', 'accion' =>'quienesSomos'),

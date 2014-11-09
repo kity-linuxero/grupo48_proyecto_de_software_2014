@@ -263,6 +263,41 @@ require_once __DIR__ . '/Controller.php';
 																  'accion' => "alta"));
 	}
 
+	public function altaDonacion()
+	{
+		$params = array('descripcion' => "",
+						'contenido' => "",
+						'peso' => "0",
+						'reservado' => "0",
+						'cantidad' => "1",
+						'donante' => "" );
+		
+		$donantes = $this->mD->obtenerDonantesActivos();
+		$contenidos = $this->mA->obtenerContenidos();
+		$alimentos = $this->mA->obtenerAlimentos();
+//		 print_r($contenidos); die;
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		// comprobar campos formulario
+             if ($this->mA->validarDatos($_POST['descripcion'],
+                      $_POST['fecha'], $_POST['contenido'],
+                      $_POST['peso'], $_POST['reservado'], $_POST['cantidad'], $_POST['donante']))
+			{
+				 $this->mA->agregarDonacion($_POST['descripcion'],
+                      $_POST['fecha'], $_POST['contenido'],
+                      $_POST['peso'], $_POST['reservado'], $_POST['cantidad'], $_POST['donante']);
+                 header('Location: backend.php?accion=listarAlimentos');
+             } else { // mostrar mensaje, lo hiciste mal, llenalo de nuevo
+                 $params['mensaje'] = 'No se ha podido insertar el alimento. Revisa el formulario';
+             }
+		}
+		 echo $this->twig->render('formAlimento.twig.html', array('params' => $params,
+																  'donantes' => $donantes,
+																  'alimentos' => $alimentos,
+																  'contenidos' => $contenidos,
+																  'usuario' => dameUsuarioYRol() 
+																  ));
+	}
+
 	public function modificarAlimento()
 	{
 		$params = array();

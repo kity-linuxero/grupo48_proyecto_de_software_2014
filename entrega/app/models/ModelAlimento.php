@@ -40,7 +40,7 @@
         return $alimentos;
      }
 
-	 public function agregarAlimento($desc) // agrega a la tabla alimento si todavia no fue agregado
+	 public function agregarAlimento($desc) // agrega a la tabla alimento si todavia no fue agregado y devuelve el codigo del alimento
 	 {
 		$sql = $this->conexion->prepare("SELECT codigo FROM alimento WHERE descripcion=(UPPER('$desc'))");
 		$sql->execute();
@@ -73,6 +73,25 @@
      
 	}
 
+     public function agregarDonacion($desc, $fec, $cont, $peso, $reser, $cant, $don)
+     {
+		$alimento_codigo = $this->agregarAlimento($desc);
+
+		$sql_detalle = $this->conexion->prepare("insert into detalle_alimento (alimento_codigo, fecha_vencimiento, contenido, peso_paquete, stock, reservado)
+										 values ('$alimento_codigo', '$fec', '$cont', '0', '$peso')");
+		$sql_detalle->execute();
+		
+		$id_detalle = $this->conexion->lastInsertId(); // detalle_alimento recien creado
+		
+		$sql_alimento_donante = $this->conexion->prepare("insert into alimento_donante (detalle_alimento_id, donante_id, cantidad)
+														  values ('$id_detalle', '$don', '$cant')");
+		$sql_alimento_donante->execute();
+
+         return $sql;
+     
+	}
+	
+	
 	public function modificar($id, $desc, $fec, $cont, $peso, $stock, $reser, $cant, $donAnt, $donNue)
      {
 		$alimento_codigo = $this->agregarAlimento($desc); // si fue modificado lo agrega como nuevo, sino no
@@ -105,6 +124,15 @@
 	public function obtenerAlimentos()
 	{
 		$sql = $this->conexion->prepare("SELECT * FROM alimento");
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $res;
+	}
+	
+	public function obtenerContenidos()
+	{
+		$sql = $this->conexion->prepare("SELECT contenido FROM detalle_alimento");
 		$sql->execute();
 		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
 		
