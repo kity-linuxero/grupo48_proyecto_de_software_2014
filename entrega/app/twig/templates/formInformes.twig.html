@@ -7,10 +7,10 @@
 <h4>Seleccione el rango de fechas para obtener el informe</h4>
 <form method="POST" action="./backend.php?accion=informePorER">
 	<label for="from">Fecha desde:</label>
-	<input type="text" id="from" name="fecha1" readonly="readonly"/>
+	<input type="text" id="from" name="fecha1" readonly="readonly" required/>
 	
 	<label for="to">Fecha hasta</label>
-	<input type="text" id="to" name="fecha2" onblur="plotear()" readonly="readonly" />
+	<input type="text" id="to" name="fecha2" onblur="plotear()" readonly="readonly" required/>
 </form>
 
 
@@ -29,7 +29,7 @@
 			subtitulo+=" y ";
 			subtitulo+=f2;
 			
-			
+						
 			
 			var options = {
 				chart: {
