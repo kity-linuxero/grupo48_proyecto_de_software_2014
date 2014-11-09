@@ -461,25 +461,21 @@ require_once __DIR__ . '/Controller.php';
 					echo $this->twig->render('listadoPedidos.twig.html', array('pedidos' => $pedidos, 'usuario' => dameUsuarioYRol()));
 					return;
 				} else {
-					// se llama al Home y se le envia un error
 					$msj = "Revisar los datos ingresados";
 				}
 			}
-		}
-		if ($id_pedido<0)
-		{
+			echo $this->twig->render('formActPedido.twig.html',  array('pedido' => $pedido,
+																	   'entidades' => $entidades,
+																	   'estados' => $estados,
+																	   'usuario' => dameUsuarioYRol(),
+																	   'mensaje' => $msj));
+		} else {
 			$msj = "Numero incorrecto de pedido";
 			$pedidos = $this->mP->todosLosPedidos();
 			echo $this->twig->render('listadoPedidos.twig.html', array('pedidos' => $pedidos, 'usuario' => dameUsuarioYRol()));
-		} else {
-			echo $this->twig->render('formActPedido.twig.html', array('pedido' => $pedido,
-															   'entidades' => $entidades,
-															   'estados' => $estados,
-															   'usuario' => dameUsuarioYRol(),
-															   'accion' => "actualizar",
-															   'mensaje' => $msj));
 		}
 	}
+	
 	
 	public function mostrarPedidos()
 	{
