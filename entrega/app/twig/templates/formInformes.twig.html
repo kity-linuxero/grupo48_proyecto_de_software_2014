@@ -2,9 +2,21 @@
 
 {% block contenido %}
 
-<script src="./js/torta.js"></script>
+{% if (informe == '0') %}
 
-<h4>Seleccione el rango de fechas para obtener el informe</h4>
+	<script src="./js/torta.js"></script>
+
+	<h4>Seleccione el rango de fechas para obtener el informe por Entidad Receptora</h4>
+
+{% endif %}
+
+{% if (informe == '1') %}
+
+
+	<h4>Seleccione el rango de fechas para obtener el informe por fecha</h4>
+
+{% endif %}
+
 
 <label for="from">Fecha desde:</label>
 <input type="text" id="from" name="fecha1" onblur="plotear()" readonly="readonly" required/>

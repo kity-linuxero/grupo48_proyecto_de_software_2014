@@ -56,7 +56,7 @@ $map = array(
 	 
 	 'entreFechasPorER' => array('controller' => 'ControllerBack', 'accion' => 'entreFechasPorER'),
 	 'informePorER' => array('controller' => 'ControllerBack', 'accion' => 'informePorER'),
-	 'informePorERJSON' => array('controller' => 'ControllerBack', 'accion' => 'informePorERJSON'),
+	 'entreFechas' => array('controller' => 'ControllerBack', 'accion' => 'entreFechas'),
 	 
 );
 session_start();

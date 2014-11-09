@@ -72,7 +72,7 @@
 					//prepara la url para mandar
 					
 					//var url="data.php?f1=";
-					var url= "../app/models/torta.php?f1=";
+					var url= "../app/models/informe.php?informe=torta&f1=";
 					//url+="backend.php?accion=informePorERJSON&f1=";
 					url+=f1;
 					url+="&f2="
