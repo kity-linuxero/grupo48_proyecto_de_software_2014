@@ -623,10 +623,6 @@ require_once __DIR__ . '/Controller.php';
 			
 			echo json_encode($rows, JSON_NUMERIC_CHECK); //lo pasa a formato JSON
 			
-			//echo $_GET['callback']. '('. json_encode($array) . ')';    
-			//die;
-		
-			
 			
 		}
 		

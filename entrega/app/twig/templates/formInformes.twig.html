@@ -34,24 +34,31 @@
 {% if (informe == '3') %}
 	<h4>Alimentos vencidos sin entregar</h4>
 
-
+	{% if alimentos|length>0 %}
+	
 	<table>
 
 			<tbody>
 				<tr class="encabezado">
-				<!--	<th>Id</th> -->
+				
 					<th>Descripcion</th>
 					<th>Stock</th>
 				</tr>
 			{% for alimento in alimentos %}
 				<tr>
-					<!--   	<td>{{ user.id }}</td> -->
+					
 						<td>{{ alimento.descripcion }}</td>
 						<td>{{ alimento.stock }}</td>
 				</tr>
 			{% endfor %}
 			</tbody>
 	</table>
+	{% else %}
+						<h4>
+							No hay alimentos vencidos sin entregar.
+						</h4>
+
+	{% endif %}
 
 
 {% endif %}
