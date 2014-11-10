@@ -215,5 +215,20 @@
 		return $alimentos;
 		
 	}
+	
+	public function alimentosVencidosSinEntregar()
+	{
+		$hoy = $fecha = date('Y-m-d');
+		$sql = $this->conexion->prepare("
+			SELECT A.descripcion, SUM(D.stock) as stock
+			FROM detalle_alimento as D INNER JOIN alimento as A ON (D.alimento_codigo = A.codigo)
+			WHERE (D.fecha_vencimiento < '$hoy')
+			GROUP BY A.descripcion
+		");
+		$sql->execute();
+		$alimentos = $sql->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $alimentos;
+	}
 
  }
