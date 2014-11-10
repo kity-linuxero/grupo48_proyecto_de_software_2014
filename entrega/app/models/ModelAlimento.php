@@ -227,7 +227,8 @@
 		");
 		$sql->execute();
 		$alimentos = $sql->fetchAll(PDO::FETCH_ASSOC);
-		
+		/*print_r($alimentos);
+		die;*/
 		return $alimentos;
 	}
 

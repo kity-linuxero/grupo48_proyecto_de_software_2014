@@ -29,8 +29,32 @@
 	<hr>
 		<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
-{% endif %}	
+{% endif %}
 
+{% if (informe == '3') %}
+	<h4>Alimentos vencidos sin entregar</h4>
+
+
+	<table>
+
+			<tbody>
+				<tr class="encabezado">
+				<!--	<th>Id</th> -->
+					<th>Descripcion</th>
+					<th>Stock</th>
+				</tr>
+			{% for alimento in alimentos %}
+				<tr>
+					<!--   	<td>{{ user.id }}</td> -->
+						<td>{{ alimento.descripcion }}</td>
+						<td>{{ alimento.stock }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+	</table>
+
+
+{% endif %}
 
 
 

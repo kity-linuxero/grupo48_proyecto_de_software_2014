@@ -629,6 +629,13 @@ require_once __DIR__ . '/Controller.php';
 			
 			
 		}
+		
+	public function alimentosPorVencer(){
+		
+		$alpv = $this->mA->alimentosVencidosSinEntregar();
+		echo $this->twig->render('formInformes.twig.html', array('usuario' => dameUsuarioYRol(), 'informe' => '3', 'alimentos' => $alpv ));
+		
+		}
 	
 	
 
