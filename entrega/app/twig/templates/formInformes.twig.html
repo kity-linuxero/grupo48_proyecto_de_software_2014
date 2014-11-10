@@ -2,30 +2,37 @@
 
 {% block contenido %}
 
-{% if (informe == '0') %}
+{% if (informe == '0' or informe == '1') %}
+	{% if (informe == '0') %}
 
-	<script src="./js/torta.js"></script>
+		<script src="./js/torta.js"></script>
 
-	<h4>Seleccione el rango de fechas para obtener el informe por Entidad Receptora</h4>
+		<h4>Seleccione el rango de fechas para obtener el informe por Entidad Receptora</h4>
 
-{% endif %}
+	{% endif %}
 
-{% if (informe == '1') %}
-
-
-	<h4>Seleccione el rango de fechas para obtener el informe por fecha</h4>
-	<script src="./js/barra.js"></script>
-{% endif %}
+	{% if (informe == '1') %}
 
 
-<label for="from">Fecha desde:</label>
-<input type="text" id="from" name="fecha1" onblur="plotear()" readonly="readonly" required/>
-	
-<label for="to">Fecha hasta</label>
-<input type="text" id="to" name="fecha2" onblur="plotear()" readonly="readonly" required/>
+		<h4>Seleccione el rango de fechas para obtener el informe por fecha</h4>
+		<script src="./js/barra.js"></script>
+	{% endif %}
 
-<input type="button" value="Dibujar" onClick="plotear()"> 
-<hr>
-	<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-	
+
+	<label for="from">Fecha desde:</label>
+	<input type="text" id="from" name="fecha1" onblur="plotear()" readonly="readonly" required/>
+		
+	<label for="to">Fecha hasta</label>
+	<input type="text" id="to" name="fecha2" onblur="plotear()" readonly="readonly" required/>
+
+	<input type="button" value="Dibujar" onClick="plotear()"> 
+	<hr>
+		<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+{% endif %}	
+
+
+
+
+
 {% endblock %}
