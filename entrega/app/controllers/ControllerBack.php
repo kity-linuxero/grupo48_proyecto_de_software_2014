@@ -20,7 +20,7 @@ require_once __DIR__ . '/Controller.php';
 	public function inicio()
      {
 		$pedidosHoy = $this->mP->pedidosAlerta();
-		echo $this->twig->render('layoutBackUser.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuarioYRol(), 'inicio' => '1'));
+		echo $this->twig->render('layoutBackUser.twig.html', array('params' => $pedidosHoy, 'usuario' => dameUsuarioYRol(), 'inicio' => '1', 'mensaje'=>$this->msj));
      }
 	 
 	public function contacto()
@@ -439,7 +439,7 @@ require_once __DIR__ . '/Controller.php';
 						'estado_pedido_id'=>"",
 						'con_envio'=>"0",
 						);
-		$msj = "";
+		$this->msj = "";
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // Array ( [entidad] => 1 [fecha] => 2014-10-29 [hora] => 12:59 [cantidad] => Array ( [8] => 5 [12] => 5 ) [con_envio] => 0 [boton] => )  
@@ -449,29 +449,30 @@ require_once __DIR__ . '/Controller.php';
 								'con_envio'=>$_POST['con_envio'],
 								);
 				$turno = array('fecha'=>$_POST['fecha'], 'hora'=>$_POST['hora']);
-				if ($this->mP->validarDatos($pedido, $turno, $_POST['cantidad'])){
+				if ($this->mP->validarDatosPedido($pedido, $turno, $_POST['cantidad'])){
 					$this->mP->agregar($pedido, $turno, $_POST['cantidad']);
-					 header('Location: backend.php?accion=inicio');
+					$this->msj = "El pedido se generó correctamente";
+					 $this->inicio(); return;
 				} else {
 					// se llama al Home y se le envia un error
-					$msj = "Revisar los datos ingresados";
+					$this->msj = "Revisar los datos ingresados";
 				}
 			} else {
-					$msj = "No se seleccionó ningún alimento para agregar al pedido";
+					$this->msj = "No se seleccionó ningún alimento para agregar al pedido";
 			}
 		}
 		echo $this->twig->render('formPedido.twig.html', array('pedido' => $pedido,
 															   'entidades' => $entidades,
 															   'detalles' => $detalles,
 															   'usuario' => dameUsuarioYRol(),
-															   'mensaje' => $msj));
+															   'mensaje' => $this->msj));
 	}
 	
 	public function actualizarPedido() // debe recibir $_GET['nro']
     {
 		$entidades = $this->mE->listarReducido(); // devuelve arreglo de arreglos con (id, razon_social)
 		$estados = $this->mP->listarEstadosPosibles();
-		$msj = "";
+		$this->msj = "";
 		if (isset($_GET['nro']))
 		{
 			$id_pedido = $_GET['nro'];
@@ -485,21 +486,21 @@ require_once __DIR__ . '/Controller.php';
 				if ($this->mP->validarDatosSinCantidad($pedido, $turno))
 				{
 					$this->mP->actualizar($pedido, $turno);
-					$msj = "El pedido se actualizó correctamente";
+					$this->msj = "El pedido se actualizó correctamente";
 					$pedidos = $this->mP->todosLosPedidos();
 					echo $this->twig->render('listadoPedidos.twig.html', array('pedidos' => $pedidos, 'usuario' => dameUsuarioYRol()));
 					return;
 				} else {
-					$msj = "Revisar los datos ingresados";
+					$this->msj = "Revisar los datos ingresados";
 				}
 			}
 			echo $this->twig->render('formActPedido.twig.html',  array('pedido' => $pedido,
 																	   'entidades' => $entidades,
 																	   'estados' => $estados,
 																	   'usuario' => dameUsuarioYRol(),
-																	   'mensaje' => $msj));
+																	   'mensaje' => $this->msj));
 		} else {
-			$msj = "Numero incorrecto de pedido";
+			$this->msj = "Numero incorrecto de pedido";
 			$pedidos = $this->mP->todosLosPedidos();
 			echo $this->twig->render('listadoPedidos.twig.html', array('pedidos' => $pedidos, 'usuario' => dameUsuarioYRol()));
 		}
@@ -517,18 +518,24 @@ require_once __DIR__ . '/Controller.php';
 		$entidades = $this->mE->listarReducido(); // devuelve arreglo de arreglos con (id, razon_social)
 		$detalles = $this->mP->alimentosEntregaDirecta();
 		$entidad = "";
-		$msj = "";
+		$this->msj = "";
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (isset($_POST['cantidad'])) 
 			{
 				$entidad = $_POST['entidad'];
-				$this->mP->agregarEntrega($entidad, $_POST['cantidad']);
-				$msj = "La entrega fue agregada con éxito";
-				echo $this->twig->render('layoutBackUser.twig.html', array('usuario' => dameUsuarioYRol(), 'mensaje' => $msj));
-				return;
+//				print_r($entidad); echo "<br>"; print_r($_POST['cantidad']); die;
+				if ($this->mP->validarDatosEntrega($entidad, $_POST['cantidad']))
+				{
+					$this->mP->agregarEntrega($entidad, $_POST['cantidad']);
+					$this->msj = "La entrega fue agregada con éxito";
+					echo $this->twig->render('layoutBackUser.twig.html', array('usuario' => dameUsuarioYRol(), 'mensaje' => $this->msj));
+					return;
+				} else {
+					$this->msj = "Verificar los datos ingresados";
+				}
 			} else {
-				$msj = "No se seleccionó ningún alimento para agregar a la entrega";
+				$this->msj = "No se seleccionó ningún alimento para agregar a la entrega";
 			}
 		} 
 		echo $this->twig->render('formEntrega.twig.html', array('entrega' => array('entidad' => $entidad),
@@ -536,7 +543,7 @@ require_once __DIR__ . '/Controller.php';
 																'detalles' => $detalles,
 																'usuario' => dameUsuarioYRol(),
 																'accion' => "alta",
-																'mensaje' => $msj));
+																'mensaje' => $this->msj));
 	}
 
 	public function verEntregasRealizadas()
@@ -547,7 +554,7 @@ require_once __DIR__ . '/Controller.php';
 	
 	public function mostrarAgenda()
     {
-		$msj = "";
+		$this->msj = "";
 		if (isset($_GET['d']))
 		{
 			$dia = $_GET['d'];
@@ -556,10 +563,10 @@ require_once __DIR__ . '/Controller.php';
 				echo $this->twig->render('agenda.twig.html', array('usuario' => dameUsuarioYRol(), 'seleccion' => '1', 'pedidos' => $pedidos));
 				return;
 			} else {
-				$msj="Error al ingresar la fecha";
+				$this->msj="Error al ingresar la fecha";
 			}
 		} 
-		echo $this->twig->render('agenda.twig.html', array('usuario' => dameUsuarioYRol(), 'mensaje' => $msj));
+		echo $this->twig->render('agenda.twig.html', array('usuario' => dameUsuarioYRol(), 'mensaje' => $this->msj));
 	}
 
 // ------------------------------------------------------------------------------------------------------------------------------------
