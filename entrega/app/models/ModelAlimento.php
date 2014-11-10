@@ -148,8 +148,8 @@
 					detalle_alimento.reservado,
 					alimento_donante.donante_id as 'donante',
 					alimento_donante.cantidad
-			 FROM detalle_alimento INNER JOIN alimento_donante ON (detalle_alimento.id=alimento_donante.detalle_alimento_id) 
-								   INNER JOIN alimento ON (detalle_alimento.alimento_codigo=alimento.codigo)
+			 FROM detalle_alimento LEFT JOIN alimento_donante ON (detalle_alimento.id=alimento_donante.detalle_alimento_id) 
+								   LEFT JOIN alimento ON (detalle_alimento.alimento_codigo=alimento.codigo)
 			 WHERE (detalle_alimento.id='$id')
 			");
 		$sql->execute();
