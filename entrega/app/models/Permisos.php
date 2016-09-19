@@ -1,5 +1,7 @@
 <?php    
 
+@session_start(); 
+
 /*
  * En esta clase, se define un array, donde estarán los permisos de cada perfil. En esta misma clase
  * Se validan dichos permisos.
@@ -23,15 +25,26 @@ class Permisos {
 								 'generarPedido'=>'0', 'generarEntrega'=>'0', 'mostrarConfiguracion'=>'0',
 								 'modificarPedido'=>'0', 'modificarConfiguracion'=>'0',
 								 'actualizarPedido'=>'0', 'mostrarAgenda'=>'0',
-								 'mostrarPedidos' =>'0',
+								 'mostrarPedidos' =>'0', 'borrarDetallePedido' =>'0',
 								 'verEntregasRealizadas'=>'0', 'entreFechasPorER'=>'0', 'informePorER'=>'0',
-								 'entreFechas' => '0', 'alimentosPorVencer'=>'0'
+								 'entreFechas' => '0', 'alimentosVencidos'=>'0', 'mostrarEnvio'=>'0',
+								 'pedidosConEnvio'=>'0'
 
 								 ),
 		'gestion' => array('generarPedido'=>'0', 'generarEntrega'=>'0', 'mostrarAgenda'=>'0',
 							'verEntregasRealizadas'=>'0', 'mostrarPedido'=>'0',
-							'inicio'=>'0'),
-		'consulta' => array('listarAlimentosSoloStock'=>'0', 'inicio'=>'0')
+							'inicio'=>'0', 'informePorER'=>'0',
+							'entreFechas' => '0', 'alimentosVencidos'=>'0',
+							'mostrarPedidos'=>'0', 'mostrarEnvio'=>'0',
+							'actualizarPedido'=>'0', 'mostrarAgenda'=>'0',
+							'pedidosConEnvio'=>'0'
+							
+							
+							),
+		'consulta' => array('listarAlimentosSoloStock'=>'0', 'inicio'=>'0',
+							'entreFechasPorER'=>'0', 'informePorER'=>'0', 'entreFechas' => '0', 'alimentosVencidos'=>'0'
+		
+							)
 	 );
 	 
 

@@ -18,7 +18,7 @@
 		{% for alimento in alimentos %}
 			<tr>
 			       	<td>{{ alimento.descripcion }}</td>
-		        	<td>{{ alimento.fecha_vencimiento }}</td>
+		        	<td>{{ alimento.fecha_vencimiento |date('d-m-Y') }}</td>
 		        	<td>{{ alimento.contenido }}</td>
 		        	<td>{{ alimento.peso_paquete }}</td>
 		        	<td>{{ alimento.stock }}</td>

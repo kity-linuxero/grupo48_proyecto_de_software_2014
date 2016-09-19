@@ -13,7 +13,7 @@
 									<th>Nº</th>
 									<th>Razón Social</th>
 									<th>Estado del Pedido</th>
-									<th>Fecha de Entrega</th>
+									<th>Fecha/hora de Entrega</th>
 									<th>Envío</th>
 									
 								</tr>
@@ -22,8 +22,8 @@
 										<td style="font-weight:bold"><a href="./backend.php?accion=actualizarPedido&amp;nro={{pedido.numero}}">{{ pedido.numero }}</a></td>
 										<td>{{ pedido.razon_social }}</td>
 										<td>{{ pedido.descripcion }}</td>
-										<td>{{ pedido.fecha|date('d-m-Y') }} {{ pedido.hora|date('H:i') }}</td>
-										<td>{% if pedido.con_envio %} Si {% else %} No {% endif %}</td>
+										<td>{{ pedido.fecha|date('d-m-Y') }} | {{ pedido.hora|date('H:i') }}</td>
+										<td>{% if pedido.con_envio %} <a href="./backend.php?accion=mostrarEnvio&amp;pedido={{pedido.numero}}">Si </a> {% else %} No {% endif %}</td>
 									</tr>
 							{% endfor %}
 							</tbody>

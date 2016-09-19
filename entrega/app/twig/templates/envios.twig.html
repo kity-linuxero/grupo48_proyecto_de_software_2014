@@ -1,52 +1,55 @@
 {% extends "layoutBackUser.twig.html" %}
 
 {% block contenido %}
-<h3>Envío del pedido </h3>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="./js/recorrido.js"></script>
+<style>
+	#climax{float: left;}
+	.climax{margin-left: 4em;}
+</style>
 
-<form class="formulario" method="post" name="formulario" action="./backend.php?accion=insertarUsuario">
-    <h2>Alta de usuario</h2>
-    
-	
-	
-	<div>
-        <label>*Nombre de usuario</label>
-        <input type="text" name="nombre" value="{{users.0.nombre}}" required/>
-    </div>
-    <div
-         class="formRow">
-					<label>Rol</label>
-					<select id="rolSelect" name="rol">
-						<option value="1"  {% if users.0.nombreRol == "administrador" %} selected="selected" {% endif %}> 
-							Administrador</option>
-						<option value="2"  {% if users.0.nombreRol == "gestion" %} selected="selected" {% endif %}> 
-							Gestión</option>
-						<option value="3"  {% if users.0.nombreRol == "consulta" %} selected="selected" {% endif %}> 
-							Consulta</option>
-					</select>	
+    <h3>Envío para: <a href="./backend.php?accion=actualizarPedido&nro={{ pedido.numero }}">Pedido {{ pedido.numero }}</a></h3>
+    <div>
+		
+				
+		<p>Entidad receptora:
+			{% if (usuario.rol=="administrador") %}
+			<a href="backend.php?accion=modificarEntidad&id={{ entidad.id }}">{{ entidad.razon_social }}</a> </p>
+			{% elseif (usuario.rol=="gestion") %}
+				{{ entidad.razon_social }} </p>
+			{% endif %}	
+			
+		<p>Fecha de envío: {{ pedido.fecha }} </p>
+		<p>Hora: {{ pedido.hora|date('H:i') }} </p>
+		<!-- <input type="text" name="dias" value="{{ pedido.entidad }}" title="Cantidad de días límite de vencimiento del stock" required/> -->
+		
+		
+		{% if clima.error %}
+			
+			<p style="color:red">{{clima.error}}</p>
+		{% else %}
+			
+			<p><strong>Pronóstico del clima: </strong>{{clima.descripcion}} | {{clima.temp |number_format(0, ',', '.') }} ºC</p>
+			<img id="climax" src="{{clima.url}}" />
+			<p class="climax"><strong>Ciudad: </strong>{{clima.ciudad}}</p>
+			<p class="climax"><strong>Máxima: </strong>{{clima.tempMax |number_format(1, ',', '.')}}ºC</p>
+			<p class="climax"><strong>Mínima: </strong>{{clima.tempMin |number_format(1, ',', '.')}}ºC</p>
+			<p class="climax"> <strong>Presión: </strong>{{clima.presion |number_format(2, ',', '.')}} hPa</p>
+			<p class="climax"> <strong>Humedad: </strong>{{clima.humedad |number_format(1, ',', '.') }}%</p>
+		
+			
+			
+		{% endif %}
 		
     </div>
-    <div>
-        <label>*Contraseña:</label>
-        <input type="password" id="p1" name="p1" required/>
-    </div>
-    
-    <div>
-        <label>*Repetir Contraseña:</label>
-        <input type="password" id="p2" name="p2" required/>
-    </div>
+        <input type="text" name="lat" id="latitud" value="{{ entidad.latitud }}" readonly="readonly" hidden >
+        <input type="text" name="lon" id="longitud" value="{{ entidad.longitud }}" readonly="readonly" hidden >
+        <input type="text" name="lat2" id="latitud2" value="{{ latitud }}" readonly="readonly" hidden >
+        <input type="text" name="lon2" id="longitud2" value="{{ longitud }}" readonly="readonly" hidden >
+	<div id="map-canvas" style="height:400px"></div>
 
-	
-
-	<br>
-	
-    <button onclick=validarPass() name="botones">Alta</button>
-    
-	<button onclick="window.location.href='./backend.php?accion=users'">Cancelar</button>
-
-
-<div class="obligatorios">*Campos obligatorios</div>
-
-
-</form>
+	<script>
+		calcularRecorrido();
+	</script>
 
 {% endblock %}

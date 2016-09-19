@@ -1,9 +1,15 @@
 {% extends "layoutBackUser.twig.html" %}
 
 {% block contenido %}
+
+
 <script>
-	OpenLayers.ImgPath = "http://openlayers.org/api/img/";
+	//OpenLayers.ImgPath = "http://openlayers.org/api/img/";
 </script>
+
+	<script>
+		window.onload = loadScript;
+    </script>
 
 <!-- &amp;id={{params.id}} -->
 <form class="formulario" method="post" name="formulario" action="./backend.php?accion=modificarConfiguracion">
@@ -17,7 +23,7 @@
     </div>
     
     <div>
-    <h5>Localización del Banco Alimentario</h5>
+    <h4>Localización del Banco Alimentario</h4>
     <hr>
  
         <label>Latitud:</label>
@@ -28,14 +34,42 @@
         <label>Longitud:</label>
         <input type="text" name="lon" id="longitud" value="{{ config.2.valor }}" required/>
 
-		<br>
-		
-	<div id="mapa" style="height:400px"></div>
+    </div>
+    <br>
+	
+	<div id="map-canvas" style="height:400px"></div>
 	<script>mostrarMapa();</script>
-		
+	
+	<hr>
+<!-- configuracion de datos de linkedin -->	
+    
+    <h3>Configuración de Claves LinkedIn</h3>
+	
+	<div>
+        <label>Clave de API:</label>
+        <input type="text" name="dato1" id="dato1" value="{{ config.3.valor }}" required/>
+
     </div>
 
-	<br>
+    <div>
+        <label>Clave Secreta:</label>
+        <input type="text" name="dato2" id="dato2" value="{{ config.4.valor }}" required/>
+
+    </div>
+
+    <div>
+        <label>Credencial del usuario OAuth:</label>
+        <input type="text" name="dato3" id="dato3" value="{{ config.5.valor }}" required/>
+
+    </div>
+
+    <div>
+        <label>Secreto del Usuario OAuth:</label>
+        <input type="text" name="dato4" id="dato4" value="{{ config.6.valor }}" required/>
+
+    </div>
+
+	<hr>
 	<div>
 		<button type="submit" name="botones">Modificar</button>
 		<button type="button" onclick="window.location.href='./backend.php'">Cancelar</button>

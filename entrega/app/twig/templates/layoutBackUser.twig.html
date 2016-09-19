@@ -8,28 +8,29 @@
 				<li><a href="./backend.php?accion=listarEntidades">Entidades Receptoras</a></li>
 				<li><a class="has-sub">Alimentos</a>
 					<ul>
-						<li><a href="./backend.php?accion=listarAlimentos">Ver_Alimentos</a></li>
-						<li><a href="./backend.php?accion=altaDonacion">Recibir_Donación</a></li>
+						<li><a href="./backend.php?accion=listarAlimentos">Ver Alimentos</a></li>
+						<li><a href="./backend.php?accion=altaDonacion">Recibir Donación</a></li>
 					</ul>
 				</li>
 				<li><a class="has-sub">Pedidos</a>
 					<ul>
-						<li><a href="./backend.php?accion=generarPedido">Generar_Pedido</a></li>
-						<li><a href="./backend.php?accion=mostrarAgenda">Agenda_de_Turnos</a></li>
-						<li><a href="./backend.php?accion=mostrarPedidos">Ver_Todos</a></li>
+						<li><a href="./backend.php?accion=generarPedido">Generar Pedido</a></li>
+						<li><a href="./backend.php?accion=mostrarAgenda">Agenda de Turnos</a></li>
+						<li><a href="./backend.php?accion=pedidosConEnvio">Pedidos con Envío</a></li>
+						<li><a href="./backend.php?accion=mostrarPedidos">Ver Todos</a></li>
 					</ul>
 				</li>
 				<li><a class="has-sub">Entregas Directas</a>
 					<ul>
-						<li><a href="./backend.php?accion=generarEntrega">Generar_Entrega</a></li>
-						<li><a href="./backend.php?accion=verEntregasRealizadas">Ver_Entregas_Realizadas</a></li>
+						<li><a href="./backend.php?accion=generarEntrega">Generar Entrega</a></li>
+						<li><a href="./backend.php?accion=verEntregasRealizadas">Ver Entregas Realizadas</a></li>
 					</ul>
 				</li>
 				<li><a class="has-sub">Informes</a>
 					<ul> 
-						<li><a href="./backend.php?accion=entreFechas">Entre_fechas</a></li>
-						<li><a href="./backend.php?accion=entreFechasPorER">Entre_fechas_por_ER</a></li>
-						<li><a href="./backend.php?accion=alimentosPorVencer">Alimentos_vencidos_sin_entregar</a></li>
+						<li><a href="./backend.php?accion=entreFechas">Entre fechas</a></li>
+						<li><a href="./backend.php?accion=informePorER">Entre fechas por ER</a></li>
+						<li><a href="./backend.php?accion=alimentosVencidos">Alimentos vencidos sin entregar</a></li>
 					</ul>
 				</li>
 				
@@ -44,18 +45,41 @@
 
 		{% elseif (usuario.rol=="consulta") %}
 				<li><a href="./backend.php">Home</a></li>
-				<li><a href="./backend.php?accion=listarAlimentosSoloStock">Listar_alimentos_en_stock</a></li>
+				<li><a href="./backend.php?accion=listarAlimentosSoloStock">Listar alimentos en stock</a></li>
+				<li><a class="has-sub">Informes</a>
+					<ul> 
+						<li><a href="./backend.php?accion=entreFechas">Entre fechas</a></li>
+						<li><a href="./backend.php?accion=informePorER">Entre fechas por ER</a></li>
+						<li><a href="./backend.php?accion=alimentosVencidos">Alimentos vencidos sin entregar</a></li>
+					</ul>
+				</li>
 				<li><a href="../app/logout.php">Logout</a></li>
 	
 		{% elseif (usuario.rol=="gestion") %}
 				<li><a href="./backend.php">Home</a></li>
-				<li><a href="./backend.php?accion=generarPedido">Generar_Pedido</a></li>
-				<li><a href="./backend.php?accion=generarEntrega">Generar_Entrega_Directa</a></li>
-				<li><a href="#" class="has-sub">Mas</a>
+				<li><a class="has-sub">Pedidos</a>
 					<ul>
-					<li><a href="../app/logout.php">Logout</a></li>
+						<li><a href="./backend.php?accion=generarPedido">Generar Pedido</a></li>
+						<li><a href="./backend.php?accion=mostrarAgenda">Agenda de Turnos</a></li>
+						<li><a href="./backend.php?accion=pedidosConEnvio">Pedidos con Envío</a></li>
+						<li><a href="./backend.php?accion=mostrarPedidos">Ver Todos</a></li>
 					</ul>
 				</li>
+				<li><a class="has-sub">Entregas Directas</a>
+					<ul>
+						<li><a href="./backend.php?accion=generarEntrega">Generar Entrega</a></li>
+						<li><a href="./backend.php?accion=verEntregasRealizadas">Ver Entregas Realizadas</a></li>
+					</ul>
+				</li>
+				<li><a class="has-sub">Informes</a>
+					<ul> 
+						<li><a href="./backend.php?accion=entreFechas">Entre fechas</a></li>
+						<li><a href="./backend.php?accion=informePorER">Entre fechas por ER</a></li>
+						<li><a href="./backend.php?accion=alimentosVencidos">Alimentos vencidos sin entregar</a></li>
+					</ul>
+				</li>
+				<li><a href="../app/logout.php">Logout</a></li>
+				
 		{% else %}
 			<li>no se cargó nada.. {{ usuario.rol }}{{ usuario.user}}</li>
 		{% endif %}

@@ -2,7 +2,7 @@
 	background: #2175bc;
     height: 30px;
 	position: relative; 
-    width: 90%;
+    width: width:800px;
 }
 
 ul.egmenu > li { 
@@ -34,7 +34,7 @@ ul.egmenu a {
 ul.egmenu li { list-style: none; }
 
 ul.egmenu li:hover { background: #2586d7; display:  block;  }
-ul.egmenu li:hover ul { display:  block;}
+ul.egmenu li:hover ul { display:  block; min-width: 151px; }
 
 
 
@@ -48,7 +48,7 @@ ul.egmenu li:hover ul { display:  block;}
 
 @media all and (max-width: 480px) {
     ul.egmenu {  height: auto; }
-    ul.egmenu > li {  float: none; width: 100%; }
+    ul.egmenu > li { float: none; width: 100%; }
     ul.egmenu a { line-height: 32px; }
     ul.egmenu ul { position: relative; }
 }

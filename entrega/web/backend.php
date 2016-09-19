@@ -53,15 +53,21 @@ $map = array(
 	 'generarEntrega' => array('controller' => 'ControllerBack', 'accion' => 'generarEntrega'),
 	 'verEntregasRealizadas' => array('controller' => 'ControllerBack', 'accion' => 'verEntregasRealizadas'),
 	 'mostrarAgenda' => array('controller' => 'ControllerBack', 'accion' => 'mostrarAgenda'),
+	 'pedidosConEnvio' => array('controller' => 'ControllerBack', 'accion' => 'pedidosConEnvio'),
 	 'entregaDirecta' => array('controller' => 'ControllerBack', 'accion' => 'entregaDirecta'),
+	 'borrarDetallePedido' => array('controller' => 'ControllerBack', 'accion' => 'borrarDetallePedido'),
 	 
-	 'entreFechasPorER' => array('controller' => 'ControllerBack', 'accion' => 'entreFechasPorER'),
 	 'informePorER' => array('controller' => 'ControllerBack', 'accion' => 'informePorER'),
 	 'entreFechas' => array('controller' => 'ControllerBack', 'accion' => 'entreFechas'),
-	 'alimentosPorVencer' => array('controller' => 'ControllerBack', 'accion' => 'alimentosPorVencer'),
-	 
+	 'alimentosVencidos' => array('controller' => 'ControllerBack', 'accion' => 'alimentosVencidos'),
+	 'mostrarEnvio' => array('controller' => 'ControllerBack', 'accion' => 'mostrarEnvio'),
+	 	 
 );
-session_start();
+
+@session_start();
+
+
+
 $errors=false;
  // Parseo de la ruta
  if (isset($_GET['accion'])) {

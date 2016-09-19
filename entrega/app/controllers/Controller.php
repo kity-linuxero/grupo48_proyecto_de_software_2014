@@ -26,6 +26,8 @@ require_once __DIR__ . '/ControllerLogin.php';
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
 				$this->mD = new ModelDonante(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);	
+				$this->us = new ModelUsers(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
+							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 			}	
 			elseif (postaTengoPermiso($accion)) {
 				$this->mE = new ModelEntidad(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
@@ -38,16 +40,14 @@ require_once __DIR__ . '/ControllerLogin.php';
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
 				$this->mP = new ModelPedido(Config::$mvc_bd_nombre, Config::$mvc_bd_usuario,
 							 Config::$mvc_bd_clave, Config::$mvc_bd_hostname);
-							 
 			} 
-			
-				else {
+			else {
 				$msj = "Usted no posee permisos para realizar dicha operación";
 				echo $this->twig->render('index.twig.html', array('mensaje' => $msj));
 			}
 		}
-		
 	}
+	
 	private static function configTwig(){
 		require_once __DIR__ . '/../twig/lib/Twig/Autoloader.php';
 		Twig_Autoloader::register();
@@ -72,6 +72,17 @@ require_once __DIR__ . '/ControllerLogin.php';
 			
 			
 	}
- 
+	
+	public static function xss($text)
+	{ 
+		// validar texto
+		$comment = trim($text);
+		 
+		// sanitizar texto
+		$comment = strip_tags($comment);
+		
+		return $comment;
+	}
+	
  }
 ?>

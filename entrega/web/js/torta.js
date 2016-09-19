@@ -10,12 +10,13 @@
 				subtitulo+=f1;
 				subtitulo+=" y ";
 				subtitulo+=f2;
+				
 				var options = {
 					chart: {
 						renderTo: 'container',
 						plotBackgroundColor: null,
 						plotBorderWidth: null,
-						plotShadow: false
+						plotShadow: false,
 					},
 					title: {
 						text: 'Informes por entidades'
@@ -23,12 +24,16 @@
 					subtitle: {
 						text: subtitulo
 					},
+					exporting: {
+						enabled: true
+					},
 					
 					tooltip: {
 						formatter: function() {
 							return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
 						}
 					},
+					
 					plotOptions: {
 						pie: {
 							allowPointSelect: true,
@@ -50,12 +55,21 @@
 						type: 'pie',
 						name: 'Browser share',
 						data: []
-					}]
+					}],
+					credits: {
+						enabled: false
+					},
+					 navigation: {
+						buttonOptions: {
+							enabled: true
+					}
+					
+				}
 				}
 
 					//prepara la url para mandar
 
-					var url= "../app/models/informe.php?informe=torta&f1=";
+					var url= "../app/informe.php?informe=torta&f1=";
 					//url+="backend.php?accion=informePorERJSON&f1=";
 					url+=f1;
 					url+="&f2="

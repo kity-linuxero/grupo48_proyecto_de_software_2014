@@ -8,45 +8,33 @@ require_once './controllers/ControllerLogin.php';
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-	$usuario= $_POST["usuario"];
-	$pass= $_POST["pass"];
+	
+	$usuario= Controller::xss($_POST["usuario"]);
+	$pass= Controller::xss($_POST["pass"]);
 
 	$intentoLogin = ModelLogin::consultar($usuario,$pass);
 	
 	if ($intentoLogin == 0)	{
 		//echo falló en la autenticación de usuario
-		
-		
 		header('Location: ../web/index.php?accion=inicioErr');
     }
 	else{
-		//login correcto. Hay que verificar el rol
+		//login correcto. Se asignan variables de sesiones.
+	
+		$_SESSION['USUARIO']['userName']= Controller::xss($_POST["usuario"]);
+		$_SESSION['USUARIO']['rol'] = Controller::xss($intentoLogin[0]['nombreRol']);
+		$_SESSION['USUARIO']['id'] = Controller::xss($intentoLogin[0]['id']);
 		
+		//almacena las coordenadas del banco de alimentos
+		$coordenadas= ModelLogin::obtenerCoordenadas();
 		
+		$lat= $coordenadas[0]['valor'];
+		$lon= $coordenadas[1]['valor'];
 		
-		
-		
-		
-		$_SESSION['USUARIO']['userName']= $_POST["usuario"];
-		$_SESSION['USUARIO']['rol'] = $intentoLogin[0]['nombreRol'];
-		$_SESSION['USUARIO']['id'] = $intentoLogin[0]['id'];
+		$_SESSION['USUARIO']['lat']= $lat;
+		$_SESSION['USUARIO']['lon']= $lon;
 
-		
-		switch (dameRol()) {
-			case "administrador":
-			//sentencias para usuario administrador
-				header('Location: ../web/backend.php');
-			break;
-			case "consulta":
-				//Sentencias para usuario consulta
-				header('Location: ../web/backend.php');
-			break;
-			case "gestion":
-				//Sentencias para usuario consulta
-				header('Location: ../web/backend.php');
-			break;
-
-		}
+		header('Location: ../web/backend.php');
 	
 	}
 }

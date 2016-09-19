@@ -23,13 +23,29 @@ $(document).ready(function() {
         },
 		title: { text: 'Informe kilo por fecha'},
 		subtitle: {	text: subtitulo	},
-        series: [{}]
+        series: [{}],
+		navigation: {
+						buttonOptions: {
+							enabled: true
+							
+					}
+					
+				},
+				exporting: {
+						enabled: true
+					},
+					credits: {
+						enabled: false
+					}
+		
+    
+    
     };
     
 
     
     
-    var url= "../app/models/informe.php?informe=barra&f1=";
+    var url= "../app/informe.php?informe=barra&f1=";
     url+=f1;
     url+="&f2=";
     url+=f2;

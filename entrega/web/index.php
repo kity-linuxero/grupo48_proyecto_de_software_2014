@@ -8,6 +8,7 @@
  require_once '../app/models/ModelDonante.php';
  require_once '../app/models/ModelEntidad.php';
  require_once '../app/models/ModelLogin.php';
+ require_once '../app/models/ModelUsers.php';
  require_once '../app/controllers/Controller.php';
  require_once '../app/controllers/ControllerFront.php';
  require_once '../app/controllers/ControllerBack.php';
@@ -22,7 +23,7 @@
      'quienesSomos' => array('controller' =>'ControllerFront', 'accion' =>'quienesSomos'),
      'contacto' => array('controller' =>'ControllerFront', 'accion' =>'contacto'),
 	 'inicioErr' => array('controller' =>'ControllerFront', 'accion' =>'inicioErr'),
-	// 'login' => array('controller' =>'ControllerFront', 'accion' =>'login')
+	
  );
 $errors=false;
  // Parseo de la ruta

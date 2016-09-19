@@ -17,24 +17,43 @@
  <fieldset>
   <legend>Información del Pedido</legend>
 		<div>
-			<label>Entidad Receptora</label>
-			<select id="entidadSelect" name="entidad">
+			<label>Entidad Receptora: </label>
+			{% if (usuario.rol=="administrador") %}
+				<select id="entidadSelect" name="entidad">
+					{% for entidad in entidades %}
+							<option value="{{ entidad.id }}" {% if pedido.entidad_receptora_id == entidad.id %} selected="selected" {% endif %}> 
+								{{ entidad.razon_social }}</option>
+					{% endfor %}
+				</select>
+			{% elseif (usuario.rol=="gestion") %}
 				{% for entidad in entidades %}
-						<option value="{{ entidad.id }}" {% if pedido.entidad_receptora_id == entidad.id %} selected="selected" {% endif %}> 
-							{{ entidad.razon_social }}</option>
+					{% if pedido.entidad_receptora_id == entidad.id %}
+						<label><strong>{{entidad.razon_social}}</strong></label>
+						<input type="hidden" id="entidadSelect" name="entidad" value="{{entidad.id}}" />
+					{% endif %}
 				{% endfor %}
-			</select>
+			{% endif %}
 		</div>
 		<hr>
 		<div>
-			<label>Fecha de Entrega</label>
-			<input type="text" id="from" name="fecha" value="{{pedido.fecha}}" readonly="readonly" required/>
+			<label>Fecha de Entrega: </label>
+			{% if (usuario.rol=="administrador") %}
+				<input type="text" id="from" name="fecha" value="{{pedido.fecha}}" readonly="readonly" required />
+			{% elseif (usuario.rol=="gestion") %}
+				<label><strong>{{pedido.fecha |date('d-m-Y') }}</strong></label>
+				<input type="hidden" id="fecha" name="fecha" value="{{pedido.fecha}}" />
+			{% endif %}
 		</div>
 		<hr>
 		<div>
-			<label>Hora</label>
-			<input type="text" name="hora" class="number" pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
-				   id="24h" placeholder="HH:MM" title="Ingrese una hora valida" value="{{pedido.hora|date('H:i')}}" required/>
+			<label>Hora: </label>
+			{% if (usuario.rol=="administrador") %}
+				<input type="text" name="hora" class="number" pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}"
+					   id="24h" placeholder="HH:MM" title="Ingrese una hora valida" value="{{pedido.hora|date('H:i')}}" required />
+			{% elseif (usuario.rol=="gestion") %}
+				<label><strong>{{pedido.hora|date('H:i')}}</strong></label>
+				<input type="hidden" id="24h" name="hora" value="{{pedido.hora|date('H:i')}}" />
+			{% endif %}
 		</div>
 		<hr>
 		<div>
@@ -48,6 +67,41 @@
 		</div>
 
  </fieldset>
+<br>
+ <fieldset>
+ 
+  <legend>Alimentos del Pedido</legend>
+    <table class="tablaLoca">
+		<tr class="encabezado">
+			<th>Descripción</th>
+			<th>Contenido</th>
+			<th>Cantidad</th>
+		</tr>
+	  {% for detalle in detalles %}
+<!-- descripcion 	contenido 	cantidad 	pedido_numero 	detalle_alimento_id -->
+		<tr>
+		  <td>
+			{{detalle.descripcion}}
+		  </td>
+		  <td>	
+			{{detalle.contenido}}
+		  </td>	
+		  <td>	
+			{{detalle.cantidad}} 
+		  </td>
+	{% if (usuario.rol=="administrador") %}
+		  <td>
+			<a href="javascript:
+	if (confirm('Confirmar la eliminación?'))
+		{ window.location.href='./backend.php?accion=borrarDetallePedido&amp;nro={{detalle.pedido_numero}}&amp;id={{detalle.detalle_alimento_id}}' }
+	else { void('') };">
+				<img src="./img/cruz.png" alt="Borrar alimento" title="Borrar alimento" ></a>
+		  </td>
+	{% endif %}
+		</tr>
+	  {% endfor %}
+    </table>
+</fieldset>
 <br>
  <fieldset>
   <legend>Opción de Envío</legend>

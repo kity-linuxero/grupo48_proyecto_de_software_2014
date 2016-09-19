@@ -32,5 +32,15 @@ require_once __DIR__ . './../controllers/ControllerBack.php';
 			return true;}
 			
 	 }
-
- }
+	 	
+	public static function xss($text)
+	{ 
+		// validar texto
+		$comment = trim($text);
+		 
+		// sanitizar texto
+		$comment = strip_tags($comment);
+		
+		return $comment;
+	}	
+}

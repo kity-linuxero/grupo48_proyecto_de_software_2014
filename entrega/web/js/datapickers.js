@@ -1,6 +1,6 @@
 $(function() {
         var dates = $( "#from, #to" ).datepicker({
-            defaultDate: "+1w",
+            defaultDate: "today",
             changeMonth: true,
             changeYear: true,
             numberOfMonths: 1,

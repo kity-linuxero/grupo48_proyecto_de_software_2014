@@ -1,39 +1,105 @@
 {% extends "layoutBackUser.twig.html" %}
 
 {% block contenido %}
-
+<script src="./js/exporting.js"></script>
 {% if (informe == '0' or informe == '1') %}
+	
 	{% if (informe == '0') %}
 
 		<script src="./js/torta.js"></script>
+		
 
 		<h4>Seleccione el rango de fechas para obtener el informe por Entidad Receptora</h4>
+		
+		<form method="POST" action="./backend.php?accion=informePorER" >
+		<label for="from">Fecha desde:</label>
+		<input type="text" id="from" name="fecha1" value="{{fechas.fecha1}}" readonly="readonly" required />
+			
+		<label for="to">Fecha hasta</label>
+		<input type="text" id="to" name="fecha2"  value="{{fechas.fecha2}}" readonly="readonly" required />
+		
+		<input type="submit" value="Listado">
+		
+		
+		</form>
+		
+		{% if (fechas) %}
+				<h5>Kilos entregados por entidad entre {{fechas.fecha1 |date('d-m-Y') }} y {{fechas.fecha2 |date('d-m-Y') }} </h5>
+				<table>
+					<tbody>
+						<tr class="encabezado">
+							<th>Entidad</th>
+							<th>Kilos entregados</th>
+						</tr>
+					{% for param in params %}
+						<tr>
+								<td>{{ param.Entidad }}</td>
+								<td>{{ param.Kilos }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			<a href="../app/PDF.php?print=informePorER&amp;f1={{fechas.fecha1}}&amp;f2={{fechas.fecha2}}">Exportar Tabla a PDF</a>
+				
+		{% endif %}
+		
+		<br>
+		
 
 	{% endif %}
 
 	{% if (informe == '1') %}
 
-
 		<h4>Seleccione el rango de fechas para obtener el informe por fecha</h4>
 		<script src="./js/barra.js"></script>
-	{% endif %}
 
-
-	<label for="from">Fecha desde:</label>
-	<input type="text" id="from" name="fecha1" onblur="plotear()" readonly="readonly" required/>
+		<form method="POST" action="./backend.php?accion=entreFechas" >
+		<label for="from">Fecha desde:</label>
+		<input type="text" id="from" name="fecha1" readonly="readonly" value="{{fechas.fecha1}}" required />
+		<label for="to">Fecha hasta</label>
+		<input type="text" id="to" name="fecha2" readonly="readonly" value="{{fechas.fecha2}}" required />
+		<input type="submit" value="Listado">
+		</form>
+		<hr>
 		
-	<label for="to">Fecha hasta</label>
-	<input type="text" id="to" name="fecha2" onblur="plotear()" readonly="readonly" required/>
+		{% if (fechas) %}
+				<h5>Kilos entregados entre {{fechas.fecha1 |date('d-m-Y') }} y {{fechas.fecha2 |date('d-m-Y')}} </h5>
+				<table>
+					<tbody>
+						<tr class="encabezado">
+							<th>Fecha</th>
+							<th>Kilos entregados</th>
+						</tr>
+					{% for param in params %}
+						<tr>
+								<td>{{ param.Fecha |date('d-m-Y') }}</td>
+								<td>{{ param.Kilos }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
 
-	<input type="button" value="Dibujar" onClick="plotear()"> 
-	<hr>
-		<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-
+			<a href="../app/PDF.php?print=entreFechas&amp;f1={{fechas.fecha1}}&amp;f2={{fechas.fecha2}}">Exportar Tabla a PDF</a>
+				
+		{% endif %}
+		
+		<br>
+		
+		
+		
+		
+			
+	{% endif %}
+	<script>plotear()</script>
 {% endif %}
+	
+
+
 
 {% if (informe == '3') %}
 	<h4>Alimentos vencidos sin entregar</h4>
 
+	
 	{% if alimentos|length>0 %}
 	
 	<table>
@@ -43,16 +109,20 @@
 				
 					<th>Descripcion</th>
 					<th>Stock</th>
+					<th>Vencieron</th>
 				</tr>
 			{% for alimento in alimentos %}
 				<tr>
 					
-						<td>{{ alimento.descripcion }}</td>
-						<td>{{ alimento.stock }}</td>
+						<td>{{ alimento.Descripcion }}</td>
+						<td>{{ alimento.Stock }}</td>
+						<td>{{ alimento.fechaVencimiento |date('d-m-Y') }}</td>
 				</tr>
 			{% endfor %}
 			</tbody>
 	</table>
+	<a href="../app/PDF.php?print=alimentosPorVencer&amp;f1={{fechas.fecha1}}&amp;f2={{fechas.fecha2}}">Exportar Tabla a PDF</a>
+	
 	{% else %}
 						<h4>
 							No hay alimentos vencidos sin entregar.
@@ -61,9 +131,8 @@
 	{% endif %}
 
 
+
 {% endif %}
 
-
-
-
+	 <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 {% endblock %}

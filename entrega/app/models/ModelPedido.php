@@ -54,9 +54,31 @@ numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 
 			FROM pedido_modelo INNER JOIN turno_entrega ON (pedido_modelo.turno_entrega_id=turno_entrega.id)
 							   INNER JOIN entidad_receptora ON (entidad_receptora.id=pedido_modelo.entidad_receptora_id)
 							   INNER JOIN estado_pedido ON (pedido_modelo.estado_pedido_id=estado_pedido.id)
-			WHERE (turno_entrega.fecha='$d')
+			WHERE (turno_entrega.fecha = :d)
 			ORDER BY pedido_modelo.numero
 		");
+		$sql->bindParam(':d', $d, PDO::PARAM_STR);
+		$sql->execute();
+		$pedidos = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+		return $pedidos;
+	}
+	
+	public function verPedidosConEnvio($d) // se utiliza para mostrar los pedidos de UN dia segun la agenda de turnos
+	{		
+		$sql = $this->conexion->prepare("
+			SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora , entidad_receptora.razon_social, estado_pedido.descripcion
+			FROM pedido_modelo INNER JOIN turno_entrega ON (pedido_modelo.turno_entrega_id=turno_entrega.id)
+							   INNER JOIN entidad_receptora ON (entidad_receptora.id=pedido_modelo.entidad_receptora_id)
+							   INNER JOIN estado_pedido ON (pedido_modelo.estado_pedido_id=estado_pedido.id)
+			WHERE (turno_entrega.fecha = :d) AND (pedido_modelo.con_envio = 1) AND
+				  ((pedido_modelo.estado_pedido_id=1) OR (pedido_modelo.estado_pedido_id=2) OR (pedido_modelo.estado_pedido_id=3))
+			ORDER BY pedido_modelo.numero
+		");
+		// en la consulta de arriba, con_envio=1 significa que el pedido incluye envio
+		// y los estado_pedido_id = 1, 2 y 3, significan "nuevo", "en espera" y "en proceso", por ende, todavia no fueron entregados
+		
+		$sql->bindParam(':d', $d, PDO::PARAM_STR);
 		$sql->execute();
 		$pedidos = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -76,18 +98,15 @@ numero 	entidad_receptora_id 	fecha_ingreso 	estado_pedido_id 	turno_entrega_id 
 	
 	public function agregar($pedido, $turno, $alimentos)
 	{
-/*		
-Array ( [entidad_receptora_id] => 1 [con_envio] => true )
-Array ( [fecha] => 2014-11-01 [hora] => 23:59 )
-Array ( ['8'] => 15 ['12'] => 5 ) 
-*/	
-		try {
+
 			$f = $turno['fecha'];
 			$h = $turno['hora'];
 			$turno_entrega = $this->conexion->prepare("
 				INSERT INTO turno_entrega (fecha, hora)
-				VALUES ('$f', '$h')
+				VALUES (:f, :h)
 								");
+			$turno_entrega->bindParam(':f', $f, PDO::PARAM_STR);
+			$turno_entrega->bindParam(':h', $h, PDO::PARAM_STR);
 			$turno_entrega->execute();
 			
 			$turno_id = $this->conexion->lastInsertId();
@@ -96,11 +115,11 @@ Array ( ['8'] => 15 ['12'] => 5 )
 			$estado = 1; // significa estado NUEVO
 			$envio = $pedido['con_envio'];
 		
-			try {
 				$pedido = $this->conexion->prepare("
 					INSERT INTO pedido_modelo (entidad_receptora_id, fecha_ingreso, estado_pedido_id, turno_entrega_id, con_envio)
-					VALUES ('$er', '$fecha_hoy', '$estado', '$turno_id', '$envio')
+					VALUES ('$er', '$fecha_hoy', '$estado', '$turno_id', :envio)
 													");
+				$pedido->bindParam(':envio', $envio, PDO::PARAM_INT);
 				$pedido->execute();
 				
 				$pedido_id = $this->conexion->lastInsertId();
@@ -110,77 +129,110 @@ Array ( ['8'] => 15 ['12'] => 5 )
 					$detalle = $id_value;
 					$cant = $alimentos[$id_value];
 					
-					try {
 						$sql = $this->conexion->prepare("
 							INSERT INTO alimento_pedido (pedido_numero, detalle_alimento_id, cantidad)
-							VALUES ('$pedido_id', '$detalle', '$cant');
+							VALUES ('$pedido_id', :detalle, :cant);
 						");
+						$sql->bindParam(':detalle', $detalle, PDO::PARAM_INT);
+						$sql->bindParam(':cant', $cant, PDO::PARAM_INT);
 						$sql->execute();
 						// actualizar cada detalle de alimento agregado
-						try {
 							$update = $this->conexion->prepare("
 								UPDATE detalle_alimento
-								SET reservado=reservado+'$cant', stock=stock-'$cant'
-								WHERE id='$detalle'
+								SET reservado = reservado + :cant, stock = stock - :cant
+								WHERE id = :detalle
 							");
+							$update->bindParam(':cant', $cant, PDO::PARAM_INT);
+							$update->bindParam(':detalle', $detalle, PDO::PARAM_INT);
 							$update->execute();
-						} catch (PDOException $e){
-							echo "ERROR". $e->getMessage();
 						}
-					} catch (PDOException $e){
-						echo "ERROR". $e->getMessage();
-					}
-				}
-			} catch (PDOException $e){
-				echo "ERROR". $e->getMessage();
-			}
-		} catch (PDOException $e){
-			echo "ERROR". $e->getMessage();
-		}
 	}
 
 	public function actualizar($pedido, $turno)
 	{
-		try {
 			$f = $turno['fecha'];
 			$h = $turno['hora'];
 			$t = $pedido['turno_entrega_id'];
+
 			$turno_entrega = $this->conexion->prepare("
-				UPDATE turno_entrega SET fecha='$f', hora='$h'
-				WHERE id='$t'
+				UPDATE turno_entrega SET fecha = :f, hora = :h
+				WHERE id = :t
 								");
+			$turno_entrega->bindParam(':f', $f, PDO::PARAM_STR);
+			$turno_entrega->bindParam(':h', $h, PDO::PARAM_STR);
+			$turno_entrega->bindParam(':t', $t, PDO::PARAM_INT);
 			$turno_entrega->execute();
-//			print_r($pedido); die;
+
 			$nro = $pedido['numero'];
 			$er = $pedido['entidad_receptora_id'];
 			$estado = $pedido['estado_pedido_id'];
 			$envio = $pedido['con_envio'];
 		
-			try {
 				$pedido = $this->conexion->prepare("
-					UPDATE pedido_modelo SET entidad_receptora_id='$er', estado_pedido_id='$estado', con_envio='$envio'
-					WHERE numero='$nro'
+					UPDATE pedido_modelo SET entidad_receptora_id = :er, estado_pedido_id = :estado, con_envio = :envio
+					WHERE numero = :nro
 				");
+				$pedido->bindParam(':er', $er, PDO::PARAM_INT);
+				$pedido->bindParam(':estado', $estado, PDO::PARAM_INT);
+				$pedido->bindParam(':envio', $envio, PDO::PARAM_INT);
+				$pedido->bindParam(':nro', $nro, PDO::PARAM_INT);
 				$pedido->execute();
+	}
+	
+	public function eliminarDetallePedido($nro, $id)
+	{
+		$cantidad = $this->conexion->prepare("
+				SELECT cantidad FROM alimento_pedido
+				WHERE (pedido_numero = :nro) AND (detalle_alimento_id = :id) ");
+		$cantidad->bindParam(':nro', $nro, PDO::PARAM_INT);
+		$cantidad->bindParam(':id', $id, PDO::PARAM_INT);
+		$cantidad->execute();
+		
+		$cant = $cantidad->fetchAll(PDO::FETCH_ASSOC);
+		$cant = $cant['0']['cantidad'];
+		
+		$detalle = $this->conexion->prepare("
+				UPDATE detalle_alimento
+				SET reservado = reservado - $cant, stock = stock + $cant
+				WHERE id = $id
+			");
+		$detalle->execute();
 
-			} catch (PDOException $e){
-				echo "ERROR". $e->getMessage();
-			}
-		} catch (PDOException $e){
-			echo "ERROR". $e->getMessage();
-		}
+		$pedido = $this->conexion->prepare("
+				DELETE FROM alimento_pedido
+				WHERE (pedido_numero = :nro) AND (detalle_alimento_id = :id) ");
+		$pedido->bindParam(':nro', $nro, PDO::PARAM_INT);
+		$pedido->bindParam(':id', $id, PDO::PARAM_INT);
+		$pedido->execute();
+		
+
+		$p = $this->obtenerDetallesPedido($nro);
+		if ($p == -1){
+			$this->eliminarPedido($nro);
+			return -1;
+		} else
+			return 1;
+	}
+	
+	public function eliminarPedido($nro)
+	{
+		$pedido = $this->conexion->prepare("
+				DELETE FROM pedido_modelo
+				WHERE (numero = :nro)
+			");
+		$pedido->bindParam(':nro', $nro, PDO::PARAM_INT);
+		$pedido->execute();
 	}
 	
 	public function agregarEntrega($entidad, $alimentos)
 	{
-
 		$fecha_hoy = $this->getToday();
 	
-		try {
 			$entrega = $this->conexion->prepare("
 				INSERT INTO entrega_directa (entidad_receptora_id, fecha)
-				VALUES ('$entidad', '$fecha_hoy')
+				VALUES (:entidad, '$fecha_hoy')
 					");
+			$entrega->bindParam(':entidad', $entidad, PDO::PARAM_INT);
 			$entrega->execute();
 			$entrega_id = $this->conexion->lastInsertId();
 			$id_values = array_keys($alimentos); // los indices son los detalle_alimento_id
@@ -189,33 +241,27 @@ Array ( ['8'] => 15 ['12'] => 5 )
 				$detalle = $id_value;
 				$cant = $alimentos[$id_value];
 				
-				try {
 					$sql = $this->conexion->prepare("
 						INSERT INTO alimento_entrega_directa (entrega_directa_id, detalle_alimento_id, cantidad)
-						VALUES ('$entrega_id', '$detalle', '$cant');
+						VALUES ('$entrega_id', :detalle, :cant);
 					");
+					$sql->bindParam(':detalle', $detalle, PDO::PARAM_INT);
+					$sql->bindParam(':cant', $cant, PDO::PARAM_INT);
 					$sql->execute();
 					// actualizar cada detalle de alimento agregado
-					try {
 						$update = $this->conexion->prepare("
 							UPDATE detalle_alimento
-							SET stock=stock-'$cant'
-							WHERE id='$detalle'
+							SET stock = stock - :cant
+							WHERE id = :detalle
 						");
+						$update->bindParam(':detalle', $detalle, PDO::PARAM_INT);
+						$update->bindParam(':cant', $cant, PDO::PARAM_INT);
 						$update->execute();
-					} catch (PDOException $e){
-						echo "ERROR". $e->getMessage();
-					}
-				} catch (PDOException $e){
-					echo "ERROR". $e->getMessage();
-				}
 			}
-		} catch (PDOException $e){
-			echo "ERROR". $e->getMessage();
-		}
 	}
 	
-	public function fechaMayorQueHoy($fecha){
+	public function fechaMayorQueHoy($fecha)
+	{
 		$h = strtotime("now");
 		$f = strtotime($fecha);
 		$res = (($h<$f) or ($h=$f));
@@ -224,23 +270,39 @@ Array ( ['8'] => 15 ['12'] => 5 )
 	
 	public function obtenerPorNro($n)
 	{
-		try {
-			$sql = $this->conexion->prepare("
-				SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora
-				FROM pedido_modelo INNER JOIN turno_entrega ON (pedido_modelo.turno_entrega_id=turno_entrega.id)
-				WHERE (pedido_modelo.numero='$n')
-			");
-			$sql->execute();
-			$res = $sql->fetchAll(PDO::FETCH_ASSOC);
-			if (count($res)>0){
-				return $res['0'];
-			}
-			else return -1;
-		} catch (PDOException $e){
-			return -1;
+		$sql = $this->conexion->prepare("
+			SELECT pedido_modelo.*, turno_entrega.fecha, turno_entrega.hora
+			FROM pedido_modelo INNER JOIN turno_entrega ON (pedido_modelo.turno_entrega_id=turno_entrega.id)
+			WHERE (pedido_modelo.numero = :n)
+		");
+		$sql->bindParam(':n', $n, PDO::PARAM_INT);
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		if (count($res)>0){
+			return $res['0'];
 		}
+		else return -1;
 	}
-
+	
+	public function obtenerDetallesPedido($n)
+	{
+		$sql = $this->conexion->prepare("
+				SELECT A.descripcion, DA.contenido, AP.cantidad, 
+					   PM.numero AS pedido_numero, DA.id AS detalle_alimento_id
+				FROM pedido_modelo AS PM INNER JOIN alimento_pedido AS AP ON (PM.numero = AP.pedido_numero)
+				INNER JOIN detalle_alimento AS DA ON (AP.detalle_alimento_id = DA.id)
+				INNER JOIN alimento AS A ON (DA.alimento_codigo = A.codigo)
+				WHERE PM.numero = :n
+			");
+		$sql->bindParam(':n', $n, PDO::PARAM_INT);
+		$sql->execute();
+		$res = $sql->fetchAll(PDO::FETCH_ASSOC);
+		if (count($res)>0){
+			return $res;
+		}
+		else return -1;
+	}
+	
 	public function listarEstadosPosibles()
 	{
 		$sql = $this->conexion->prepare("
@@ -293,10 +355,10 @@ Array ( ['8'] => 15 ['12'] => 5 )
 			$id_values = array_keys($alimentos); // los indices son los detalle_alimento_id
 			
 			foreach ($id_values as $id_value) {
-				$detalle = $id_value;
 				$sql = $this->conexion->prepare("
-						SELECT stock FROM detalle_alimento WHERE id='$id_value'
+						SELECT stock FROM detalle_alimento WHERE id = :id_value
 				");
+				$sql->bindParam(':id_value', $id_value, PDO::PARAM_INT);
 				$sql->execute();
 				$temp = $sql->fetchAll(PDO::FETCH_ASSOC);
 				$res = $res & ($alimentos[$id_value]<=$temp['0']['stock']);
@@ -317,8 +379,9 @@ Array ( ['8'] => 15 ['12'] => 5 )
 			foreach ($id_values as $id_value) {
 				$detalle = $id_value;
 				$sql = $this->conexion->prepare("
-						SELECT stock FROM detalle_alimento WHERE id='$id_value'
+						SELECT stock FROM detalle_alimento WHERE id = :id_value
 				");
+				$sql->bindParam(':id_value', $id_value, PDO::PARAM_INT);
 				$sql->execute();
 				$temp = $sql->fetchAll(PDO::FETCH_ASSOC);
 				$res = $res & ($alimentos[$id_value]<=$temp['0']['stock']);
