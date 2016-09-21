@@ -1,0 +1,10 @@
+Grupo 48 - Proyecto de software 2014 - UNLP
+
+Este software ha sido publicada bajo licencia MIT
+
+Requisitos:
+- Copiar index.html y el directorio entrega dentro de un servidor web, ej.: Apache
+- Dentro del directorio /data se encuentra la base de datos. Levantar base de datos en un servidor de base de datos, ej.: MySQL.
+  El trabajo está pensado para el web server y la base de datos sean el mismo host.
+  En caso de necesitar otro, modificar el archivo /entrega/app/Config.php.
+
