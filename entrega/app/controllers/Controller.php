@@ -73,7 +73,7 @@ require_once __DIR__ . '/ControllerLogin.php';
 			
 			
 			echo $newTwig->render('errorBlue.twig.html', array('mensaje' => $mensajes, 'error' => $error));
-			
+			break; // Con esto evito que la pantalla de error se imprima varias veces
 			
 	}
 	
