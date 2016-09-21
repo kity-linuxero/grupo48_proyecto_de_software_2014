@@ -1,3 +1,7 @@
+/*
+ *	This software is MIT Licensed (see LICENSE)
+ *	Copyright (c) 2014-2016 Cristian O. Giambruni, Ezequiel F. Gómez
+ */
 function mostrarMapa(){
 
  /*   var lat            = -34.878110;

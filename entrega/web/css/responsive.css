@@ -1,4 +1,8 @@
-﻿ul.egmenu {  
+﻿/*
+ *	This software is MIT Licensed (see LICENSE)
+ *	Copyright (c) 2014-2016 Cristian O. Giambruni, Ezequiel F. Gómez
+ */
+ul.egmenu {  
 	background: #2175bc;
     height: 30px;
 	position: relative; 
