@@ -8,10 +8,12 @@ services:
         volumes:
             - ./entrega:/var/www/html
         links:
-            - 'mariadb'
+            - 'mysql'
+        environment:
+            TZ: 'America/Argentina/Buenos_Aires'
 
-    mariadb:
-        image: mariadb:10.1
+    mysql:
+        image: mysql:5.6.48
         container_name: base_balp
         volumes:
             - ./data/grupo_48.sql:/docker-entrypoint-initdb.d/grupo_48.sql

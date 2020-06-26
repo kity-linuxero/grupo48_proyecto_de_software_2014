@@ -3,7 +3,7 @@
  *	This software is MIT Licensed (see LICENSE)
  *	Copyright (c) 2014-2016 Cristian O. Giambruni, Ezequiel F. Gómez
  */
- 
+date_default_timezone_set(getenv('TZ'));
 require_once __DIR__ . './../controllers/ControllerBack.php';
  class Model
  {

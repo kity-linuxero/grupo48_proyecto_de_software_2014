@@ -1,4 +1,5 @@
 <?php
+ob_start();
 /*
  *	This software is MIT Licensed (see LICENSE)
  *	Copyright (c) 2014-2016 Cristian O. Giambruni, Ezequiel F. Gómez
@@ -38,10 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		$_SESSION['USUARIO']['lat']= $lat;
 		$_SESSION['USUARIO']['lon']= $lon;
-
 		header('Location: ../web/backend.php');
-	
 	}
 }
-	
+ob_end_flush();
 ?>
