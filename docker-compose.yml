@@ -1,0 +1,33 @@
+version: "3"
+services:
+    php-apache:
+        build:
+            context: .
+        ports:
+            -  8090:80
+        volumes:
+            - ./entrega:/var/www/html
+        links:
+            - 'mysql'
+        environment:
+            TZ: 'America/Argentina/Buenos_Aires'
+
+    mysql:
+        image: mysql:5.6.48
+        container_name: base_balp
+        volumes:
+            - ./data/grupo_48.sql:/docker-entrypoint-initdb.d/grupo_48.sql
+            - /etc/localtime:/etc/localtime:ro
+        expose:
+            - 3306
+
+        environment:
+            TZ: 'America/Argentina/Buenos_Aires'
+            MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+            MYSQL_ROOT_PASSWORD: "tHVmHSdXZV1Nw99T"
+            MYSQL_USER: 'grupo_48'
+            MYSQL_PASSWORD: 'tHVmHSdXZV1Nw99T'
+            MYSQL_DATABASE: 'grupo_48'
+            MYSQL_TZ: 'America/Argentina/Buenos_Aires'
+    
+
