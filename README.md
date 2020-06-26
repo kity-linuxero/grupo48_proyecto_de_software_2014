@@ -18,7 +18,7 @@ cd proyecto2014
 docker-compose up -d
 ```
 
-4. Acceder desde el navegador vía (http://localhost:8090)[http://localhost:8090]
+4. Acceder desde el navegador vía [http://localhost:8090](http://localhost:8090)
 
 ### Usuarios
 
