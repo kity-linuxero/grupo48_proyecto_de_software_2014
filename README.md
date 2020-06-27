@@ -29,8 +29,8 @@ más manejo de usuarios y configuraciones del sistema).
 - **Gestión:** Puede agregar y modificar pedidos modelo, envíos, turnos de entrega y
 entregas directas, así como también se le visualizarán las alertas y podrá
 consultar los listados de alimentos en stock.
-  - User: `admin`
-  - Pass: `admin`
+  - User: `gestion`
+  - Pass: `gestion`
 
 - **Consulta:** Puede listar los alimentos en stock y consultar los listados y estadísticas.
   - User: `consulta`
