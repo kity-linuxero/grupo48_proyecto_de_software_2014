@@ -1,16 +1,16 @@
-# Trabajo práctico: Grupo 48 - Proyecto de software 2014
+# Trabajo práctico: Proyecto de software 2014
 #### Facultad de informática | UNLP
 
 ## Banco Alimentario La Plata
 
-Este es un software desarrollado por [Cristian Giambruni](https://github.com/kity-linuxero) y [Ezequiel F. Gómez](https://github.com/egother) para la materia Proyecto de Software año 2014.
+Este es un software desarrollado por [Cristian Giambruni](https://github.com/kity-linuxero) y [Ezequiel F. Gómez](https://github.com/egother) (grupo 48) para la materia Proyecto de Software año 2014.
 
 ### ¿Cómo usarlo?
 
 1. Instalar docker y docker-compose
 2. Bajar el repositorio
 ```bash
-git clone https://github.com/kity-linuxero/grupo48_proyecto_de_software_2014 proyecto2014
+git clone https://github.com/kity-linuxero/proyecto_de_software_unlp2014 proyecto2014
 ```
 3. Ejecutar contenedores
 ```bash
