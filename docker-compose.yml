@@ -27,7 +27,7 @@ services:
             TZ: 'America/Argentina/Buenos_Aires'
 
     db:
-        image: mariadb:10.0.38
+        image: yobasystems/alpine-mariadb:latest
         container_name: base_balp
         volumes:
             - ./data/grupo_48.sql:/docker-entrypoint-initdb.d/grupo_48.sql

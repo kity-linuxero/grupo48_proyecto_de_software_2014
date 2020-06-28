@@ -1,7 +1,8 @@
 <?php
+ob_start();
 /*
  *	This software is MIT Licensed (see LICENSE)
- *	Copyright (c) 2014-2016 Cristian O. Giambruni, Ezequiel F. Gómez
+ *	Copyright (c) 2014-2016 Cristian O. Giambruni, Ezequiel F. Gï¿½mez
  */
 
  require('./lib/fpdf/fpdf.php');
@@ -15,7 +16,7 @@ class PDF extends FPDF
 // Cargar los datos
 function LoadData($file)
 {
-    // Leer las líneas del fichero
+    // Leer las lï¿½neas del fichero
     $lines = file($file);
     $data = array();
     foreach($lines as $line)
@@ -23,7 +24,7 @@ function LoadData($file)
     return $data;
 }
 
-// Cabecera de página
+// Cabecera de pï¿½gina
 function Header()
 {
 	global $title;
@@ -31,7 +32,7 @@ function Header()
     $this->Image('../web/img/logo.jpg',10,8,33);
     // Lucida bold 15
     $this->SetFont('arial','B',15);
-    // Calculamos ancho y posición del título.
+    // Calculamos ancho y posiciï¿½n del tï¿½tulo.
     $w = $this->GetStringWidth($title)+6;
     $this->SetX((210-$w)/2);
     // Colores de los bordes, fondo y texto
@@ -40,29 +41,29 @@ function Header()
     $this->SetTextColor(255,255,255);
     // Ancho del borde (1 mm)
     $this->SetLineWidth(1);
-    // Título
+    // Tï¿½tulo
     $this->Cell($w,9,$title,1,1,'C',true);
-    // Salto de línea
+    // Salto de lï¿½nea
     $this->Ln(10);
 }
 
-// Pie de página
+// Pie de pï¿½gina
 function Footer()
 {
-    // Posición a 1,5 cm del final
+    // Posiciï¿½n a 1,5 cm del final
     $this->SetY(-15);
-    // Arial itálica 8
+    // Arial itï¿½lica 8
     $this->SetFont('Arial','I',8);
     // Color del texto en gris
     $this->SetTextColor(128);
-    // Número de página
-    $this->Cell(0,10,'Página '.$this->PageNo(),0,0,'C');
+    // Nï¿½mero de pï¿½gina
+    $this->Cell(0,10,'Pï¿½gina '.$this->PageNo(),0,0,'C');
 }
 
 // Tabla coloreada
 function Tablita($header, $params)
 {
-    // Colores, ancho de línea y fuente en negrita
+    // Colores, ancho de lï¿½nea y fuente en negrita
     $this->SetFillColor(0,160,230);
     $this->SetTextColor(255);
     $this->SetDrawColor(0,0,0);
@@ -73,7 +74,7 @@ function Tablita($header, $params)
     for($i=0;$i<count($header);$i++)
         $this->Cell($w[$i],7,$header[$i],1,0,'C',true);
     $this->Ln();
-    // Restauración de colores y fuentes
+    // Restauraciï¿½n de colores y fuentes
     $this->SetFillColor(224,235,255);
     $this->SetTextColor(0);
     $this->SetFont('');
@@ -86,7 +87,7 @@ function Tablita($header, $params)
         $this->Ln();
         $fill = !$fill;
     }
-    // Línea de cierre
+    // Lï¿½nea de cierre
     $this->Cell(array_sum($w),0,'','T');
 }
 }
@@ -106,7 +107,7 @@ if	($print	== 'informePorER'){
 }
 if ($print == 'entreFechas'){
 	$params = $mE->informePesoPorDia($f1, $f2, "1");
-	$title = "Informe de peso por día";
+	$title = "Informe de peso por dï¿½a";
 }
 if ($print == 'alimentosPorVencer'){
 	$params = $mA->alimentosVencidosSinEntregar();
@@ -116,7 +117,7 @@ if ($print == 'alimentosPorVencer'){
 /*Array ( [0] => Array ( [fecha] => 2014-11-06 [Kilos] => 6.00 ) ) */
 $id_values = array_keys($params['0']); // los indices son los detalle_alimento_id
 $pdf = new PDF();
-// Títulos de las columnas
+// Tï¿½tulos de las columnas
 $header = array($id_values['0'], $id_values['1']);
 // Carga de datos
 $pdf->SetFont('Arial','',14);
@@ -124,5 +125,5 @@ $pdf->AddPage();
 $pdf->Tablita($header,$params);
 $pdf->Output('informe.pdf', 'I');
 
-
+ob_end_flush();
 ?>

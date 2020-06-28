@@ -1,4 +1,5 @@
 <?php
+ob_start();
 /*
  *	This software is MIT Licensed (see LICENSE)
  *	Copyright (c) 2014-2016 Cristian O. Giambruni, Ezequiel F. Gómez
@@ -102,3 +103,5 @@ if(!$errors){
 			 
  }
 }
+ob_end_flush();
+?>
